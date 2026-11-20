@@ -1,0 +1,7 @@
+{
+  "name": "@talleros/ui",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "main": "./tailwind-preset.js"
+}

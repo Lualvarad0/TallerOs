@@ -1,0 +1,86 @@
+name: talleros
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TALLEROS_MIGRATOR_USER: ${TALLEROS_MIGRATOR_USER}
+      TALLEROS_MIGRATOR_PASSWORD: ${TALLEROS_MIGRATOR_PASSWORD}
+      TALLEROS_APP_USER: ${TALLEROS_APP_USER}
+      TALLEROS_APP_PASSWORD: ${TALLEROS_APP_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - talleros_pgdata:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - talleros_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  garage:
+    # Reemplaza a MinIO: desde 2024 la imagen oficial minio/minio quedó
+    # detrás de login/suscripción en Docker Hub. Garage es S3-compatible,
+    # open source (AGPLv3, igual licencia que MinIO) y se descarga sin login.
+    # Tras el primer `docker compose up -d garage` corre una vez:
+    #   infra/garage/bootstrap.sh
+    image: dxflrs/garage:v1.0.1
+    restart: unless-stopped
+    environment:
+      GARAGE_RPC_SECRET: ${GARAGE_RPC_SECRET}
+    ports:
+      - "3900:3900" # API S3
+    volumes:
+      - ./garage/garage.toml:/etc/garage.toml:ro
+      - talleros_garagedata:/data
+    healthcheck:
+      test: ["CMD", "/garage", "status"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # api:
+  #   Se agrega en el paso 3 (backend) del Módulo 1, cuando exista
+  #   backend/src/TallerOS.Api con su Dockerfile. Mientras tanto la API
+  #   corre en local (dotnet run) contra este Postgres/Redis/MinIO.
+  #   build:
+  #     context: ../backend
+  #     dockerfile: src/TallerOS.Api/Dockerfile
+  #   environment:
+  #     ConnectionStrings__App: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${TALLEROS_APP_USER};Password=${TALLEROS_APP_PASSWORD}
+  #     ConnectionStrings__Migrator: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${TALLEROS_MIGRATOR_USER};Password=${TALLEROS_MIGRATOR_PASSWORD}
+  #     Redis__ConnectionString: redis:6379,password=${REDIS_PASSWORD}
+  #     S3__Endpoint: http://garage:3900
+  #   ports:
+  #     - "5000:8080"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #     garage:
+  #       condition: service_healthy
+
+volumes:
+  talleros_pgdata:
+  talleros_redisdata:
+  talleros_garagedata:

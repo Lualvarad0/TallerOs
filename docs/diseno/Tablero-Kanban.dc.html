@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">03 · Tablero Kanban de OT</div>
+    <div style="flex:1"></div>
+    <a href="Detalle-OT.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Detalle de OT →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+
+      <div id="1a" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;color:#E6E6E3"><span style="background:#FFC21A;color:#1A1400;font-weight:800;font-size:13px;padding:3px 8px;border-radius:5px">1a</span><span style="font-size:16px;font-weight:600">Columnas por estado + vista tabla</span><span style="font-size:13px;color:#A9ADB1">Arrastra tarjetas entre columnas</span></div>
+        <div style="display:flex;gap:32px;align-items:flex-start">
+          <div style="width:1440px;flex-shrink:0;height:900px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+            <dc-import name="Sidebar" active="tablero" hint-size="232px,900px"></dc-import>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+              <div style="height:64px;display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--bd);background:var(--sf)">
+                <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700;letter-spacing:-.01em">Tablero de OT</div>
+                <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx3)">24 activas</div>
+                <div style="display:flex;background:var(--sf2);border:1px solid var(--bd);border-radius:8px;padding:3px;margin-left:12px">
+                  <button onClick="{{ showBoard }}" style="height:28px;padding:0 12px;border-radius:6px;border:0;background:{{ boardBtnBg }};color:var(--tx);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-kanban"></i>Tablero</button>
+                  <button onClick="{{ showTable }}" style="height:28px;padding:0 12px;border-radius:6px;border:0;background:{{ tableBtnBg }};color:var(--tx);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-rows"></i>Tabla</button>
+                </div>
+                <div style="flex:1"></div>
+                <div style="width:280px;height:36px;border:1px solid var(--bd);border-radius:8px;background:var(--sf2);display:flex;align-items:center;gap:8px;padding:0 10px;color:var(--tx3);font-size:15px"><i class="ph ph-magnifying-glass"></i>Buscar placa, cliente, OT…<span style="margin-left:auto;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11px;border:1px solid var(--bd2);border-radius:4px;padding:1px 5px">/</span></div>
+                <a href="Recepcion.dc.html" style="height:36px;padding:0 14px;border-radius:8px;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="ph-bold ph-plus"></i>Nueva OT</a>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:12px 24px;border-bottom:1px solid var(--bd)">
+                <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+                  <div style="height:32px;padding:0 10px;border:1px solid var(--bd2);border-radius:8px;background:var(--sf);font-size:13px;display:flex;align-items:center;gap:6px;color:var(--tx2)"><i class="ph {{ f.icon }}"></i><span>{{ f.k }}:</span><b style="color:var(--tx);font-weight:600">{{ f.v }}</b><i class="ph ph-caret-down" style="font-size:12px"></i></div>
+                </sc-for>
+                <div style="height:32px;padding:0 10px;border:1px solid var(--red);border-radius:8px;background:var(--red-s);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--red)"><i class="ph-bold ph-warning"></i>Solo atrasadas · 4</div>
+                <div style="flex:1"></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--tx3)"><span style="width:7px;height:7px;border-radius:50%;background:var(--grn)"></span>Actualizado en vivo</div>
+              </div>
+              <sc-if value="{{ isBoard }}" hint-placeholder-val="{{ true }}">
+                <div style="flex:1;min-height:0;display:flex;gap:12px;padding:16px 24px;overflow-x:auto">
+                  <sc-for list="{{ cols }}" as="col" hint-placeholder-count="5">
+                    <div onDragOver="{{ col.onOver }}" onDrop="{{ col.onDrop }}" style="width:268px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;border-radius:10px;padding:8px;background:{{ col.dropBg }};outline:{{ col.outline }}">
+                      <div style="display:flex;align-items:center;gap:8px;padding:2px 4px 6px">
+                        <div style="width:8px;height:8px;border-radius:2px;background:{{ col.c }}"></div>
+                        <div style="font-size:13.5px;font-weight:700">{{ col.name }}</div>
+                        <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx3)">{{ col.count }}</div>
+                        <div style="flex:1"></div>
+                        <i class="ph ph-plus" style="color:var(--tx3)"></i>
+                      </div>
+                      <sc-for list="{{ col.cards }}" as="o" hint-placeholder-count="2">
+                        <a href="Detalle-OT.dc.html" draggable="true" onDragStart="{{ o.onDrag }}" style="background:var(--sf);border:1px solid var(--bd);border-left:3px solid {{ o.edge }};border-radius:9px;padding:11px 12px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--sh);cursor:grab;color:var(--tx)" style-hover="border-color:var(--bd2)">
+                          <div style="display:flex;gap:10px"><div style="width:58px;height:42px;border-radius:7px;background:var(--sf2);border:1px solid var(--bd);position:relative;flex-shrink:0;padding:4px"><dc-import name="Silueta" tipo="{{ o.body }}" hint-size="100%,100%"></dc-import><span style="position:absolute;left:-5px;bottom:-5px;width:19px;height:19px;border-radius:50%;background:var(--sf);border:1px solid var(--bd2);display:grid;place-items:center;font-size:11px;color:var(--tx2)"><i class="ph-bold {{ o.typeIcon }}"></i></span></div><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:6px"><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:12.5px;padding:1px 6px;border:1.5px solid var(--tx);border-radius:4px;letter-spacing:.06em">{{ o.plate }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx3)">{{ o.id }}</div><div style="flex:1"></div><i class="ph-bold {{ o.prioIcon }}" style="color:{{ o.prioC }};font-size:16px"></i></div><div style="font-family:'Barlow Semi Condensed';font-size:17px;font-weight:700;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.car }}</div></div></div>
+                          <div style="font-size:12.5px;color:var(--tx2)">{{ o.client }} · {{ o.job }}</div>
+                          <sc-if value="{{ o.hasFlags }}"><div style="display:flex;gap:5px;flex-wrap:wrap"><sc-if value="{{ o.finds }}"><span style="height:22px;padding:0 7px;border-radius:5px;background:var(--ac-s);color:var(--ac-tx);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-lightbulb"></i>{{ o.findsLabel }}</span></sc-if><sc-if value="{{ o.missing }}"><span style="height:22px;padding:0 7px;border-radius:5px;background:var(--vio-s);color:var(--vio);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-package"></i>{{ o.missing }}</span></sc-if></div></sc-if>
+                          <div style="display:flex;align-items:center;gap:6px">
+                            <div style="display:flex">
+                              <sc-for list="{{ o.mecs }}" as="m" hint-placeholder-count="1"><div style="width:24px;height:24px;border-radius:50%;background:{{ m.bg }};color:{{ m.fg }};border:{{ m.border }};display:grid;place-items:center;font-size:10px;font-weight:700;margin-right:-6px">{{ m.i }}</div></sc-for>
+                            </div>
+                            <sc-if value="{{ o.unassigned }}"><div style="font-size:12px;color:var(--tx3);display:flex;align-items:center;gap:4px"><i class="ph ph-user-plus"></i>Sin asignar</div></sc-if>
+                            <div style="flex:1"></div>
+                            <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:4px"><i class="ph ph-clock"></i>{{ o.time }}</div>
+                            <sc-if value="{{ o.late }}"><div style="height:20px;padding:0 6px;border-radius:4px;background:var(--red);color:var(--sf);font-size:11px;font-weight:800;display:flex;align-items:center;gap:3px">{{ o.late }}</div></sc-if>
+                          </div>
+                        </a>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ isTable }}">
+                <div style="flex:1;min-height:0;overflow:auto;padding:0 24px">
+                  <div style="display:grid;grid-template-columns:110px 90px 1.4fr 1.1fr 170px 100px 90px 100px;font-size:13.5px">
+                    <div style="display:contents;font-size:12px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em">
+                      <div style="padding:12px 8px;border-bottom:1px solid var(--bd)">Placa</div><div style="padding:12px 8px;border-bottom:1px solid var(--bd)">OT</div><div style="padding:12px 8px;border-bottom:1px solid var(--bd)">Vehículo · trabajo</div><div style="padding:12px 8px;border-bottom:1px solid var(--bd)">Cliente</div><div style="padding:12px 8px;border-bottom:1px solid var(--bd)">Estado</div><div style="padding:12px 8px;border-bottom:1px solid var(--bd)">Mecánicos</div><div style="padding:12px 8px;border-bottom:1px solid var(--bd)">Tiempo</div><div style="padding:12px 8px;border-bottom:1px solid var(--bd)">Atraso</div>
+                    </div>
+                    <sc-for list="{{ allCards }}" as="o" hint-placeholder-count="8">
+                      <div style="display:contents">
+                        <div style="padding:10px 8px;border-bottom:1px solid var(--bd)"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:12.5px;padding:1px 6px;border:1.5px solid var(--tx);border-radius:4px;letter-spacing:.06em">{{ o.plate }}</span></div>
+                        <div style="padding:10px 8px;border-bottom:1px solid var(--bd);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx2)">{{ o.id }}</div>
+                        <a href="Detalle-OT.dc.html" style="padding:10px 8px;border-bottom:1px solid var(--bd)"><b style="font-weight:600">{{ o.car }}</b><span style="color:var(--tx3)"> · {{ o.job }}</span></a>
+                        <div style="padding:10px 8px;border-bottom:1px solid var(--bd);color:var(--tx2)">{{ o.client }}</div>
+                        <div style="padding:8px;border-bottom:1px solid var(--bd)"><span style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:5px;background:{{ o.sbg }};color:{{ o.sfg }};font-size:12px;font-weight:700"><i class="ph-bold {{ o.sicon }}"></i>{{ o.sname }}</span></div>
+                        <div style="padding:8px;border-bottom:1px solid var(--bd);display:flex"><sc-for list="{{ o.mecs }}" as="m" hint-placeholder-count="1"><div style="width:24px;height:24px;border-radius:50%;background:{{ m.bg }};color:{{ m.fg }};border:{{ m.border }};display:grid;place-items:center;font-size:10px;font-weight:700;margin-right:-6px">{{ m.i }}</div></sc-for></div>
+                        <div style="padding:10px 8px;border-bottom:1px solid var(--bd);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px">{{ o.time }}</div>
+                        <div style="padding:10px 8px;border-bottom:1px solid var(--bd);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;font-weight:700;color:var(--red)">{{ o.late }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+            <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700;background:var(--sf)"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+            <div style="background:var(--sf);padding:6px 16px 0;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--bd)">
+              <div style="display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:12px;color:var(--tx3)">Sucursal Norte</div><div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Tablero</div></div><div style="width:40px;height:40px;border-radius:10px;border:1px solid var(--bd2);display:grid;place-items:center;font-size:20px"><i class="ph ph-magnifying-glass"></i></div><div style="width:40px;height:40px;border-radius:10px;border:1px solid var(--bd2);display:grid;place-items:center;font-size:20px;position:relative"><i class="ph ph-funnel"></i><span style="position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--ac)"></span></div></div>
+              <div style="display:flex;gap:4px;overflow-x:auto;margin:0 -16px;padding:0 16px">
+                <sc-for list="{{ mobTabs }}" as="t" hint-placeholder-count="5">
+                  <button onClick="{{ t.on }}" style="flex-shrink:0;height:40px;padding:0 12px;border:0;background:transparent;border-bottom:3px solid {{ t.line }};color:{{ t.fg }};font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px;white-space:nowrap">{{ t.name }}<span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;padding:1px 6px;border-radius:9px;background:var(--sf3)">{{ t.count }}</span></button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ mobCards }}" as="o" hint-placeholder-count="3">
+                <a href="Detalle-OT.dc.html" style="background:var(--sf);border:1px solid var(--bd);border-left:4px solid {{ o.edge }};border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;color:var(--tx)">
+                  <div style="display:flex;align-items:center;gap:8px"><div style="width:52px;height:36px;border-radius:7px;background:var(--sf2);border:1px solid var(--bd);padding:3px;flex-shrink:0"><dc-import name="Silueta" tipo="{{ o.body }}" hint-size="100%,100%"></dc-import></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:15px;padding:2px 7px;border:2px solid var(--tx);border-radius:4px;letter-spacing:.06em">{{ o.plate }}</div><i class="ph-bold {{ o.typeIcon }}" style="color:var(--tx3);font-size:17px"></i><div style="flex:1"></div><sc-if value="{{ o.late }}"><div style="height:24px;padding:0 8px;border-radius:5px;background:var(--red);color:var(--sf);font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-warning"></i>{{ o.late }}</div></sc-if><i class="ph-bold {{ o.prioIcon }}" style="color:{{ o.prioC }};font-size:18px"></i></div>
+                  <div><div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700">{{ o.car }}</div><div style="font-size:15px;color:var(--tx2);margin-top:2px">{{ o.client }} · {{ o.job }}</div></div>
+                  <sc-if value="{{ o.hasFlags }}"><div style="display:flex;gap:5px;flex-wrap:wrap"><sc-if value="{{ o.finds }}"><span style="height:26px;padding:0 7px;border-radius:5px;background:var(--ac-s);color:var(--ac-tx);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-lightbulb"></i>{{ o.findsLabel }}</span></sc-if><sc-if value="{{ o.missing }}"><span style="height:26px;padding:0 7px;border-radius:5px;background:var(--vio-s);color:var(--vio);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-package"></i>{{ o.missing }}</span></sc-if></div></sc-if>
+                  <div style="display:flex;align-items:center;gap:8px"><div style="display:flex"><sc-for list="{{ o.mecs }}" as="m" hint-placeholder-count="1"><div style="width:28px;height:28px;border-radius:50%;background:{{ m.bg }};color:{{ m.fg }};border:{{ m.border }};display:grid;place-items:center;font-size:11px;font-weight:700;margin-right:-6px">{{ m.i }}</div></sc-for></div><div style="flex:1"></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx2);display:flex;align-items:center;gap:4px"><i class="ph ph-clock"></i>{{ o.time }}</div></div>
+                </a>
+              </sc-for>
+            </div>
+            <dc-import name="TabBar" active="tablero" hint-size="100%,84px"></dc-import>
+          </div>
+        </div>
+      </div>
+
+      <div id="1b" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;color:#E6E6E3"><span style="background:#FFC21A;color:#1A1400;font-weight:800;font-size:13px;padding:3px 8px;border-radius:5px">1b</span><span style="font-size:16px;font-weight:600">Carriles por mecánico · 4 fases</span><span style="font-size:13px;color:#A9ADB1">Pensado para pantalla de taller: carga visible por persona</span></div>
+        <div style="display:flex;gap:32px;align-items:flex-start">
+          <div style="width:1440px;flex-shrink:0;height:900px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+            <dc-import name="Sidebar" active="tablero" hint-size="232px,900px"></dc-import>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+              <div style="height:64px;display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--bd);background:var(--sf)">
+                <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700;letter-spacing:-.01em">Tablero por mecánico</div>
+                <div style="display:flex;gap:6px;margin-left:12px">
+                  <div style="height:30px;padding:0 10px;border-radius:15px;background:var(--tx);color:var(--bg);font-size:13px;font-weight:700;display:flex;align-items:center">Todas las áreas</div>
+                  <div style="height:30px;padding:0 10px;border-radius:15px;border:1px solid var(--bd2);font-size:13px;font-weight:600;display:flex;align-items:center;color:var(--tx2)">Mecánica</div>
+                  <div style="height:30px;padding:0 10px;border-radius:15px;border:1px solid var(--bd2);font-size:13px;font-weight:600;display:flex;align-items:center;color:var(--tx2)">Eléctrico</div>
+                  <div style="height:30px;padding:0 10px;border-radius:15px;border:1px solid var(--bd2);font-size:13px;font-weight:600;display:flex;align-items:center;color:var(--tx2)">Latonería</div>
+                  <div style="height:30px;padding:0 10px;border-radius:15px;border:1px solid var(--bd2);font-size:13px;font-weight:600;display:flex;align-items:center;color:var(--tx2)">Pintura</div>
+                </div>
+                <div style="flex:1"></div>
+                <a href="Recepcion.dc.html" style="height:36px;padding:0 14px;border-radius:8px;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="ph-bold ph-plus"></i>Nueva OT</a>
+              </div>
+              <div style="display:grid;grid-template-columns:220px repeat(4,minmax(0,1fr));gap:0;padding:0 24px;border-bottom:1px solid var(--bd);background:var(--sf2)">
+                <div style="padding:10px 0;font-size:12px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em">Mecánico · carga hoy</div>
+                <sc-for list="{{ phases }}" as="p" hint-placeholder-count="4"><div style="padding:10px 10px;font-size:12px;font-weight:700;color:{{ p.c }};text-transform:uppercase;letter-spacing:.06em;display:flex;gap:6px;align-items:center"><i class="ph-bold {{ p.icon }}"></i>{{ p.name }}<span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx3)">{{ p.count }}</span></div></sc-for>
+              </div>
+              <div style="flex:1;overflow:auto;padding:0 24px">
+                <sc-for list="{{ lanes }}" as="l" hint-placeholder-count="5">
+                  <div style="display:grid;grid-template-columns:220px repeat(4,minmax(0,1fr));border-bottom:1px solid var(--bd);min-height:104px">
+                    <div style="padding:14px 14px 14px 0;display:flex;flex-direction:column;gap:8px">
+                      <div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:50%;background:{{ l.bg }};color:{{ l.fg }};border:{{ l.border }};display:grid;place-items:center;font-size:12px;font-weight:700">{{ l.i }}</div><div><div style="font-size:15px;font-weight:700">{{ l.name }}</div><div style="font-size:12px;color:var(--tx3)">{{ l.role }}</div></div></div>
+                      <div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;border-radius:3px;background:var(--sf3);overflow:hidden"><div style="height:100%;width:{{ l.load }};background:{{ l.loadC }}"></div></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx2)">{{ l.hours }}</div></div>
+                    </div>
+                    <sc-for list="{{ l.cells }}" as="cell" hint-placeholder-count="4">
+                      <div style="padding:8px;display:flex;flex-direction:column;gap:6px;border-left:1px solid var(--bd)">
+                        <sc-for list="{{ cell }}" as="o" hint-placeholder-count="1">
+                          <a href="Detalle-OT.dc.html" style="background:var(--sf);border:1px solid var(--bd);border-left:3px solid {{ o.edge }};border-radius:7px;padding:7px 9px;display:flex;flex-direction:column;gap:4px;color:var(--tx)">
+                            <div style="display:flex;align-items:center;gap:6px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:11.5px;padding:0 5px;border:1.5px solid var(--tx);border-radius:3px;letter-spacing:.05em">{{ o.plate }}</span><span style="font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1">{{ o.car }}</span></div>
+                            <div style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--tx2)"><sc-if value="{{ o.finds }}"><i class="ph-fill ph-lightbulb" style="color:var(--ac-tx)"></i></sc-if><sc-if value="{{ o.missing }}"><i class="ph-fill ph-package" style="color:var(--vio)"></i></sc-if><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.sname }}</span><span style="font-family:'JetBrains Mono'">{{ o.time }}</span><sc-if value="{{ o.late }}"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;color:var(--red)">{{ o.late }}</span></sc-if></div>
+                          </a>
+                        </sc-for>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+            <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700;background:var(--sf)"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+            <div style="background:var(--sf);padding:6px 16px 12px;border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:12px">
+              <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Por mecánico</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+                <sc-for list="{{ phases }}" as="p" hint-placeholder-count="4"><div style="border:1px solid var(--bd);border-radius:8px;padding:6px 8px;background:var(--sf2)"><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700;color:{{ p.c }}">{{ p.count }}</div><div style="font-size:11px;color:var(--tx2);font-weight:600">{{ p.name }}</div></div></sc-for>
+              </div>
+            </div>
+            <div style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ lanes }}" as="l" hint-placeholder-count="4">
+                <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden">
+                  <div style="display:flex;align-items:center;gap:10px;padding:12px 14px"><div style="width:36px;height:36px;border-radius:50%;background:{{ l.bg }};color:{{ l.fg }};border:{{ l.border }};display:grid;place-items:center;font-size:12px;font-weight:700">{{ l.i }}</div><div style="flex:1"><div style="font-size:16px;font-weight:700">{{ l.name }}</div><div style="display:flex;align-items:center;gap:6px;margin-top:4px"><div style="flex:1;height:5px;border-radius:3px;background:var(--sf3);overflow:hidden"><div style="height:100%;width:{{ l.load }};background:{{ l.loadC }}"></div></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx2)">{{ l.hours }}</span></div></div><i class="ph ph-caret-down" style="color:var(--tx3)"></i></div>
+                  <sc-for list="{{ l.flat }}" as="o" hint-placeholder-count="1">
+                    <a href="Detalle-OT.dc.html" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--bd);color:var(--tx)"><div style="width:4px;align-self:stretch;border-radius:2px;background:{{ o.edge }}"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px">{{ o.plate }}</span><span style="flex:1;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.car }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:{{ o.timeC }};font-weight:700">{{ o.timeOrLate }}</span></a>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+            <dc-import name="TabBar" active="tablero" hint-size="100%,84px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = {
+    theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark',
+    view: 'board', over: null, mobTab: 'repa',
+    cards: [
+      ['OT-1042','ABC-482','Toyota Hilux 2019','Carlos Méndez','Frenos + suspensión','repa',['JR','MS'],'5h 10m','u','+2h'],
+      ['OT-1047','KDF-310','Chevrolet Spark GT 2017','Lucía Fernández','Falla eléctrica','diag',['AT'],'1h 05m','a',''],
+      ['OT-1049','PRT-907','Nissan Frontier 2021','Transportes Andina','Mant. 60.000 km','rec',[],'20m','n',''],
+      ['OT-1050','MT-0391','Yamaha MT-03 2022','Sofía Herrera','Kit de arrastre','rec',[],'8m','n',''],
+      ['OT-1038','GHT-554','Hyundai Tucson 2020','Roberto Díaz','Embrague','apr',['LP'],'1d 3h','a','26h det.'],
+      ['OT-1044','JKL-118','Mazda 3 2016','Ana Morales','Latonería capó','apr',['RD'],'6h','n',''],
+      ['OT-1035','XYZ-736','Ford Ranger 2018','Constructora Lima','Turbo','rep',['JR'],'2d 4h','u','52h det.'],
+      ['OT-1040','BVC-093','Renault Duster 2019','Pedro Salas','Bomba de agua','rep',['KR'],'22h','n',''],
+      ['OT-1045','QWE-640','VW Gol 2015','Martín Ruiz','Afinamiento','repa',['LP','KR'],'2h 40m','n',''],
+      ['OT-1046','RTY-215','Suzuki Swift 2022','Elena Vargas','Diagnóstico A/C','repa',['AT'],'3h 15m','a','+45m'],
+      ['OT-1041','UIO-882','Chevrolet D-Max 2020','Agrícola Sur','Cambio de clutch','qc',['JR','MS'],'7h','n',''],
+      ['OT-1039','ASD-417','Toyota Corolla 2019','Valeria Ortiz','Mant. 40.000 km','listo',['LP'],'4h 30m','n',''],
+      ['OT-1043','FGH-306','Honda CR-V 2017','Diego Castro','Suspensión trasera','listo',['KR','MS'],'5h','n',''],
+      ['OT-1036','LMN-725','Kia Sportage 2021','Paula Ríos','Pintura parachoques','ent',['RD'],'9h','n','']
+    ]
+  };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    const S = {
+      rec: ['Recibido','var(--tx3)','var(--sf3)','var(--tx2)','ph-tray-arrow-down'],
+      diag: ['Diagnóstico','var(--blue)','var(--blue-s)','var(--blue)','ph-stethoscope'],
+      apr: ['Esperando aprobación','var(--vio)','var(--vio-s)','var(--vio)','ph-hourglass'],
+      rep: ['Esperando repuestos','var(--vio)','var(--vio-s)','var(--vio)','ph-package'],
+      repa: ['En reparación','var(--blue)','var(--blue-s)','var(--blue)','ph-wrench'],
+      qc: ['Control de calidad','var(--blue)','var(--blue-s)','var(--blue)','ph-check-square'],
+      listo: ['Listo para entregar','var(--grn)','var(--grn-s)','var(--grn)','ph-flag-checkered'],
+      ent: ['Entregado','var(--grn)','var(--sf3)','var(--grn)','ph-handshake']
+    };
+    const M = { JR: ['var(--blue-s)','var(--blue)','Jorge Ramírez','Mecánica'], LP: ['var(--vio-s)','var(--vio)','Luis Pérez','Mecánica'], AT: ['var(--grn-s)','var(--grn)','Andrés Torres','Eléctrico'], KR: ['var(--ac-s)','var(--ac-tx)','Kevin Rojas','Mecánica'], RD: ['var(--red-s)','var(--red)','Raúl Díaz','Latonería y pintura'], MS: ['var(--sf)','var(--tx2)','Miguel Soto','Mecánica · sin acceso'] };
+    const av = i => ({ i, bg: M[i][0], fg: M[i][1], border: i === 'MS' ? '1.5px dashed var(--tx3)' : '2px solid var(--sf)' });
+    const prio = { u: ['ph-caret-double-up','var(--red)'], a: ['ph-caret-up','var(--ac-tx)'], n: ['ph-equals','var(--tx3)'] };
+    const X = { 'ABC-482': ['pickup',2,''], 'KDF-310': ['hatchback',1,''], 'PRT-907': ['pickup',0,''], 'MT-0391': ['moto',0,''], 'GHT-554': ['suv',0,''], 'JKL-118': ['sedan',0,''], 'XYZ-736': ['pickup',0,'Turbo · sin fecha'], 'BVC-093': ['suv',0,'Bomba de agua'], 'QWE-640': ['hatchback',0,''], 'RTY-215': ['hatchback',1,'Válvula A/C'], 'UIO-882': ['pickup',0,''], 'ASD-417': ['sedan',0,''], 'FGH-306': ['suv',0,''], 'LMN-725': ['suv',0,''] };
+    const cards = this.state.cards.map(c => ({ body: X[c[1]][0], typeIcon: X[c[1]][0] === 'moto' ? 'ph-motorcycle' : 'ph-car', finds: X[c[1]][1] > 0, findsLabel: X[c[1]][1] + (X[c[1]][1] > 1 ? ' hallazgos' : ' hallazgo') + ' por aprobar', missing: X[c[1]][2], hasFlags: X[c[1]][1] > 0 || !!X[c[1]][2],
+      id: c[0], plate: c[1], car: c[2], client: c[3], job: c[4], st: c[5], mecs: c[6].map(av), unassigned: c[6].length === 0, time: c[7],
+      prioIcon: prio[c[8]][0], prioC: prio[c[8]][1], late: c[9], edge: c[9] ? 'var(--red)' : S[c[5]][1],
+      sname: S[c[5]][0], sbg: S[c[5]][2], sfg: S[c[5]][3], sicon: S[c[5]][4],
+      timeOrLate: c[9] || c[7], timeC: c[9] ? 'var(--red)' : 'var(--tx2)',
+      onDrag: e => { this.dragId = c[0]; e.dataTransfer.effectAllowed = 'move'; }
+    }));
+    const move = st => e => { e.preventDefault(); const id = this.dragId; this.dragId = null; this.setState(s => ({ over: null, cards: s.cards.map(c => c[0] === id ? [...c.slice(0, 5), st, ...c.slice(6)] : c) })); };
+    const cols = Object.keys(S).map(k => {
+      const list = cards.filter(c => c.st === k);
+      return { name: S[k][0], c: S[k][1], count: list.length, cards: list,
+        onOver: e => { e.preventDefault(); if (this.state.over !== k) this.setState({ over: k }); }, onDrop: move(k),
+        dropBg: this.state.over === k ? 'var(--ac-s)' : 'var(--sf2)', outline: this.state.over === k ? '2px dashed var(--ac)' : '0' };
+    });
+    const mobTabs = ['diag','apr','rep','repa','qc','listo','rec'].map(k => ({ name: S[k][0], count: cards.filter(c => c.st === k).length, line: this.state.mobTab === k ? 'var(--ac)' : 'transparent', fg: this.state.mobTab === k ? 'var(--tx)' : 'var(--tx3)', on: () => this.setState({ mobTab: k }) }));
+    const PH = [['Por iniciar',['rec'],'var(--tx2)','ph-tray-arrow-down'],['Trabajando',['diag','repa','qc'],'var(--blue)','ph-wrench'],['Detenido',['apr','rep'],'var(--vio)','ph-hourglass'],['Listo',['listo'],'var(--grn)','ph-flag-checkered']];
+    const loads = { JR: [7.5, 8], LP: [6.2, 8], AT: [4.3, 8], KR: [5, 8], RD: [3, 8], MS: [6.8, 8] };
+    const lanes = Object.keys(M).map(i => {
+      const mine = cards.filter(c => c.st !== 'ent' && c.mecs.some(m => m.i === i));
+      const ld = loads[i];
+      return { ...av(i), border: i === 'MS' ? '1.5px dashed var(--tx3)' : '0', name: M[i][2], role: M[i][3], hours: ld[0] + 'h / ' + ld[1] + 'h', load: Math.round(ld[0] / ld[1] * 100) + '%', loadC: ld[0] / ld[1] > .9 ? 'var(--red)' : 'var(--blue)', cells: PH.map(p => mine.filter(c => p[1].includes(c.st))), flat: mine };
+    });
+    lanes.push({ i: '—', bg: 'var(--sf3)', fg: 'var(--tx3)', border: '0', name: 'Sin asignar', role: 'Pendiente de jefe de área', hours: '2 OT', load: '0%', loadC: 'var(--tx3)', cells: PH.map(p => cards.filter(c => c.unassigned && p[1].includes(c.st))), flat: cards.filter(c => c.unassigned) });
+    return {
+      theme: this.state.theme, toggle: this.toggle, themeLabel: this.state.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      isBoard: this.state.view === 'board', isTable: this.state.view === 'table',
+      showBoard: () => this.setState({ view: 'board' }), showTable: () => this.setState({ view: 'table' }),
+      boardBtnBg: this.state.view === 'board' ? 'var(--sf)' : 'transparent', tableBtnBg: this.state.view === 'table' ? 'var(--sf)' : 'transparent',
+      filters: [{ icon: 'ph-buildings', k: 'Sucursal', v: 'Norte' }, { icon: 'ph-squares-four', k: 'Área', v: 'Todas' }, { icon: 'ph-user', k: 'Mecánico', v: 'Todos' }, { icon: 'ph-flag', k: 'Prioridad', v: 'Todas' }],
+      cols, allCards: cards, mobTabs, mobCards: cards.filter(c => c.st === this.state.mobTab),
+      phases: PH.map(p => ({ name: p[0], c: p[2], icon: p[3], count: cards.filter(c => p[1].includes(c.st)).length })), lanes
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TallerOS.Api/TallerOS.Api.csproj" />
+    <Project Path="src/TallerOS.Application/TallerOS.Application.csproj" />
+    <Project Path="src/TallerOS.Domain/TallerOS.Domain.csproj" />
+    <Project Path="src/TallerOS.Infrastructure/TallerOS.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TallerOS.Api.Tests/TallerOS.Api.Tests.csproj" />
+    <Project Path="tests/TallerOS.Application.Tests/TallerOS.Application.Tests.csproj" />
+    <Project Path="tests/TallerOS.Domain.Tests/TallerOS.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

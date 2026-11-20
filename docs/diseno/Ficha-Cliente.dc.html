@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">09 · Ficha del cliente</div>
+    <div style="flex:1"></div>
+    <a href="Cotizacion.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Cotización →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="width:1440px;flex-shrink:0;height:900px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+      <dc-import name="Sidebar" active="clientes" hint-size="232px,900px"></dc-import>
+      <div style="flex:1;min-width:0;padding:28px 32px;display:grid;grid-template-columns:340px minmax(0,1fr);gap:24px;align-content:start">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="padding:20px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;flex-direction:column;gap:14px">
+            <div style="font-family:'Barlow Semi Condensed';width:64px;height:64px;border-radius:50%;background:var(--sf3);display:grid;place-items:center;font-size:22px;font-weight:700">CM</div>
+            <div><div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:-.01em">Carlos Méndez</div><div style="font-size:13.5px;color:var(--tx3)">Cliente desde jun 2021 · Persona natural</div></div>
+            <div style="display:grid;grid-template-columns:20px 1fr;gap:10px;font-size:15px;align-items:center"><i class="ph ph-phone" style="color:var(--tx3)"></i><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">+1 555 0142</span><i class="ph ph-envelope-simple" style="color:var(--tx3)"></i><span>cmendez@correo.com</span><i class="ph ph-identification-card" style="color:var(--tx3)"></i><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">ID 0912-445-871</span><i class="ph ph-map-pin" style="color:var(--tx3)"></i><span>Av. Los Pinos 220</span></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;font-weight:600;color:var(--tx2)">Canal preferido de aviso</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:3px;border-radius:9px;background:var(--sf2);border:1px solid var(--bd)"><sc-for list="{{ channels }}" as="c" hint-placeholder-count="2"><button onClick="{{ c.pick }}" style="height:36px;border-radius:7px;border:0;background:{{ c.bg }};color:{{ c.fg }};font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:{{ c.sh }}"><i class="ph-fill {{ c.icon }}" style="font-size:17px"></i>{{ c.n }}</button></sc-for></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><a href="Recepcion.dc.html" style="height:38px;border-radius:8px;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ph-bold ph-plus"></i>Nueva OT</a><button style="height:38px;border-radius:8px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ph ph-whatsapp-logo"></i>Escribir</button></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="padding:14px;border-radius:12px;background:var(--sf);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--tx3)">Total facturado</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:22px;font-weight:700">$5.120</div></div>
+            <div style="padding:14px;border-radius:12px;background:var(--sf);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--tx3)">Aprobación</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:22px;font-weight:700">82%</div><div style="font-size:11.5px;color:var(--tx3)">de ítems cotizados</div></div>
+          </div>
+          <div style="padding:14px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;align-items:center;gap:10px"><i class="ph-fill ph-device-mobile" style="font-size:22px;color:var(--grn)"></i><div style="flex:1;font-size:13.5px"><b>Usa Mi Garage</b><div style="color:var(--tx3);font-size:12.5px">Recibe estado de OT y aprueba en la app</div></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700">Vehículos <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:14px;color:var(--tx3);font-weight:500">2</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <a href="Ficha-Vehiculo.dc.html" style="padding:16px;border-radius:12px;background:var(--sf);border:1px solid var(--blue);display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:center;gap:8px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:14px;padding:1px 7px;border:2px solid var(--tx);border-radius:4px">ABC-482</span><div style="flex:1"></div><span style="height:24px;padding:0 8px;border-radius:5px;background:var(--blue-s);color:var(--blue);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-wrench"></i>En reparación</span></div><div style="font-size:17px;font-weight:700">Toyota Hilux 2019</div><div style="display:flex;gap:18px;font-size:13px;color:var(--tx2)"><span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">84.210</span> km</span><span>6 visitas</span><span style="color:var(--red);font-weight:600">Aceite vencido</span></div></a>
+              <a href="Ficha-Vehiculo.dc.html" style="padding:16px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:center;gap:8px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:14px;padding:1px 7px;border:2px solid var(--tx);border-radius:4px">PQR-115</span><div style="flex:1"></div><span style="font-size:12.5px;color:var(--tx3)">Última 14 ago</span></div><div style="font-size:17px;font-weight:700">Mazda CX-5 2022</div><div style="display:flex;gap:18px;font-size:13px;color:var(--tx2)"><span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">31.400</span> km</span><span>2 visitas</span><span style="color:var(--grn);font-weight:600">Al día</span></div></a>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700">Pendientes</div>
+            <div style="display:flex;gap:10px"><sc-for list="{{ pend }}" as="p" hint-placeholder-count="3"><div style="flex:1;padding:12px 14px;border-radius:10px;border:1px dashed var(--bd2);display:flex;flex-direction:column;gap:4px"><div style="display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:{{ p.c }}"><i class="ph-bold {{ p.icon }}"></i>{{ p.k }}</div><div style="font-size:15px;font-weight:600">{{ p.n }}</div><div style="font-size:12.5px;color:var(--tx3)">{{ p.s }}</div></div></sc-for></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700">Historial de visitas</div>
+            <div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);overflow:hidden">
+              <div style="display:grid;grid-template-columns:110px 100px 90px minmax(0,1fr) 140px 100px;padding:10px 16px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--bd);background:var(--sf2)"><span>Fecha</span><span>Placa</span><span>OT</span><span>Trabajo</span><span>Atendió</span><span style="text-align:right">Total</span></div>
+              <sc-for list="{{ visits }}" as="v" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:110px 100px 90px minmax(0,1fr) 140px 100px;padding:11px 16px;font-size:13.5px;border-bottom:1px solid var(--bd);align-items:center"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx2)">{{ v.d }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:12.5px">{{ v.p }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx3)">{{ v.ot }}</span><span style="font-weight:600">{{ v.w }}</span><span style="color:var(--tx2)">{{ v.who }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;font-weight:700">{{ v.t }}</span></div></sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+      <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700;background:var(--sf)"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+      <div style="flex:1;overflow:auto;display:flex;flex-direction:column">
+        <div style="background:var(--sf);padding:6px 16px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--bd)">
+          <i class="ph ph-arrow-left" style="font-size:24px"></i>
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:52px;border-radius:50%;background:var(--sf3);display:grid;place-items:center;font-size:18px;font-weight:700">CM</div><div><div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">Carlos Méndez</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx2)">+1 555 0142</div></div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div style="height:56px;border-radius:12px;background:var(--grn-s);color:var(--grn);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:700;gap:2px"><i class="ph-fill ph-whatsapp-logo" style="font-size:22px"></i>WhatsApp</div><div style="height:56px;border-radius:12px;border:1px solid var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:700;gap:2px"><i class="ph ph-phone" style="font-size:22px"></i>Llamar</div><div style="height:56px;border-radius:12px;border:1px solid var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:700;gap:2px"><i class="ph ph-envelope-simple" style="font-size:22px"></i>Correo</div></div>
+          <div style="font-size:12.5px;color:var(--tx3);display:flex;align-items:center;gap:6px"><i class="ph-fill ph-star" style="color:var(--ac)"></i>Prefiere avisos por WhatsApp</div>
+        </div>
+        <div style="padding:14px 12px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:16px;font-weight:700;padding:0 4px">Vehículos</div>
+          <a href="Ficha-Vehiculo.dc.html" style="padding:14px;border-radius:12px;background:var(--sf);border:1px solid var(--blue);display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px;padding:1px 6px;border:2px solid var(--tx);border-radius:4px">ABC-482</span><div style="flex:1;font-size:16px;font-weight:600">Hilux 2019</div><span style="font-size:12px;font-weight:700;color:var(--blue)">En taller</span></a>
+          <a href="Ficha-Vehiculo.dc.html" style="padding:14px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px;padding:1px 6px;border:2px solid var(--tx);border-radius:4px">PQR-115</span><div style="flex:1;font-size:16px;font-weight:600">CX-5 2022</div><span style="font-size:12px;color:var(--tx3)">Al día</span></a>
+          <div style="font-size:16px;font-weight:700;padding:8px 4px 0">Pendientes</div>
+          <sc-for list="{{ pend }}" as="p" hint-placeholder-count="3"><div style="padding:12px;border-radius:12px;border:1px dashed var(--bd2);display:flex;align-items:center;gap:10px"><i class="ph-bold {{ p.icon }}" style="color:{{ p.c }};font-size:20px"></i><div style="flex:1"><div style="font-size:15px;font-weight:600">{{ p.n }}</div><div style="font-size:12px;color:var(--tx3)">{{ p.s }}</div></div></div></sc-for>
+          <div style="font-size:16px;font-weight:700;padding:8px 4px 0">Visitas</div>
+          <sc-for list="{{ visits }}" as="v" hint-placeholder-count="4"><div style="padding:12px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:15px;font-weight:600">{{ v.w }}</div><div style="font-size:12px;color:var(--tx3)"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">{{ v.d }} · {{ v.p }}</span></div></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px">{{ v.t }}</span></div></sc-for>
+        </div>
+      </div>
+      <dc-import name="TabBar" active="mas" hint-size="100%,84px"></dc-import>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark', ch: 0 };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    return {
+      theme: this.state.theme, toggle: this.toggle, themeLabel: this.state.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      channels: [['WhatsApp','ph-whatsapp-logo'],['Correo','ph-envelope-simple']].map((c, i) => ({ n: c[0], icon: c[1], bg: this.state.ch === i ? 'var(--sf)' : 'transparent', fg: this.state.ch === i ? 'var(--tx)' : 'var(--tx3)', sh: this.state.ch === i ? 'var(--sh)' : 'none', pick: () => this.setState({ ch: i }) })),
+      pend: [
+        { k: 'Cotización', icon: 'ph-receipt', c: 'var(--vio)', n: 'Llantas traseras · $380', s: 'Enviada 12 mar · sin respuesta' },
+        { k: 'Mantenimiento', icon: 'ph-warning', c: 'var(--red)', n: 'Aceite ABC-482', s: 'Vencido hace 210 km' },
+        { k: 'Por cobrar', icon: 'ph-currency-dollar', c: 'var(--ac-tx)', n: 'OT-1042 · $721', s: 'Se cobra al entregar' }
+      ],
+      visits: [['30 OCT 2026','ABC-482','OT-1042','Frenos + suspensión (en curso)','J. Ramírez, M. Soto','$721'],['14 AGO 2026','PQR-115','OT-0988','Mantenimiento 30.000 km','L. Pérez','$186'],['12 MAR 2026','ABC-482','OT-0911','Mantenimiento 80.000 km','L. Pérez','$214'],['03 SEP 2025','ABC-482','OT-0702','Batería + alineación','A. Torres','$268'],['02 ABR 2024','ABC-482','OT-0351','Embrague completo','J. Ramírez','$1.180']].map(v => ({ d: v[0], p: v[1], ot: v[2], w: v[3], who: v[4], t: v[5] }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+body{margin:0;background:#2A2D30;font-family:Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:#0E7C6B}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid #0E7C6B;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Figtree,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:14px;color:#A9ADB1">← Índice</a>
+    <div style="font-size:22px;font-weight:700">15–20 · App del cliente «Mi Garage»</div>
+    <div style="font-size:13px;color:#A9ADB1">Marca propia, solo modo claro · tono cálido y cercano</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;max-width:2400px">
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">15 · Mis vehículos</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:#F6F2EA;color:#1D2420;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;overflow:auto;padding:8px 18px 18px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:10px;background:#0E7C6B;color:#F6F2EA;display:grid;place-items:center;font-size:19px"><i class="ph-fill ph-garage"></i></div><div style="font-size:18px;font-weight:800;letter-spacing:-.01em;flex:1">Mi Garage</div><div style="width:38px;height:38px;border-radius:50%;background:#E6DFD2;display:grid;place-items:center;font-weight:700;font-size:13px">CM</div></div>
+          <div style="font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1">Hola Carlos<br><span style="color:#5E6A63;font-weight:600;font-size:18px">Tienes 1 auto en el taller</span></div>
+          <a href="#19" style="padding:16px;border-radius:20px;background:#0E7C6B;color:#F6F2EA;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;opacity:.9"><span style="width:8px;height:8px;border-radius:50%;background:#FFD27A"></span>EN TALLER AHORA · RUTA 5</div>
+            <div style="font-size:21px;font-weight:800">Toyota Hilux 2019</div>
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px"><div style="height:5px;border-radius:3px;background:#F6F2EA"></div><div style="height:5px;border-radius:3px;background:#F6F2EA"></div><div style="height:5px;border-radius:3px;background:#F6F2EA"></div><div style="height:5px;border-radius:3px;background:#FFD27A"></div><div style="height:5px;border-radius:3px;background:rgba(246,242,234,.3)"></div><div style="height:5px;border-radius:3px;background:rgba(246,242,234,.3)"></div></div>
+            <div style="display:flex;align-items:center;font-size:14px"><span style="flex:1">En reparación · entrega hoy 18:00</span><span style="height:28px;padding:0 10px;border-radius:14px;background:#FFD27A;color:#3B2A00;font-size:12.5px;font-weight:800;display:flex;align-items:center">1 por aprobar</span></div>
+          </a>
+          <sc-for list="{{ cars }}" as="c" hint-placeholder-count="2">
+            <a href="#16" style="padding:16px;border-radius:20px;background:#FFFFFF;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 2px rgba(60,40,10,.06),0 6px 18px rgba(60,40,10,.06)">
+              <div style="display:flex;align-items:center;gap:12px"><div style="width:56px;height:44px;border-radius:12px;background:#EFE9DD;display:grid;place-items:center;color:#8C8170;font-size:26px"><i class="ph ph-car-profile"></i></div><div style="flex:1"><div style="font-size:17px;font-weight:800">{{ c.n }}</div><div style="font-family:'JetBrains Mono';white-space:nowrap;font-size:12.5px;color:#5E6A63">{{ c.p }} · {{ c.km }}</div></div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div style="padding:10px 12px;border-radius:14px;background:{{ c.nbg }}"><div style="font-size:11.5px;font-weight:700;color:{{ c.nfg }}">PRÓXIMO</div><div style="font-size:14px;font-weight:700;line-height:1.25">{{ c.next }}</div><div style="font-size:12px;color:#5E6A63">{{ c.when }}</div></div>
+                <div style="padding:10px 12px;border-radius:14px;background:#F6F2EA"><div style="font-size:11.5px;font-weight:700;color:#8C8170">ÚLTIMA VISITA</div><div style="font-size:14px;font-weight:700;line-height:1.25">{{ c.last }}</div><div style="font-size:12px;color:#5E6A63">{{ c.lastWhere }}</div></div>
+              </div>
+            </a>
+          </sc-for>
+          <div style="height:56px;border-radius:16px;border:2px dashed #D6CCBA;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:700;color:#5E6A63"><i class="ph-bold ph-plus"></i>Agregar vehículo</div>
+        </div>
+        <div style="height:84px;background:#FFFFFF;border-top:1px solid #EAE3D6;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 6px 26px">
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:800;color:#0E7C6B"><i class="ph-fill ph-garage" style="font-size:24px"></i>Garage</div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;color:#8C8170"><i class="ph ph-clock-counter-clockwise" style="font-size:24px"></i>Historial</div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;color:#8C8170"><i class="ph ph-wrench" style="font-size:24px"></i>Taller</div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;color:#8C8170"><i class="ph ph-user" style="font-size:24px"></i>Perfil</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="16" style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">16 · Detalle del vehículo (toca Por año / Por visita)</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:#F6F2EA;color:#1D2420;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;overflow:auto;padding:4px 18px 18px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:10px"><i class="ph-bold ph-arrow-left" style="font-size:22px"></i><div style="flex:1"></div><a href="#20" style="font-size:13.5px;font-weight:700;color:#0E7C6B;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-arrows-left-right"></i>Transferir</a></div>
+          <div><div style="font-size:26px;font-weight:800;letter-spacing:-.02em">Toyota Hilux 2019</div><div style="font-family:'JetBrains Mono';white-space:nowrap;font-size:13px;color:#5E6A63">ABC-482 · 84.210 km</div></div>
+          <div style="padding:16px;border-radius:20px;background:#FFFFFF;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center"><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#8C8170">TOTAL INVERTIDO</div><div style="font-family:'JetBrains Mono';white-space:nowrap;font-size:28px;font-weight:700">$4.563</div></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;padding:3px;border-radius:12px;background:#F6F2EA"><sc-for list="{{ invModes }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.pick }}" style="height:32px;border-radius:9px;border:0;background:{{ m.bg }};color:#1D2420;font-size:13px;font-weight:700;box-shadow:{{ m.sh }}">{{ m.n }}</button></sc-for></div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:120px">
+              <sc-for list="{{ invBars }}" as="b" hint-placeholder-count="5"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-family:'JetBrains Mono';white-space:nowrap;font-size:10.5px;color:#5E6A63">{{ b.t }}</span><div style="width:100%;display:flex;flex-direction:column;border-radius:6px;overflow:hidden"><div style="height:{{ b.r }};background:#F2B544"></div><div style="height:{{ b.m }};background:#0E7C6B"></div></div><span style="font-size:11px;color:#8C8170;font-weight:600">{{ b.l }}</span></div></sc-for>
+            </div>
+            <div style="display:flex;gap:16px;font-size:12.5px"><span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:#0E7C6B"></span>Mano de obra $1.720</span><span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:#F2B544"></span>Repuestos $2.843</span></div>
+          </div>
+          <div style="font-size:17px;font-weight:800">Próximos cambios</div>
+          <sc-for list="{{ nextC }}" as="n" hint-placeholder-count="3"><div style="padding:12px 14px;border-radius:16px;background:#FFFFFF;display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;border-radius:12px;background:{{ n.bg }};color:{{ n.fg }};display:grid;place-items:center;font-size:20px"><i class="ph-bold {{ n.i }}"></i></div><div style="flex:1"><div style="font-size:15px;font-weight:700">{{ n.n }}</div><div style="font-size:12.5px;color:#5E6A63">{{ n.w }}</div></div></div></sc-for>
+          <div style="font-size:17px;font-weight:800">Partes cambiadas</div>
+          <sc-for list="{{ parts }}" as="p" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid #EAE3D6;font-size:14px"><i class="ph ph-gear-six" style="color:#8C8170"></i><span style="flex:1;font-weight:600">{{ p.n }}</span><span style="font-family:'JetBrains Mono';white-space:nowrap;font-size:12px;color:#5E6A63">{{ p.d }}</span></div></sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div id="17" style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">17 · Historial de visitas</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:#F6F2EA;color:#1D2420;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;overflow:auto;padding:4px 18px 18px;display:flex;flex-direction:column;gap:12px">
+          <div style="font-size:26px;font-weight:800;letter-spacing:-.02em">Historial</div>
+          <div style="display:flex;gap:6px"><sc-for list="{{ hFilters }}" as="f" hint-placeholder-count="3"><button onClick="{{ f.pick }}" style="height:34px;padding:0 14px;border-radius:17px;border:0;background:{{ f.bg }};color:{{ f.fg }};font-size:13.5px;font-weight:700">{{ f.n }}</button></sc-for></div>
+          <sc-for list="{{ hist }}" as="h" hint-placeholder-count="4">
+            <div style="padding:14px;border-radius:18px;background:#FFFFFF;display:flex;flex-direction:column;gap:8px;border:{{ h.bd }}">
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-family:'JetBrains Mono';white-space:nowrap;font-size:12px;color:#5E6A63">{{ h.d }} · {{ h.km }}</span><div style="flex:1"></div><span style="font-family:'JetBrains Mono';white-space:nowrap;font-weight:700;font-size:14px">{{ h.t }}</span></div>
+              <div style="font-size:16px;font-weight:800">{{ h.w }}</div>
+              <div style="font-size:13px;color:#5E6A63">{{ h.where }}</div>
+              <sc-if value="{{ h.ver }}"><span style="align-self:flex-start;height:26px;padding:0 10px;border-radius:13px;background:#DDF0EA;color:#0B5F52;font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:5px"><i class="ph-fill ph-seal-check" style="font-size:16px"></i>Verificado por taller</span></sc-if>
+              <sc-if value="{{ h.own }}"><span style="align-self:flex-start;height:26px;padding:0 10px;border-radius:13px;border:1.5px dashed #B9AE9A;color:#5E5444;font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-user-circle" style="font-size:16px"></i>Registro propio</span></sc-if>
+            </div>
+          </sc-for>
+          <a href="#18" style="height:52px;border-radius:16px;background:#1D2420;color:#F6F2EA;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:800"><i class="ph-bold ph-plus"></i>Agregar registro propio</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="18" style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">18 · Agregar registro propio</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:#F6F2EA;color:#1D2420;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;overflow:auto;padding:4px 18px 18px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:10px"><i class="ph-bold ph-x" style="font-size:22px"></i><div style="font-size:20px;font-weight:800">Nuevo registro</div></div>
+          <div style="padding:12px 14px;border-radius:14px;background:#EFE9DD;font-size:13px;color:#5E5444;line-height:1.45;display:flex;gap:10px"><i class="ph-bold ph-info" style="font-size:18px;margin-top:1px"></i>Anota trabajos hechos fuera de un taller TallerOS. Se guardan como «Registro propio».</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:13px;font-weight:700;color:#5E6A63">Fecha</label><div style="height:50px;border-radius:14px;background:#FFFFFF;border:1.5px solid #E2D9C8;display:flex;align-items:center;padding:0 14px;font-size:15px;font-weight:600">18 oct 2026</div></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:13px;font-weight:700;color:#5E6A63">Kilometraje</label><div style="height:50px;border-radius:14px;background:#FFFFFF;border:1.5px solid #E2D9C8;display:flex;align-items:center;padding:0 14px;font-family:'JetBrains Mono';white-space:nowrap;font-size:15px;font-weight:700">83.100</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:13px;font-weight:700;color:#5E6A63">¿Qué se hizo?</label><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ ownTypes }}" as="t" hint-placeholder-count="5"><button onClick="{{ t.pick }}" style="height:36px;padding:0 12px;border-radius:18px;border:1.5px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};font-size:13.5px;font-weight:700">{{ t.n }}</button></sc-for></div><div style="min-height:50px;border-radius:14px;background:#FFFFFF;border:1.5px solid #0E7C6B;padding:13px 14px;font-size:15px">Cambio de llantas delanteras Michelin</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:13px;font-weight:700;color:#5E6A63">Costo de piezas</label><div style="height:50px;border-radius:14px;background:#FFFFFF;border:1.5px solid #E2D9C8;display:flex;align-items:center;padding:0 14px;font-family:'JetBrains Mono';white-space:nowrap;font-size:15px;font-weight:700">$ 290.00</div></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:13px;font-weight:700;color:#5E6A63">Mano de obra</label><div style="height:50px;border-radius:14px;background:#FFFFFF;border:1.5px solid #E2D9C8;display:flex;align-items:center;padding:0 14px;font-family:'JetBrains Mono';white-space:nowrap;font-size:15px;font-weight:700">$ 25.00</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:13px;font-weight:700;color:#5E6A63">¿Dónde? (opcional)</label><div style="height:50px;border-radius:14px;background:#FFFFFF;border:1.5px solid #E2D9C8;display:flex;align-items:center;padding:0 14px;font-size:15px;color:#8C8170">Mi mecánico de confianza · Don Lucho</div></div>
+          <div style="height:96px;border-radius:16px;border:2px dashed #D6CCBA;display:flex;align-items:center;justify-content:center;gap:10px;font-size:15px;font-weight:700;color:#5E6A63"><i class="ph-bold ph-receipt" style="font-size:28px"></i>Foto de la factura</div>
+        </div>
+        <div style="padding:12px 18px 28px"><button style="width:100%;height:56px;border-radius:16px;border:0;background:#0E7C6B;color:#F6F2EA;font-size:16px;font-weight:800">Guardar registro</button></div>
+      </div>
+    </div>
+
+    <div id="19" style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">19 · Estado de OT en curso</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:#F6F2EA;color:#1D2420;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;overflow:auto;padding:4px 18px 18px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:10px"><i class="ph-bold ph-arrow-left" style="font-size:22px"></i><div style="flex:1;font-size:15px;font-weight:700;color:#5E6A63">Taller Ruta 5 · Norte</div><i class="ph-bold ph-phone" style="font-size:22px;color:#0E7C6B"></i></div>
+          <div><div style="font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1">Tu Hilux está en reparación</div><div style="font-size:14.5px;color:#5E6A63;margin-top:6px">Entrega estimada <b style="color:#1D2420">hoy 18:00</b> (antes 17:00)</div></div>
+          <div style="padding:16px;border-radius:20px;background:#FFFFFF;display:flex;flex-direction:column">
+            <sc-for list="{{ stages }}" as="s" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:28px 1fr;gap:12px"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:24px;height:24px;border-radius:50%;background:{{ s.bg }};border:2.5px solid {{ s.bd }};color:#FFFFFF;display:grid;place-items:center;font-size:13px"><i class="ph-bold {{ s.i }}"></i></div><div style="flex:1;width:2.5px;background:{{ s.line }};min-height:14px"></div></div><div style="padding-bottom:14px"><div style="font-size:15px;font-weight:{{ s.w }};color:{{ s.fg }}">{{ s.n }}</div><div style="font-size:12.5px;color:#5E6A63">{{ s.sub }}</div></div></div>
+            </sc-for>
+          </div>
+          <div style="padding:16px;border-radius:20px;background:#FFF4DC;border:2px solid #F2B544;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:#7A5200"><i class="ph-fill ph-bell-ringing" style="font-size:18px"></i>NECESITA TU APROBACIÓN</div>
+            <div style="font-size:16px;font-weight:800">Retén diferencial trasero</div>
+            <div style="font-size:13.5px;color:#5E5444">Encontraron una fuga de aceite. Incluye 2 fotos.</div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono';white-space:nowrap;font-size:18px;font-weight:700;flex:1">$129.92</span><a href="Cotizacion.dc.html" style="height:42px;padding:0 18px;border-radius:12px;background:#1D2420;color:#F6F2EA;font-size:14.5px;font-weight:800;display:flex;align-items:center">Revisar</a></div>
+          </div>
+          <div style="padding:14px;border-radius:16px;background:#FFFFFF;display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;border-radius:50%;background:#DDF0EA;color:#0B5F52;display:grid;place-items:center;font-weight:800;font-size:13px">JR</div><div style="flex:1"><div style="font-size:14.5px;font-weight:700">Jorge Ramírez</div><div style="font-size:12.5px;color:#5E6A63">Mecánico a cargo</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="20" style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">20 · Transferir historial al vender (interactivo)</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:#F6F2EA;color:#1D2420;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <sc-if value="{{ trStep1 }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1;overflow:auto;padding:4px 18px 18px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;gap:10px"><i class="ph-bold ph-arrow-left" style="font-size:22px"></i><div style="font-size:20px;font-weight:800">Transferir historial</div></div>
+            <div style="padding:16px;border-radius:20px;background:#FFFFFF;display:flex;align-items:center;gap:12px"><div style="width:56px;height:44px;border-radius:12px;background:#EFE9DD;display:grid;place-items:center;color:#8C8170;font-size:26px"><i class="ph ph-car-profile"></i></div><div><div style="font-size:16px;font-weight:800">Toyota Hilux 2019</div><div style="font-family:'JetBrains Mono';white-space:nowrap;font-size:12.5px;color:#5E6A63">ABC-482 · 7 registros</div></div></div>
+            <div style="font-size:15px;font-weight:700">¿Qué se transfiere al nuevo dueño?</div>
+            <sc-for list="{{ trOpts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.tog }}" style="padding:12px 14px;border-radius:16px;border:1.5px solid {{ o.bd }};background:#FFFFFF;color:#1D2420;display:flex;align-items:center;gap:12px;text-align:left"><i class="{{ o.i }}" style="font-size:24px;color:{{ o.c }}"></i><div style="flex:1"><div style="font-size:14.5px;font-weight:700">{{ o.n }}</div><div style="font-size:12.5px;color:#5E6A63">{{ o.s }}</div></div></button></sc-for>
+            <div style="padding:12px 14px;border-radius:14px;background:#EFE9DD;font-size:13px;color:#5E5444;line-height:1.45">Tus montos pagados y datos personales no se comparten. El nuevo dueño verá trabajos, fechas, km y sellos de verificación.</div>
+          </div>
+          <div style="padding:12px 18px 28px"><button onClick="{{ trNext }}" style="width:100%;height:56px;border-radius:16px;border:0;background:#0E7C6B;color:#F6F2EA;font-size:16px;font-weight:800">Generar código de transferencia</button></div>
+        </sc-if>
+        <sc-if value="{{ trStep2 }}">
+          <div style="flex:1;padding:20px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center">
+            <div style="width:200px;height:200px;border-radius:24px;background:#FFFFFF;display:grid;place-items:center;color:#1D2420;font-size:120px;box-shadow:0 6px 24px rgba(60,40,10,.1)"><i class="ph ph-qr-code"></i></div>
+            <div style="font-family:'JetBrains Mono';white-space:nowrap;font-size:30px;font-weight:700;letter-spacing:.12em">HX7-4K2</div>
+            <div style="font-size:22px;font-weight:800">Compártelo con el comprador</div>
+            <div style="font-size:14.5px;color:#5E6A63;line-height:1.5">Lo ingresa en su Mi Garage. Válido por 72 horas. Al aceptar, el vehículo sale de tu garage.</div>
+            <div style="display:flex;gap:10px;width:100%"><div style="flex:1;height:50px;border-radius:14px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700"><i class="ph-fill ph-whatsapp-logo" style="color:#0E7C6B;font-size:20px"></i>Enviar</div><button onClick="{{ trBack }}" style="flex:1;height:50px;border-radius:14px;border:0;background:transparent;color:#5E6A63;font-weight:700;font-size:15px">Cancelar</button></div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { inv: 0, hf: 0, own: 1, tr: 1, opts: [true, true, true, false] };
+  renderVals() {
+    const s = this.state;
+    const byYear = [[2022,180,120],[2023,240,310],[2024,420,1050],[2025,330,610],[2026,550,753]];
+    const byVisit = [['Abr 24',380,800],['May 24',0,40],['Sep 25',110,158],['Mar 26',95,119],['Hoy',187,534]];
+    const data = s.inv === 0 ? byYear.map(b => ({ l: String(b[0]), m: b[1], r: b[2] })) : byVisit.map(b => ({ l: b[0], m: b[1], r: b[2] }));
+    const max = Math.max(...data.map(d => d.m + d.r));
+    const H = [
+      ['30 OCT 2026','84.210 km','Frenos + suspensión (en curso)','Taller Ruta 5 · Jorge Ramírez','$721',1],
+      ['18 OCT 2026','83.100 km','Llantas delanteras Michelin','Don Lucho · mecánico de confianza','$315',0],
+      ['12 MAR 2026','78.950 km','Mantenimiento 80.000 km','Taller Ruta 5 · Luis Pérez','$214',1],
+      ['15 DIC 2025','74.600 km','Cambio de plumillas y foco','Yo mismo','$38',0],
+      ['03 SEP 2025','71.300 km','Batería + alineación','Taller Ruta 5 · Andrés Torres','$268',1]
+    ];
+    const hist = H.filter(h => s.hf === 0 || (s.hf === 1 ? h[5] : !h[5])).map(h => ({ d: h[0], km: h[1], w: h[2], where: h[3], t: h[4], ver: !!h[5], own: !h[5], bd: h[5] ? '0' : '1.5px dashed #D6CCBA' }));
+    const SG = [['Recibido','Hoy 08:05',2],['Diagnóstico','Revisaron frenos y suspensión',2],['Aprobaste el presupuesto','4 trabajos · $721',2],['En reparación','Instalando amortiguadores',1],['Control de calidad','Prueba de ruta',0],['Listo para retirar','Te avisaremos por WhatsApp',0]];
+    return {
+      cars: [{ n: 'Mazda CX-5 2022', p: 'PQR-115', km: '31.400 km', next: 'Rotación de llantas', when: 'en 1.600 km', nbg: '#DDF0EA', nfg: '#0B5F52', last: 'Mantenimiento 30.000 km', lastWhere: '14 ago · Ruta 5' }, { n: 'Toyota Hilux 2019', p: 'ABC-482', km: '84.210 km', next: 'Cambio de aceite', when: 'vencido hace 210 km', nbg: '#FBE3DC', nfg: '#A2361C', last: 'En taller ahora', lastWhere: 'Ruta 5 · Norte' }],
+      invModes: ['Por año','Por visita'].map((n, i) => ({ n, bg: s.inv === i ? '#FFFFFF' : 'transparent', sh: s.inv === i ? '0 1px 3px rgba(60,40,10,.15)' : 'none', pick: () => this.setState({ inv: i }) })),
+      invBars: data.map(d => ({ l: d.l, t: '$' + (d.m + d.r), m: d.m / max * 90 + 'px', r: d.r / max * 90 + 'px' })),
+      nextC: [['Cambio de aceite','Vencido · hace 210 km','ph-drop','#FBE3DC','#A2361C'],['Frenos traseros','En ~1.200 km','ph-disc','#FFF4DC','#7A5200'],['SOAT / revisión técnica','12 ene 2027','ph-calendar','#DDF0EA','#0B5F52']].map(n => ({ n: n[0], w: n[1], i: n[2], bg: n[3], fg: n[4] })),
+      parts: [['Amortiguadores delanteros','HOY'],['Discos y pastillas del.','HOY'],['Llantas delanteras','OCT 26'],['Filtros aceite/aire/cabina','MAR 26'],['Batería 70Ah','SEP 25'],['Kit de embrague','ABR 24']].map(p => ({ n: p[0], d: p[1] })),
+      hFilters: ['Todo','Verificado','Propio'].map((n, i) => ({ n, bg: s.hf === i ? '#1D2420' : '#FFFFFF', fg: s.hf === i ? '#F6F2EA' : '#1D2420', pick: () => this.setState({ hf: i }) })),
+      hist,
+      ownTypes: ['Mantenimiento','Llantas','Frenos','Batería','Otro'].map((n, i) => ({ n, bg: s.own === i ? '#0E7C6B' : '#FFFFFF', fg: s.own === i ? '#F6F2EA' : '#1D2420', bd: s.own === i ? '#0E7C6B' : '#E2D9C8', pick: () => this.setState({ own: i }) })),
+      stages: SG.map((g, i) => ({ n: g[0], sub: g[1], bg: g[2] === 2 ? '#0E7C6B' : g[2] === 1 ? '#F2B544' : '#FFFFFF', bd: g[2] === 2 ? '#0E7C6B' : g[2] === 1 ? '#F2B544' : '#D6CCBA', i: g[2] === 2 ? 'ph-check' : g[2] === 1 ? 'ph-wrench' : '', line: i === SG.length - 1 ? 'transparent' : g[2] === 2 ? '#0E7C6B' : '#E2D9C8', w: g[2] === 1 ? 800 : 600, fg: g[2] === 0 ? '#8C8170' : '#1D2420' })),
+      trStep1: s.tr === 1, trStep2: s.tr === 2, trNext: () => this.setState({ tr: 2 }), trBack: () => this.setState({ tr: 1 }),
+      trOpts: [['Visitas verificadas por taller','5 visitas con sello'],['Registros propios','2 registros · se marcan como propios'],['Fotos de facturas','4 fotos'],['Montos pagados','Desactivado por privacidad']].map((o, i) => ({ n: o[0], s: o[1], i: s.opts[i] ? 'ph-fill ph-check-square' : 'ph ph-square', c: s.opts[i] ? '#0E7C6B' : '#B9AE9A', bd: s.opts[i] ? '#0E7C6B' : '#E2D9C8', tog: () => this.setState(st => { const a = [...st.opts]; a[i] = !a[i]; return { opts: a }; }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

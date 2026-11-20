@@ -1,0 +1,12 @@
+export * from './cliente';
+export * from './tipos/auth';
+export * from './tipos/catalogos';
+export * from './tipos/clientes';
+export * from './tipos/error';
+export * from './tipos/organizacion';
+export * from './tipos/seguridad';
+export * from './tipos/vehiculos';
+export type { CrearEmpresaDatos, CrearEmpresaResultado } from './recursos/empresas';
+export type { CrearPersonalDatos } from './recursos/personal';
+export type { ActualizarClienteDatos, CrearClienteDatos } from './recursos/clientes';
+export type { RegistrarVehiculoDatos } from './recursos/vehiculos';

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">13 · Configuración de empresa</div>
+    <div style="flex:1"></div>
+    <span style="font-size:13px;color:#A9ADB1">Cambia de sección en el menú izquierdo · las casillas de permisos son editables</span>
+    <a href="Super-Admin.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Super Admin →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="width:1440px;flex-shrink:0;height:900px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+      <dc-import name="Sidebar" active="config" hint-size="232px,900px"></dc-import>
+      <div style="width:240px;border-right:1px solid var(--bd);padding:24px 12px;display:flex;flex-direction:column;gap:2px;background:var(--sf2)">
+        <div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700;padding:0 10px 14px">Configuración</div>
+        <sc-for list="{{ secs }}" as="s" hint-placeholder-count="7"><button onClick="{{ s.pick }}" style="height:38px;padding:0 10px;border-radius:7px;border:0;background:{{ s.bg }};color:{{ s.fg }};font-size:15px;font-weight:{{ s.w }};display:flex;align-items:center;gap:10px;text-align:left"><i class="ph {{ s.icon }}" style="font-size:18px"></i>{{ s.n }}</button></sc-for>
+      </div>
+      <div style="flex:1;min-width:0;padding:24px 28px;overflow:auto;display:flex;flex-direction:column;gap:16px">
+        <sc-if value="{{ isRoles }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:flex-end;gap:12px"><div style="flex:1"><div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Roles y permisos</div><div style="font-size:13.5px;color:var(--tx2);margin-top:4px">Los roles son acumulables: una persona puede ser Asesor y Caja a la vez.</div></div><button style="height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-plus"></i>Rol personalizado</button></div>
+          <div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);overflow:hidden">
+            <div style="display:grid;grid-template-columns:minmax(0,1.6fr) repeat(8,minmax(0,1fr));background:var(--sf2);border-bottom:1px solid var(--bd)"><div style="padding:12px 16px;font-size:12px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em">Permiso</div><sc-for list="{{ roles }}" as="r" hint-placeholder-count="7"><div style="padding:12px 4px;font-size:12px;font-weight:700;text-align:center;line-height:1.2">{{ r }}</div></sc-for></div>
+            <sc-for list="{{ perms }}" as="p" hint-placeholder-count="10">
+              <sc-if value="{{ p.isGroup }}"><div style="padding:10px 16px 6px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--bd)">{{ p.n }}</div></sc-if>
+              <sc-if value="{{ p.isRow }}"><div style="display:grid;grid-template-columns:minmax(0,1.6fr) repeat(8,minmax(0,1fr));border-bottom:1px solid var(--bd);align-items:center"><div style="padding:10px 16px;font-size:13.5px">{{ p.n }}</div><sc-for list="{{ p.cells }}" as="c" hint-placeholder-count="7"><div style="display:grid;place-items:center;padding:6px"><button onClick="{{ c.tog }}" style="width:26px;height:26px;border-radius:6px;border:1.5px solid {{ c.bd }};background:{{ c.bg }};color:var(--ac-ink);display:grid;place-items:center;font-size:16px;padding:0"><i class="ph-bold {{ c.icon }}"></i></button></div></sc-for></div></sc-if>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isStaff }}">
+          <div style="display:flex;align-items:flex-end;gap:12px"><div style="flex:1"><div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Personal</div><div style="font-size:13.5px;color:var(--tx2);margin-top:4px">14 personas · 9 con acceso · 5 sin acceso (otra persona registra por ellas)</div></div><button style="height:36px;padding:0 14px;border-radius:8px;border:0;background:var(--ac);color:var(--ac-ink);font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="ph-bold ph-plus"></i>Agregar persona</button></div>
+          <div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);overflow:hidden">
+            <sc-for list="{{ staff }}" as="m" hint-placeholder-count="7"><div style="display:grid;grid-template-columns:40px minmax(0,1.2fr) minmax(0,1.4fr) 130px 140px 110px;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--bd)"><div style="width:36px;height:36px;border-radius:50%;background:{{ m.bg }};color:{{ m.fg }};border:{{ m.border }};display:grid;place-items:center;font-size:12px;font-weight:700">{{ m.i }}</div><div><div style="font-size:15.5px;font-weight:600">{{ m.n }}</div><div style="font-size:12.5px;color:var(--tx3)">{{ m.area }}</div></div><div style="display:flex;flex-wrap:wrap;gap:4px"><sc-for list="{{ m.roles }}" as="r" hint-placeholder-count="1"><span style="height:22px;padding:0 7px;border-radius:5px;background:var(--sf3);font-size:12px;font-weight:600;display:flex;align-items:center">{{ r }}</span></sc-for></div><span style="font-size:13px;color:var(--tx2)">{{ m.branch }}</span><span style="font-size:12.5px;font-weight:700;color:{{ m.ac }};display:flex;align-items:center;gap:5px"><i class="ph-bold {{ m.ai }}"></i>{{ m.access }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx3)">{{ m.pin }}</span></div></sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isJobs }}">
+          <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Tipos de trabajo y tiempo estándar</div>
+          <div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);overflow:hidden">
+            <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="7"><div style="display:grid;grid-template-columns:minmax(0,1fr) 140px 120px 120px;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--bd);font-size:15px"><b style="font-weight:600">{{ j.n }}</b><span style="color:var(--tx2)">{{ j.a }}</span><div style="height:34px;border:1px solid var(--bd2);border-radius:7px;display:flex;align-items:center;padding:0 10px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;background:var(--sf2)">{{ j.t }}</div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx2)">{{ j.p }}</span></div></sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isAlerts }}">
+          <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Reglas de alerta e intervalos de mantenimiento</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);padding:16px;display:flex;flex-direction:column;gap:10px"><div style="font-size:16px;font-weight:700">Alertas al jefe</div><sc-for list="{{ alerts }}" as="a" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;border:1px solid var(--bd);font-size:13.5px"><i class="ph-fill {{ a.i }}" style="color:{{ a.c }};font-size:20px"></i><span style="flex:1">{{ a.n }}</span><span style="height:30px;padding:0 10px;border:1px solid var(--bd2);border-radius:7px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;display:flex;align-items:center;background:var(--sf2)">{{ a.v }}</span></div></sc-for></div>
+            <div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);padding:16px;display:flex;flex-direction:column;gap:10px"><div style="font-size:16px;font-weight:700">Intervalos de mantenimiento</div><sc-for list="{{ maint }}" as="m" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:minmax(0,1fr) 100px 90px;gap:8px;align-items:center;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--bd)"><span>{{ m.n }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700">{{ m.km }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx2)">{{ m.t }}</span></div></sc-for></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isBranches }}">
+          <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Sucursales y áreas</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><sc-for list="{{ branches }}" as="b" hint-placeholder-count="2"><div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);padding:16px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:center;gap:8px"><i class="ph ph-map-pin" style="font-size:20px"></i><b style="font-size:16px;flex:1">{{ b.n }}</b><span style="font-size:12.5px;color:var(--tx3)">{{ b.addr }}</span></div><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ b.areas }}" as="a" hint-placeholder-count="4"><span style="height:30px;padding:0 10px;border-radius:7px;border:1px solid var(--bd2);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">{{ a }}</span></sc-for><span style="height:30px;padding:0 10px;border-radius:7px;border:1px dashed var(--bd2);font-size:13px;color:var(--tx3);display:flex;align-items:center;gap:4px"><i class="ph ph-plus"></i>Área</span></div><div style="font-size:12.5px;color:var(--tx3)">{{ b.meta }}</div></div></sc-for></div>
+        </sc-if>
+      </div>
+    </div>
+    <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+      <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+      <div style="flex:1;overflow:auto;padding:6px 14px 14px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Personal</div>
+        <div style="height:44px;border-radius:10px;border:1px solid var(--bd2);background:var(--sf);display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--tx3);font-size:15.5px"><i class="ph ph-magnifying-glass"></i>Buscar persona</div>
+        <sc-for list="{{ staff }}" as="m" hint-placeholder-count="6"><div style="padding:12px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;border-radius:50%;background:{{ m.bg }};color:{{ m.fg }};border:{{ m.border }};display:grid;place-items:center;font-size:13px;font-weight:700">{{ m.i }}</div><div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:600">{{ m.n }}</div><div style="font-size:12.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.rolesTxt }}</div></div><i class="ph-bold {{ m.ai }}" style="color:{{ m.ac }};font-size:18px"></i></div></sc-for>
+      </div>
+      <dc-import name="TabBar" active="mas" hint-size="100%,84px"></dc-import>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark', sec: 'roles',
+    grid: {
+      'Ver todas las OT':[1,1,1,0,1,0,0,0],'Crear OT / recepción':[1,1,1,0,1,0,0,0],'Cambiar estado de OT':[1,1,1,1,1,0,0,0],'Asignar mecánicos':[1,1,1,1,0,0,0,0],
+      'Registrar tiempo propio':[0,0,0,1,0,1,0,0],'Registrar por otros (delegado)':[1,1,1,1,1,0,0,0],'Editar tiempos registrados':[1,1,1,0,0,0,0,0],
+      'Crear y enviar cotización':[1,1,1,0,1,0,0,0],'Ver costos y márgenes':[1,1,0,0,0,0,0,0],'Despachar repuestos':[1,0,0,0,0,0,1,0],'Cobrar y facturar':[1,0,0,0,0,0,0,1],
+      'Ver reportes':[1,1,1,0,0,0,0,0],'Configurar empresa':[1,0,0,0,0,0,0,0]
+    } };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    const s = this.state;
+    const roles = ['Dueño / Gerente','Jefe de sucursal','Jefe de taller','Jefe de área','Asesor','Mecánico','Bodega','Caja'];
+    const idx = [0, 1, 2, 3, 4, 5, 6, 7];
+    const groups = { 'Ver todas las OT': 'Órdenes de trabajo', 'Registrar tiempo propio': 'Tiempos', 'Crear y enviar cotización': 'Dinero y repuestos', 'Ver reportes': 'Gestión' };
+    const perms = [];
+    Object.keys(s.grid).forEach(k => {
+      if (groups[k]) perms.push({ isGroup: true, n: groups[k] });
+      perms.push({ isRow: true, n: k, cells: idx.map(ci => { const on = !!s.grid[k][ci]; return { bg: on ? 'var(--ac)' : 'transparent', bd: on ? 'var(--ac)' : 'var(--bd2)', icon: on ? 'ph-check' : '', tog: () => this.setState(st => { const g = { ...st.grid }; g[k] = [...g[k]]; g[k][ci] = g[k][ci] ? 0 : 1; return { grid: g }; }) }; }) });
+    });
+    const staff = [
+      ['PG','Patricia Gómez','Jefa de taller · Mecánica',['Jefe de taller','Jefe de área'],'Norte',true,'var(--vio-s)','var(--vio)'],
+      ['DC','Daniela Cruz','Recepción',['Asesor','Caja'],'Norte',true,'var(--grn-s)','var(--grn)'],
+      ['JR','Jorge Ramírez','Mecánica',['Mecánico'],'Norte',true,'var(--blue-s)','var(--blue)'],
+      ['AT','Andrés Torres','Eléctrico',['Mecánico','Jefe de área'],'Norte',true,'var(--grn-s)','var(--grn)'],
+      ['MS','Miguel Soto','Mecánica',['Mecánico'],'Norte',false,'var(--sf)','var(--tx2)'],
+      ['EP','Ernesto Paz','Pintura',['Mecánico'],'Norte',false,'var(--sf)','var(--tx2)'],
+      ['HV','Hugo Vera','Bodega',['Bodega'],'Norte · Centro',true,'var(--ac-s)','var(--ac-tx)']
+    ].map(m => ({ i: m[0], n: m[1], area: m[2], roles: m[3], rolesTxt: m[3].join(' · ') + ' · ' + m[2], branch: m[4], access: m[5] ? 'Con acceso' : 'Sin acceso', ai: m[5] ? 'ph-check-circle' : 'ph-prohibit', ac: m[5] ? 'var(--grn)' : 'var(--tx3)', pin: m[5] ? 'PIN ••••' : 'Registro delegado', bg: m[6], fg: m[7], border: m[5] ? '0' : '1.5px dashed var(--tx3)' }));
+    const S = [['branches','Sucursales y áreas','ph-buildings'],['staff','Personal','ph-users'],['roles','Roles y permisos','ph-shield-check'],['jobs','Tipos de trabajo','ph-wrench'],['alerts','Alertas y mantenimiento','ph-bell-ringing']];
+    return {
+      theme: s.theme, toggle: this.toggle, themeLabel: s.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      secs: S.map(x => ({ n: x[1], icon: x[2], bg: s.sec === x[0] ? 'var(--sf)' : 'transparent', fg: s.sec === x[0] ? 'var(--tx)' : 'var(--tx2)', w: s.sec === x[0] ? 700 : 500, pick: () => this.setState({ sec: x[0] }) })),
+      isRoles: s.sec === 'roles', isStaff: s.sec === 'staff', isJobs: s.sec === 'jobs', isAlerts: s.sec === 'alerts', isBranches: s.sec === 'branches',
+      roles, perms, staff,
+      jobs: [['Mantenimiento 10.000 km','Mecánica','1:00','$35/h'],['Cambio pastillas delanteras','Mecánica','1:30','$35/h'],['Cambio de embrague','Mecánica','5:00','$35/h'],['Alineación y balanceo','Mecánica','0:45','tarifa fija $40'],['Diagnóstico eléctrico','Eléctrico','1:00','$40/h'],['Pintura de pieza','Pintura','4:00','$38/h'],['Enderezado de puerta','Latonería','3:00','$38/h']].map(j => ({ n: j[0], a: j[1], t: j[2], p: j[3] })),
+      alerts: [['Tarea supera su tiempo estimado en','ph-timer','var(--red)','+15 min'],['OT detenida (sin cambio de estado) más de','ph-hourglass','var(--vio)','4 h'],['Cotización sin respuesta del cliente','ph-receipt','var(--vio)','24 h'],['Hallazgo nuevo reportado','ph-lightbulb','var(--ac-tx)','Inmediato']].map(a => ({ n: a[0], i: a[1], c: a[2], v: a[3] })),
+      maint: [['Aceite y filtro','5.000 km','6 meses'],['Filtro de aire','15.000 km','12 meses'],['Frenos (revisión)','20.000 km','12 meses'],['Refrigerante','40.000 km','24 meses'],['Correa de distribución','100.000 km','60 meses']].map(m => ({ n: m[0], km: m[1], t: m[2] })),
+      branches: [{ n: 'Sucursal Norte', addr: 'Av. Industrial 1450', areas: ['Mecánica','Eléctrico','Latonería','Pintura'], meta: '11 personas · 8 elevadores · 24 OT activas' }, { n: 'Sucursal Centro', addr: 'Calle 8 #220', areas: ['Mecánica','Eléctrico'], meta: '5 personas · 3 elevadores · 11 OT activas' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

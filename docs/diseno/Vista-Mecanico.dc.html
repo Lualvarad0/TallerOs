@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">05 · Vista del mecánico + tablet compartida</div>
+    <div style="flex:1"></div>
+    <a href="Registro-Delegado.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Registro delegado →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+
+  <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">A · Mis tareas de hoy</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:8px 18px 14px;display:flex;align-items:center;gap:12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-size:18px;font-weight:800">JR</div>
+          <div style="flex:1"><div style="font-size:18px;color:var(--tx2)">Hola, Jorge</div><div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:-.01em">Hoy: 4 tareas</div></div>
+        </div>
+        <div style="margin:0 14px 14px;padding:14px 16px;border-radius:16px;background:var(--sf);border:2px solid var(--bd);display:flex;align-items:center;gap:14px">
+          <div style="flex:1"><div style="font-size:18px;color:var(--tx3);font-weight:600">TRABAJADO HOY</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:30px;font-weight:700">4:12</div></div>
+          <div style="width:1px;height:44px;background:var(--bd)"></div>
+          <div style="flex:1"><div style="font-size:18px;color:var(--tx3);font-weight:600">PLAN</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:30px;font-weight:700;color:var(--tx3)">7:30</div></div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:0 14px 14px;display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ myTasks }}" as="t" hint-placeholder-count="4">
+            <div style="border-radius:18px;background:var(--sf);border:3px solid {{ t.bd }};padding:16px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:20px;padding:2px 9px;border:2.5px solid var(--tx);border-radius:6px;letter-spacing:.05em">{{ t.plate }}</span><div style="flex:1"></div><span style="height:30px;padding:0 10px;border-radius:8px;background:{{ t.sbg }};color:{{ t.sfg }};font-size:18px;font-weight:800;display:flex;align-items:center;gap:6px"><i class="ph-fill {{ t.sicon }}"></i>{{ t.sname }}</span></div>
+              <div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700;line-height:1.2">{{ t.task }}</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:18px;color:var(--tx2)"><i class="ph ph-car-profile" style="font-size:20px"></i>{{ t.car }}<div style="flex:1"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;color:{{ t.timeC }}">{{ t.time }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:12px 14px 28px;display:grid;grid-template-columns:1fr 1fr;gap:10px;border-top:1px solid var(--bd);background:var(--sf)">
+          <div style="height:60px;border-radius:14px;border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:800"><i class="ph-bold ph-camera" style="font-size:24px"></i>Foto</div>
+          <div style="height:60px;border-radius:14px;border:2px solid var(--ac);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:800"><i class="ph-bold ph-lightbulb" style="font-size:24px"></i>Hallazgo</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">B · Tarea en curso (interactivo)</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A;position:relative">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:6px 18px;display:flex;align-items:center;gap:12px"><i class="ph-bold ph-arrow-left" style="font-size:28px"></i><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:22px;padding:2px 10px;border:2.5px solid var(--tx);border-radius:6px">ABC-482</span><div style="font-size:18px;color:var(--tx2);font-weight:600">Hilux 2019</div></div>
+        <div style="font-family:'Barlow Semi Condensed';padding:14px 18px 0;font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.01em">Cambio de amortiguadores delanteros</div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 18px">
+          <div style="height:34px;padding:0 14px;border-radius:17px;background:{{ phaseBg }};color:{{ phaseFg }};font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px"><i class="ph-fill {{ phaseIcon }}"></i>{{ phaseLabel }}</div>
+          <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:68px;font-weight:700;letter-spacing:-.04em;color:{{ timerC }}">{{ timer }}</div>
+          <div style="width:100%;display:flex;flex-direction:column;gap:6px"><div style="height:12px;border-radius:6px;background:var(--sf3);overflow:hidden"><div style="height:100%;width:{{ pct }};background:{{ timerC }}"></div></div><div style="display:flex;justify-content:space-between;font-size:18px;font-weight:700;color:var(--tx2)"><span>Estimado 2:00</span><span style="color:{{ timerC }}">{{ overLabel }}</span></div></div>
+        </div>
+        <div style="padding:14px 14px 30px;display:flex;flex-direction:column;gap:10px">
+          <sc-if value="{{ isRunning }}"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button onClick="{{ openSheet }}" style="font-family:'Barlow Semi Condensed';height:96px;border-radius:20px;border:0;background:var(--ac);color:var(--ac-ink);font-size:20px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-pause" style="font-size:34px"></i>PAUSAR</button>
+            <button onClick="{{ finish }}" style="font-family:'Barlow Semi Condensed';height:96px;border-radius:20px;border:0;background:var(--tx);color:var(--bg);font-size:20px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-flag-checkered" style="font-size:34px"></i>FINALIZAR</button>
+          </div></sc-if>
+          <sc-if value="{{ isPaused }}"><button onClick="{{ resume }}" style="font-family:'Barlow Semi Condensed';width:100%;height:96px;border-radius:20px;border:0;background:var(--grn);color:var(--sf);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px"><i class="ph-fill ph-play" style="font-size:34px"></i>REANUDAR</button></sc-if>
+          <sc-if value="{{ isDone }}"><button onClick="{{ resetT }}" style="font-family:'Barlow Semi Condensed';width:100%;height:96px;border-radius:20px;border:3px solid var(--grn);background:var(--grn-s);color:var(--grn);font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px"><i class="ph-fill ph-check-circle" style="font-size:34px"></i>TAREA TERMINADA</button></sc-if>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="height:60px;border-radius:14px;border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:800"><i class="ph-bold ph-camera" style="font-size:24px"></i>Foto</div>
+            <div style="height:60px;border-radius:14px;border:2px solid var(--ac);color:var(--ac-tx);display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:800"><i class="ph-bold ph-lightbulb" style="font-size:24px"></i>Hallazgo</div>
+          </div>
+        </div>
+        <sc-if value="{{ sheetOpen }}">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;flex-direction:column;justify-content:flex-end">
+            <div style="background:var(--sf);border-radius:24px 24px 0 0;padding:20px 14px 30px;display:flex;flex-direction:column;gap:10px">
+              <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;padding:0 6px 6px">¿Por qué pausas?</div>
+              <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="4">
+                <button onClick="{{ r.pick }}" style="font-family:'Barlow Semi Condensed';height:76px;border-radius:16px;border:2px solid var(--bd2);background:var(--sf2);color:var(--tx);font-size:20px;font-weight:700;display:flex;align-items:center;gap:16px;padding:0 20px"><i class="ph-bold {{ r.icon }}" style="font-size:32px;color:{{ r.c }}"></i>{{ r.name }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">C · Reportar hallazgo</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:6px 18px 14px;display:flex;align-items:center;gap:12px"><i class="ph-bold ph-x" style="font-size:28px"></i><div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700">Nuevo hallazgo</div></div>
+        <div style="flex:1;padding:0 14px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:var(--sf);border:2px solid var(--bd)"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:18px;padding:1px 8px;border:2px solid var(--tx);border-radius:5px">ABC-482</span><span style="font-size:18px;color:var(--tx2)">Hilux 2019</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="aspect-ratio:1;border-radius:16px;background:var(--sf3);display:grid;place-items:center;color:var(--tx3);position:relative"><i class="ph ph-image" style="font-size:40px"></i><span style="position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:var(--bg);display:grid;place-items:center"><i class="ph-bold ph-x"></i></span></div>
+            <div style="aspect-ratio:1;border-radius:16px;border:3px dashed var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:18px;font-weight:800"><i class="ph-bold ph-camera" style="font-size:40px"></i>Otra foto</div>
+          </div>
+          <div style="font-size:18px;font-weight:700;color:var(--tx2)">¿Qué encontraste?</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ findings }}" as="f" hint-placeholder-count="6"><div style="height:48px;padding:0 16px;border-radius:12px;border:2px solid {{ f.bd }};background:{{ f.bg }};font-size:18px;font-weight:700;display:flex;align-items:center">{{ f.n }}</div></sc-for>
+          </div>
+          <div style="height:88px;border-radius:16px;background:var(--red-s);border:2px solid var(--red);color:var(--red);display:flex;align-items:center;justify-content:center;gap:12px;font-size:18px;font-weight:800"><i class="ph-fill ph-microphone" style="font-size:34px"></i>Mantén para grabar nota</div>
+        </div>
+        <div style="padding:14px 14px 30px"><div style="font-family:'Barlow Semi Condensed';height:76px;border-radius:18px;background:var(--ac);color:var(--ac-ink);display:flex;align-items:center;justify-content:center;gap:10px;font-size:20px;font-weight:900"><i class="ph-bold ph-paper-plane-tilt" style="font-size:28px"></i>ENVIAR AL JEFE</div></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">E · Cerrar trabajo (modo «Al cierre», interactivo)</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:6px 18px 10px;display:flex;align-items:center;gap:12px"><i class="ph-bold ph-arrow-left" style="font-size:28px"></i><div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;flex:1">Cerrar trabajo</div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:18px;padding:1px 8px;border:2.5px solid var(--tx);border-radius:6px">QWE-640</span></div>
+        <div style="margin:0 14px;padding:14px;border-radius:18px;background:var(--sf);border:2px solid var(--bd);display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div style="font-size:18px;font-weight:700;color:var(--tx2)">Tiempo total en el vehículo</div>
+          <div style="display:flex;align-items:center;gap:12px;width:100%"><button onClick="{{ totMinus }}" style="width:64px;height:64px;border-radius:16px;border:2px solid var(--bd2);background:var(--sf2);color:var(--tx);font-size:30px;display:grid;place-items:center"><i class="ph-bold ph-minus"></i></button><div style="flex:1;text-align:center;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:52px;font-weight:700;letter-spacing:-.03em">{{ closeTotal }}</div><button onClick="{{ totPlus }}" style="width:64px;height:64px;border-radius:16px;border:2px solid var(--bd2);background:var(--sf2);color:var(--tx);font-size:30px;display:grid;place-items:center"><i class="ph-bold ph-plus"></i></button></div>
+          <div style="font-size:18px;color:var(--tx3)">Estimado {{ closeEst }} · se reparte según lo estimado</div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ closeRows }}" as="r" hint-placeholder-count="4">
+            <div style="padding:12px;border-radius:16px;background:var(--sf);border:2px solid {{ r.bd }};display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:18px;font-weight:700;line-height:1.2">{{ r.n }}</div><div style="font-size:18px;color:var(--tx3)">Est. {{ r.est }}</div></div><button onClick="{{ r.minus }}" style="width:52px;height:52px;border-radius:12px;border:2px solid var(--bd2);background:var(--sf2);color:var(--tx);font-size:24px;display:grid;place-items:center"><i class="ph-bold ph-minus"></i></button><div style="width:74px;text-align:center;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:24px;font-weight:700;color:{{ r.c }}">{{ r.v }}</div><button onClick="{{ r.plus }}" style="width:52px;height:52px;border-radius:12px;border:2px solid var(--bd2);background:var(--sf2);color:var(--tx);font-size:24px;display:grid;place-items:center"><i class="ph-bold ph-plus"></i></button></div>
+              <sc-if value="{{ r.over }}"><div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:18px;font-weight:800;color:var(--red)">+{{ r.diff }} · ¿Por qué?</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><sc-for list="{{ r.reasons }}" as="x" hint-placeholder-count="6"><button onClick="{{ x.pick }}" style="min-height:52px;border-radius:12px;border:2px solid {{ x.bd }};background:{{ x.bg }};color:var(--tx);font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;padding:0 10px;text-align:left;line-height:1.1"><i class="ph-bold {{ x.i }}" style="font-size:22px;color:{{ x.ic }}"></i>{{ x.n }}</button></sc-for></div></div></sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:12px 14px 30px"><button style="width:100%;height:80px;border-radius:20px;border:0;background:{{ closeBtnBg }};color:{{ closeBtnFg }};font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px"><i class="ph-fill ph-flag-checkered" style="font-size:30px"></i>{{ closeBtnLabel }}</button></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">F · Marcación de jornada (interactivo)</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:14px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:6px 18px 14px;display:flex;flex-direction:column;gap:4px"><div style="font-size:18px;color:var(--tx2)">Jueves 30 oct · Jorge Ramírez</div><div style="font-family:'Barlow Semi Condensed';font-size:30px;font-weight:700">Mi jornada</div></div>
+        <div style="margin:0 14px;padding:16px;border-radius:18px;background:var(--sf);border:2px solid var(--bd);display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:50%;background:{{ dayDot }}"></span><span style="font-size:18px;font-weight:800;color:{{ dayDot }}">{{ dayState }}</span></div>
+          <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:48px;font-weight:700">{{ dayHours }}</div>
+          <div style="font-size:18px;color:var(--tx3)">Turno 08:00 – 17:00 · almuerzo 60 min</div>
+        </div>
+        <div style="flex:1;padding:14px;display:flex;flex-direction:column;gap:0">
+          <sc-for list="{{ marks }}" as="m" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;min-height:56px;border-bottom:1px solid var(--bd)"><i class="ph-fill {{ m.i }}" style="font-size:26px;color:{{ m.c }}"></i><span style="font-size:18px;font-weight:700">{{ m.n }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700">{{ m.t }}</span></div></sc-for>
+          <div style="font-size:18px;color:var(--tx3);display:flex;align-items:center;gap:6px;margin-top:12px"><i class="ph-fill ph-map-pin" style="color:var(--grn)"></i>En Sucursal Norte</div>
+        </div>
+        <div style="padding:12px 14px 30px;display:flex;flex-direction:column;gap:10px">
+          <sc-if value="{{ dayOut }}"><button onClick="{{ markIn }}" style="width:100%;height:120px;border-radius:22px;border:0;background:var(--grn);color:var(--sf);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-sign-in" style="font-size:40px"></i><span style="font-family:'Barlow Semi Condensed';font-size:28px;font-weight:700">MARCAR ENTRADA</span></button></sc-if>
+          <sc-if value="{{ dayIn }}"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onClick="{{ markLunch }}" style="height:120px;border-radius:22px;border:0;background:var(--ac);color:var(--ac-ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-fork-knife" style="font-size:38px"></i><span style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700">ALMUERZO</span></button><button onClick="{{ markOut }}" style="height:120px;border-radius:22px;border:0;background:var(--tx);color:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-sign-out" style="font-size:38px"></i><span style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700">SALIDA</span></button></div></sc-if>
+          <sc-if value="{{ dayLunch }}"><button onClick="{{ markBack }}" style="width:100%;height:120px;border-radius:22px;border:0;background:var(--grn);color:var(--sf);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-arrow-u-up-left" style="font-size:40px"></i><span style="font-family:'Barlow Semi Condensed';font-size:28px;font-weight:700">VOLVER DE ALMUERZO</span></button></sc-if>
+          <sc-if value="{{ dayDone }}"><button onClick="{{ markReset }}" style="width:100%;height:120px;border-radius:22px;border:3px solid var(--grn);background:var(--grn-s);color:var(--grn);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-check-circle" style="font-size:40px"></i><span style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700">JORNADA CERRADA</span></button></sc-if>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">D · Tablet compartida · ingreso con PIN (interactivo, PIN de prueba 1234)</div>
+      <div style="width:1180px;flex-shrink:0;height:820px;border-radius:28px;overflow:hidden;background:var(--bg);color:var(--tx);display:grid;grid-template-columns:1fr 1fr;box-shadow:0 20px 60px rgba(0,0,0,.4);border:12px solid #0A0A0A">
+        <div style="padding:40px;display:flex;flex-direction:column;gap:20px;border-right:1px solid var(--bd);background:var(--sf)">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:var(--ac);color:var(--ac-ink);display:grid;place-items:center;font-size:20px"><i class="ph-bold ph-wrench"></i></div><div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700">Taller Ruta 5 · Norte</div><div style="flex:1"></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700">10:52</div></div>
+          <div style="font-family:'Barlow Semi Condensed';font-size:30px;font-weight:700;letter-spacing:-.01em">¿Quién eres?</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <sc-for list="{{ people }}" as="p" hint-placeholder-count="6">
+              <button onClick="{{ p.pick }}" style="height:132px;border-radius:18px;border:3px solid {{ p.bd }};background:var(--sf2);color:var(--tx);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><div style="font-family:'Barlow Semi Condensed';width:56px;height:56px;border-radius:50%;background:{{ p.bg }};color:{{ p.fg }};display:grid;place-items:center;font-size:20px;font-weight:700">{{ p.i }}</div><div style="font-size:18px;font-weight:700">{{ p.name }}</div></button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:40px 64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px">
+          <sc-if value="{{ pinOk }}">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:16px"><div style="width:96px;height:96px;border-radius:50%;background:var(--grn);color:var(--sf);display:grid;place-items:center;font-size:52px"><i class="ph-bold ph-check"></i></div><div style="font-family:'Barlow Semi Condensed';font-size:30px;font-weight:700">Hola, {{ who }}</div><div style="font-size:18px;color:var(--tx2)">Tienes 4 tareas hoy</div><button onClick="{{ clearPin }}" style="font-family:'Barlow Semi Condensed';height:64px;padding:0 32px;border-radius:16px;border:0;background:var(--ac);color:var(--ac-ink);font-size:19px;font-weight:900">VER MIS TAREAS</button></div>
+          </sc-if>
+          <sc-if value="{{ pinAsk }}">
+            <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700">PIN de {{ who }}</div>
+            <div style="display:flex;gap:18px"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="4"><div style="width:26px;height:26px;border-radius:50%;border:3px solid var(--tx);background:{{ d }}"></div></sc-for></div>
+            <div style="font-size:18px;color:var(--red);font-weight:700;height:18px">{{ pinErr }}</div>
+            <div style="display:grid;grid-template-columns:repeat(3,96px);gap:14px">
+              <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12"><button onClick="{{ k.press }}" style="height:96px;border-radius:20px;border:2px solid var(--bd2);background:{{ k.bg }};color:var(--tx);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;font-size:32px;font-weight:700;display:grid;place-items:center;visibility:{{ k.vis }}" style-active="background:var(--ac);color:var(--ac-ink)"><i class="{{ k.icon }}"></i>{{ k.n }}</button></sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark', sec: 2 * 3600 + 41 * 60 + 12, phase: 'run', sheet: false, reason: '', pin: '', who: 0, ok: false, err: '' };
+  componentDidMount() { this.iv = setInterval(() => { if (this.state.phase === 'run' && !this.state.sheet) this.setState(s => ({ sec: s.sec + 1 })); }, 1000); }
+  componentWillUnmount() { clearInterval(this.iv); }
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  closeVals() {
+    const s = this.state, est = [40, 60, 15, 20], names = ['Cambio de bujías','Limpieza de inyectores','Cambio de filtro de aire','Escaneo final y prueba'];
+    const al = s.al || [55, 80, 15, 20], rs = s.rs || ['Pieza oxidada', null, null, null], day = s.day || 'in';
+    const f = m => Math.floor(m / 60) + ':' + String(m % 60).padStart(2, '0');
+    const REASONS = [['Pieza oxidada','ph-drop-half'],['Hallazgo adicional','ph-lightbulb'],['Faltó herramienta','ph-wrench'],['Faltó repuesto','ph-package'],['Esperó aprobación','ph-hourglass'],['Retrabajo','ph-arrow-counter-clockwise']];
+    const tot = al.reduce((a, b) => a + b, 0), estT = est.reduce((a, b) => a + b, 0);
+    const setAl = a => this.setState({ al: a });
+    const missing = al.some((v, i) => v > est[i] && !rs[i]);
+    const D = { out: ['Fuera de turno','var(--tx3)'], in: ['Trabajando','var(--grn)'], lunch: ['En almuerzo','var(--ac-tx)'], done: ['Jornada cerrada','var(--tx2)'] };
+    const marks = [['Entrada','07:58','ph-sign-in','var(--grn)']];
+    if (day === 'lunch' || s.back || day === 'done') marks.push(['Salida a almuerzo','12:31','ph-fork-knife','var(--ac-tx)']);
+    if (s.back || day === 'done') marks.push(['Regreso de almuerzo','13:29','ph-arrow-u-up-left','var(--grn)']);
+    if (day === 'done') marks.push(['Salida','17:06','ph-sign-out','var(--tx)']);
+    return {
+      closeTotal: f(tot), closeEst: f(estT),
+      totMinus: () => setAl(al.map((v, i) => i === 1 ? Math.max(0, v - 15) : v)), totPlus: () => setAl(al.map((v, i) => i === 1 ? v + 15 : v)),
+      closeRows: al.map((v, i) => ({ n: names[i], est: f(est[i]), v: f(v), over: v > est[i], diff: f(v - est[i]), c: v > est[i] ? 'var(--red)' : 'var(--tx)', bd: v > est[i] && !rs[i] ? 'var(--red)' : 'var(--bd)',
+        minus: () => setAl(al.map((x, k) => k === i ? Math.max(0, x - 5) : x)), plus: () => setAl(al.map((x, k) => k === i ? x + 5 : x)),
+        reasons: REASONS.map(r => ({ n: r[0], i: r[1], bd: rs[i] === r[0] ? 'var(--ac)' : 'var(--bd2)', bg: rs[i] === r[0] ? 'var(--ac-s)' : 'var(--sf2)', ic: rs[i] === r[0] ? 'var(--ac-tx)' : 'var(--tx2)', pick: () => this.setState(st => { const a = [...(st.rs || rs)]; a[i] = r[0]; return { rs: a }; }) })) })),
+      closeBtnBg: missing ? 'var(--sf3)' : 'var(--ac)', closeBtnFg: missing ? 'var(--tx3)' : 'var(--ac-ink)', closeBtnLabel: missing ? 'FALTA ELEGIR MOTIVO' : 'CERRAR TRABAJO',
+      dayOut: day === 'out', dayIn: day === 'in', dayLunch: day === 'lunch', dayDone: day === 'done', dayState: D[day][0], dayDot: D[day][1],
+      dayHours: day === 'out' ? '0:00' : day === 'done' ? '8:10' : '4:33', marks: marks.map(m => ({ n: m[0], t: m[1], i: m[2], c: m[3] })),
+      markIn: () => this.setState({ day: 'in', back: false }), markLunch: () => this.setState({ day: 'lunch' }), markBack: () => this.setState({ day: 'in', back: true }), markOut: () => this.setState({ day: 'done' }), markReset: () => this.setState({ day: 'out', back: false })
+    };
+  }
+  renderVals() {
+    const s = this.state, est = 7200;
+    const f = x => { const h = Math.floor(x / 3600), m = Math.floor(x % 3600 / 60), q = x % 60; return h + ':' + String(m).padStart(2, '0') + ':' + String(q).padStart(2, '0'); };
+    const over = s.sec > est;
+    const people = [['JR','Jorge','var(--blue-s)','var(--blue)'],['LP','Luis','var(--vio-s)','var(--vio)'],['AT','Andrés','var(--grn-s)','var(--grn)'],['KR','Kevin','var(--ac-s)','var(--ac-tx)'],['RD','Raúl','var(--red-s)','var(--red)'],['MS','Miguel','var(--sf3)','var(--tx2)']];
+    const press = n => () => this.setState(st => {
+      if (n === 'del') return { pin: st.pin.slice(0, -1), err: '' };
+      const p = (st.pin + n).slice(0, 4);
+      if (p.length === 4) return p === '1234' ? { pin: '', ok: true, err: '' } : { pin: '', err: 'PIN incorrecto, intenta de nuevo' };
+      return { pin: p, err: '' };
+    });
+    return {
+      ...this.closeVals(),
+      theme: s.theme, toggle: this.toggle, themeLabel: s.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      myTasks: [
+        ['ABC-482','Cambio de amortiguadores delanteros','Toyota Hilux 2019','En curso','var(--blue)','var(--sf)','ph-play','2:41 / 2:00','var(--red)','var(--blue)'],
+        ['XYZ-736','Cambio de turbo','Ford Ranger 2018','Sin repuesto','var(--vio-s)','var(--vio)','ph-pause','1:10 / 3:00','var(--tx2)','var(--bd)'],
+        ['UIO-882','Revisar ruido en caja','Chevrolet D-Max 2020','Pendiente','var(--sf3)','var(--tx2)','ph-circle','0:00 / 0:45','var(--tx2)','var(--bd)'],
+        ['ASD-417','Ajuste de frenos','Toyota Corolla 2019','Terminada','var(--grn-s)','var(--grn)','ph-check-circle','0:35 / 0:30','var(--tx2)','var(--bd)']
+      ].map(t => ({ plate: t[0], task: t[1], car: t[2], sname: t[3], sbg: t[4], sfg: t[5], sicon: t[6], time: t[7], timeC: t[8], bd: t[9] })),
+      timer: f(s.sec), pct: Math.min(100, s.sec / est * 100) + '%', timerC: s.phase === 'done' ? 'var(--grn)' : over ? 'var(--red)' : 'var(--tx)', overLabel: over ? '+' + f(s.sec - est).slice(0, -3) + ' excedido' : 'Quedan ' + f(est - s.sec).slice(0, -3),
+      phaseLabel: s.phase === 'run' ? 'EN VIVO' : s.phase === 'pause' ? 'PAUSA · ' + s.reason.toUpperCase() : 'TERMINADA', phaseIcon: s.phase === 'run' ? 'ph-record' : s.phase === 'pause' ? 'ph-pause-circle' : 'ph-check-circle',
+      phaseBg: s.phase === 'run' ? 'var(--grn-s)' : s.phase === 'pause' ? 'var(--vio-s)' : 'var(--grn-s)', phaseFg: s.phase === 'pause' ? 'var(--vio)' : 'var(--grn)',
+      isRunning: s.phase === 'run', isPaused: s.phase === 'pause', isDone: s.phase === 'done', sheetOpen: s.sheet,
+      openSheet: () => this.setState({ sheet: true }), resume: () => this.setState({ phase: 'run' }), finish: () => this.setState({ phase: 'done' }), resetT: () => this.setState({ phase: 'run' }),
+      reasons: [['Sin repuesto','ph-package','var(--vio)'],['Esperando cliente','ph-user-sound','var(--blue)'],['Almuerzo','ph-fork-knife','var(--grn)'],['Otro','ph-dots-three-circle','var(--tx2)']].map(r => ({ name: r[0], icon: r[1], c: r[2], pick: () => this.setState({ sheet: false, phase: 'pause', reason: r[0] }) })),
+      findings: ['Fuga','Desgaste','Ruido','Golpe','Corrosión','Otro'].map((n, i) => ({ n, bd: i === 0 ? 'var(--ac)' : 'var(--bd2)', bg: i === 0 ? 'var(--ac-s)' : 'var(--sf)' })),
+      people: people.map((p, i) => ({ i: p[0], name: p[1], bg: p[2], fg: p[3], bd: s.who === i ? 'var(--ac)' : 'var(--bd)', pick: () => this.setState({ who: i, pin: '', ok: false, err: '' }) })),
+      who: people[s.who][1], pinOk: s.ok, pinAsk: !s.ok, pinErr: s.err, clearPin: () => this.setState({ ok: false, pin: '' }),
+      dots: [0, 1, 2, 3].map(i => i < s.pin.length ? 'var(--tx)' : 'transparent'),
+      keys: ['1','2','3','4','5','6','7','8','9','','0','del'].map(n => ({ n: n === 'del' ? '' : n, icon: n === 'del' ? 'ph-bold ph-backspace' : '', vis: n === '' ? 'hidden' : 'visible', bg: 'var(--sf)', press: press(n) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Config de Garage (alternativa a MinIO: ver docs/especificacion.md).
+# El secreto RPC se inyecta por la variable de entorno GARAGE_RPC_SECRET
+# (soportada de forma nativa por Garage), nunca se escribe aquí.
+
+metadata_dir = "/data/meta"
+data_dir = "/data/data"
+db_engine = "sqlite"
+
+replication_factor = 1
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "127.0.0.1:3901"
+
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3.talleros.localhost"

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<svg viewBox="0 0 120 56" style="width:100%;height:100%;display:block;color:{{ c }}">
+  <sc-if value="{{ sedan }}"><path d="M6 40 L9 31 L30 27 L43 18 L79 18 L95 27 L112 30 L116 40 Z" fill="currentColor"></path><path d="M46 21 L58 21 L58 27 L37 27 Z M62 21 L77 21 L88 27 L62 27 Z" fill="var(--sf)" opacity=".55"></path><circle cx="30" cy="41" r="8" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle><circle cx="92" cy="41" r="8" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle></sc-if>
+  <sc-if value="{{ suv }}"><path d="M6 40 L8 26 L22 24 L31 11 L95 11 L104 24 L114 27 L116 40 Z" fill="currentColor"></path><path d="M35 15 L58 15 L58 23 L28 23 Z M62 15 L92 15 L99 23 L62 23 Z" fill="var(--sf)" opacity=".55"></path><circle cx="30" cy="40" r="9" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle><circle cx="92" cy="40" r="9" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle></sc-if>
+  <sc-if value="{{ pickup }}"><path d="M4 40 L6 28 L36 25 L45 11 L74 11 L78 25 L116 25 L116 40 Z" fill="currentColor"></path><path d="M48 15 L60 15 L60 23 L41 23 Z M63 15 L72 15 L75 23 L63 23 Z" fill="var(--sf)" opacity=".55"></path><circle cx="26" cy="40" r="9" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle><circle cx="96" cy="40" r="9" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle></sc-if>
+  <sc-if value="{{ hatch }}"><path d="M12 40 L14 30 L32 26 L44 15 L86 15 L104 27 L106 40 Z" fill="currentColor"></path><path d="M47 18 L64 18 L64 25 L39 25 Z M68 18 L84 18 L96 25 L68 25 Z" fill="var(--sf)" opacity=".55"></path><circle cx="32" cy="41" r="8" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle><circle cx="88" cy="41" r="8" fill="var(--tx2)" stroke="var(--sf)" stroke-width="3"></circle></sc-if>
+  <sc-if value="{{ moto }}"><circle cx="26" cy="40" r="12" fill="none" stroke="var(--tx2)" stroke-width="5"></circle><circle cx="94" cy="40" r="12" fill="none" stroke="var(--tx2)" stroke-width="5"></circle><path d="M26 40 L50 26 L72 26 L94 40 M72 26 L82 14 L90 14" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M44 18 L70 18 L74 26 L48 28 Z" fill="currentColor"></path><path d="M30 20 L46 20 L46 24 L34 25 Z" fill="currentColor"></path></sc-if>
+</svg>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:240,&quot;height&quot;:112},&quot;tipo&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;sedan&quot;,&quot;suv&quot;,&quot;pickup&quot;,&quot;hatchback&quot;,&quot;moto&quot;],&quot;default&quot;:&quot;sedan&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;color&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#919191&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const t = this.props.tipo || 'sedan';
+    return { sedan: t === 'sedan', suv: t === 'suv', pickup: t === 'pickup', hatch: t === 'hatchback', moto: t === 'moto', c: this.props.color || 'var(--tx3)' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">06 · Registro delegado</div>
+    <div style="flex:1"></div>
+    <a href="Recepcion.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Recepción →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="width:1440px;flex-shrink:0;height:900px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+      <dc-import name="Sidebar" active="delegado" hint-size="232px,900px"></dc-import>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+        <div style="height:64px;display:flex;align-items:center;gap:14px;padding:0 28px;border-bottom:1px solid var(--bd);background:var(--sf)">
+          <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700;letter-spacing:-.01em">Registro delegado</div>
+          <div style="height:30px;padding:0 10px;border-radius:7px;border:1px solid var(--bd2);font-size:13px;display:flex;align-items:center;gap:6px"><i class="ph ph-calendar"></i>Hoy, 30 oct</div>
+          <div style="flex:1"></div>
+          <div style="font-size:13px;color:var(--tx2);display:flex;align-items:center;gap:6px"><i class="ph ph-pencil-simple"></i>Registrando como <b style="color:var(--tx)">Daniela Cruz</b></div>
+          <button style="height:38px;padding:0 16px;border-radius:8px;border:0;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="ph-bold ph-floppy-disk"></i>Guardar {{ pendingCount }} registros</button>
+        </div>
+        <div style="flex:1;min-height:0;display:grid;grid-template-columns:300px minmax(0,1fr)">
+          <div style="border-right:1px solid var(--bd);padding:16px 12px;display:flex;flex-direction:column;gap:6px;background:var(--sf)">
+            <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);padding:0 6px 6px">Mecánicos · pendientes de registrar</div>
+            <sc-for list="{{ mechs }}" as="m" hint-placeholder-count="5">
+              <button onClick="{{ m.pick }}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:9px;border:1px solid {{ m.bd }};background:{{ m.bg }};color:var(--tx);text-align:left">
+                <div style="width:38px;height:38px;border-radius:50%;background:{{ m.abg }};color:{{ m.afg }};border:{{ m.aborder }};display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0">{{ m.i }}</div>
+                <div style="flex:1;min-width:0"><div style="font-size:15.5px;font-weight:600">{{ m.name }}</div><div style="font-size:12px;color:var(--tx3)">{{ m.sub }}</div></div>
+                <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;font-weight:700;padding:2px 7px;border-radius:9px;background:{{ m.cbg }};color:{{ m.cfg }}">{{ m.count }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="padding:20px 28px;display:flex;flex-direction:column;gap:14px;overflow:auto">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div style="width:52px;height:52px;border-radius:50%;background:{{ cur.abg }};color:{{ cur.afg }};border:{{ cur.aborder }};display:grid;place-items:center;font-size:18px;font-weight:700">{{ cur.i }}</div>
+              <div style="flex:1"><div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">{{ cur.name }}</div><div style="font-size:13.5px;color:var(--tx2)">{{ cur.sub }} · Turno 08:00 – 17:00</div></div>
+              <button style="height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-plus"></i>Tarea no asignada</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;background:var(--sf2);border:1px dashed var(--bd2);font-size:13px;color:var(--tx2)"><i class="ph ph-info"></i>Cada registro quedará como <b style="color:var(--tx)">Ejecutado por {{ cur.name }}</b> · <b style="color:var(--tx)">Registrado por Daniela Cruz</b> con chip <span style="height:20px;padding:0 7px;border-radius:10px;border:1.5px dashed var(--tx3);font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;gap:4px"><i class="ph-bold ph-pencil-simple"></i>Manual</span></div>
+            <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="3">
+              <div style="padding:14px 16px;border-radius:12px;background:var(--sf);border:1px solid {{ t.bd }};display:grid;grid-template-columns:32px minmax(0,1fr) 300px 120px;gap:14px;align-items:center">
+                <button onClick="{{ t.tog }}" style="width:32px;height:32px;border-radius:8px;border:2px solid {{ t.cbd }};background:{{ t.cbg }};color:var(--sf);display:grid;place-items:center;font-size:18px;padding:0"><i class="ph-bold ph-check"></i></button>
+                <div style="min-width:0"><div style="display:flex;align-items:center;gap:8px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:12.5px;padding:0 6px;border:1.5px solid var(--tx);border-radius:4px">{{ t.plate }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx3)">{{ t.ot }}</span></div><div style="font-size:16px;font-weight:600;margin-top:4px">{{ t.name }}</div><div style="font-size:12.5px;color:var(--tx3)">Estimado {{ t.est }}</div></div>
+                <div style="display:flex;align-items:center;gap:8px"><div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:11.5px;color:var(--tx3)">Inicio</span><div style="height:40px;border:1px solid var(--bd2);border-radius:8px;display:flex;align-items:center;padding:0 10px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:16px;font-weight:700;background:var(--sf2)">{{ t.start }}</div></div><i class="ph ph-arrow-right" style="color:var(--tx3);margin-top:16px"></i><div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:11.5px;color:var(--tx3)">Fin</span><div style="height:40px;border:1px solid var(--bd2);border-radius:8px;display:flex;align-items:center;padding:0 10px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:16px;font-weight:700;background:var(--sf2)">{{ t.end }}</div></div><div style="display:flex;flex-direction:column;gap:3px;align-items:flex-end"><span style="font-size:11.5px;color:var(--tx3)">Total</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:16px;font-weight:700;height:40px;display:flex;align-items:center;color:{{ t.durC }}">{{ t.dur }}</span></div></div>
+                <div style="display:flex;gap:6px;justify-content:flex-end"><div style="width:40px;height:40px;border-radius:8px;border:1px solid var(--bd2);display:grid;place-items:center;font-size:18px;color:{{ t.phC }}"><i class="ph {{ t.phI }}"></i></div><div style="width:40px;height:40px;border-radius:8px;border:1px solid var(--bd2);display:grid;place-items:center;font-size:18px"><i class="ph ph-microphone"></i></div></div>
+              </div>
+            </sc-for>
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:var(--sf2);font-size:15px"><b>Total del día</b><div style="flex:1"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700">{{ cur.total }}</span><span style="color:var(--tx3)">de 8:00 de turno</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+      <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700;background:var(--sf)"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+      <div style="background:var(--sf);padding:4px 16px 12px;border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Registrar por otros</div>
+        <div style="display:flex;gap:8px;overflow-x:auto"><sc-for list="{{ mechs }}" as="m" hint-placeholder-count="5"><button onClick="{{ m.pick }}" style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;border:0;background:transparent;color:var(--tx);width:62px"><div style="width:46px;height:46px;border-radius:50%;background:{{ m.abg }};color:{{ m.afg }};border:{{ m.aborder }};outline:{{ m.ring }};outline-offset:2px;display:grid;place-items:center;font-size:15px;font-weight:700;position:relative">{{ m.i }}<span style="position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:{{ m.cfg }};color:var(--sf);font-size:10.5px;font-weight:800;display:grid;place-items:center">{{ m.count }}</span></div><span style="font-size:11.5px;font-weight:600">{{ m.first }}</span></button></sc-for></div>
+      </div>
+      <div style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="3">
+          <div style="padding:14px;border-radius:14px;background:var(--sf);border:1px solid {{ t.bd }};display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:12px;align-items:flex-start"><button onClick="{{ t.tog }}" style="width:40px;height:40px;border-radius:10px;border:2px solid {{ t.cbd }};background:{{ t.cbg }};color:var(--sf);display:grid;place-items:center;font-size:22px;padding:0;flex-shrink:0"><i class="ph-bold ph-check"></i></button><div style="flex:1"><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px">{{ t.plate }}</div><div style="font-size:15.5px;font-weight:600;line-height:1.25">{{ t.name }}</div></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end"><div style="height:48px;border:1px solid var(--bd2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:18px;font-weight:700;background:var(--sf2)">{{ t.start }}</div><div style="height:48px;border:1px solid var(--bd2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:18px;font-weight:700;background:var(--sf2)">{{ t.end }}</div><div style="display:flex;gap:6px"><div style="width:48px;height:48px;border-radius:10px;border:1px solid var(--bd2);display:grid;place-items:center;font-size:20px"><i class="ph ph-camera"></i></div><div style="width:48px;height:48px;border-radius:10px;border:1px solid var(--bd2);display:grid;place-items:center;font-size:20px"><i class="ph ph-microphone"></i></div></div></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:10px 12px 26px;background:var(--sf);border-top:1px solid var(--bd)"><button style="width:100%;height:54px;border-radius:12px;border:0;background:var(--ac);color:var(--ac-ink);font-size:16px;font-weight:800">Guardar {{ pendingCount }} registros</button></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark', sel: 0, done: { 'MS-0': true, 'MS-1': true } };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    const s = this.state;
+    const M = [
+      { i: 'MS', name: 'Miguel Soto', sub: 'Mecánica · sin acceso', abg: 'var(--sf)', afg: 'var(--tx2)', aborder: '1.5px dashed var(--tx3)', total: '6:40', tasks: [['ABC-482','OT-1042','Cambio de pastillas y discos delanteros','1:30','08:10','09:25'],['UIO-882','OT-1041','Desmontaje de caja para clutch','2:00','09:40','12:05'],['FGH-306','OT-1043','Cambio de bujes traseros','1:00','13:00','—:—'],['UIO-882','OT-1041','Montaje de caja','2:00','—:—','—:—']] },
+      { i: 'EP', name: 'Ernesto Paz', sub: 'Pintura · sin acceso', abg: 'var(--sf)', afg: 'var(--tx2)', aborder: '1.5px dashed var(--tx3)', total: '3:15', tasks: [['JKL-118','OT-1044','Lijado y masillado capó','2:00','08:30','11:00'],['LMN-725','OT-1036','Pulido parachoques','0:45','11:15','12:00']] },
+      { i: 'KR', name: 'Kevin Rojas', sub: 'Mecánica · olvidó marcar', abg: 'var(--ac-s)', afg: 'var(--ac-tx)', aborder: '0', total: '1:20', tasks: [['QWE-640','OT-1045','Cambio de bujías','0:40','09:00','09:50']] },
+      { i: 'JA', name: 'Julio Arce', sub: 'Ayudante · sin acceso', abg: 'var(--sf)', afg: 'var(--tx2)', aborder: '1.5px dashed var(--tx3)', total: '0:00', tasks: [['BVC-093','OT-1040','Lavado de motor','0:30','—:—','—:—']] }
+    ];
+    const dur = (a, b) => { if (a.includes('—') || b.includes('—')) return '—'; const [h1, m1] = a.split(':').map(Number), [h2, m2] = b.split(':').map(Number); const d = h2 * 60 + m2 - h1 * 60 - m1; return Math.floor(d / 60) + ':' + String(d % 60).padStart(2, '0'); };
+    const cur = M[s.sel];
+    const tasks = cur.tasks.map((t, k) => { const key = cur.i + '-' + k, on = !!s.done[key], d = dur(t[4], t[5]);
+      const over = d !== '—' && (d.split(':')[0] * 60 + +d.split(':')[1]) > (t[3].split(':')[0] * 60 + +t[3].split(':')[1]);
+      return { plate: t[0], ot: t[1], name: t[2], est: t[3], start: t[4], end: t[5], dur: d, durC: over ? 'var(--red)' : 'var(--tx)', bd: on ? 'var(--grn)' : 'var(--bd)', cbd: on ? 'var(--grn)' : 'var(--bd2)', cbg: on ? 'var(--grn)' : 'transparent', phI: k === 0 ? 'ph-fill ph-image' : 'ph-camera', phC: k === 0 ? 'var(--grn)' : 'var(--tx)', tog: () => this.setState(st => ({ done: { ...st.done, [key]: !st.done[key] } })) }; });
+    return {
+      theme: s.theme, toggle: this.toggle, themeLabel: s.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      mechs: M.map((m, i) => ({ ...m, first: m.name.split(' ')[0], count: m.tasks.length, bd: s.sel === i ? 'var(--ac)' : 'transparent', bg: s.sel === i ? 'var(--ac-s)' : 'transparent', ring: s.sel === i ? '3px solid var(--ac)' : '0', cbg: i < 2 ? 'var(--red-s)' : 'var(--sf3)', cfg: i < 2 ? 'var(--red)' : 'var(--tx2)', pick: () => this.setState({ sel: i }) })),
+      cur, tasks, pendingCount: Object.values(s.done).filter(Boolean).length
+    };
+  }
+}
+</script>
+</body>
+</html>

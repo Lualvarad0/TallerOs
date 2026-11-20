@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">11 · Notificaciones al cliente</div>
+    <div style="flex:1"></div>
+    <a href="Reportes.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Reportes →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="width:1440px;flex-shrink:0;height:960px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+      <dc-import name="Sidebar" active="notificaciones" hint-size="232px,960px"></dc-import>
+      <div style="flex:1;min-width:0;padding:24px 28px;display:flex;flex-direction:column;gap:18px">
+        <div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:-.01em">Notificaciones al cliente</div>
+        <div style="display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px">
+          <div style="padding:18px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;gap:8px"><i class="ph-fill ph-whatsapp-logo" style="font-size:24px;color:var(--grn)"></i><div style="font-size:16px;font-weight:700;flex:1">Conexión WhatsApp</div><span style="height:24px;padding:0 8px;border-radius:12px;background:{{ connBg }};color:{{ connFg }};font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:{{ connFg }}"></span>{{ connLabel }}</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;padding:3px;border-radius:9px;background:var(--sf2);border:1px solid var(--bd)"><sc-for list="{{ modes }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.pick }}" style="height:34px;border-radius:7px;border:0;background:{{ m.bg }};color:{{ m.fg }};font-size:13px;font-weight:700;box-shadow:{{ m.sh }}">{{ m.n }}</button></sc-for></div>
+            <sc-if value="{{ isQR }}"><div style="display:flex;gap:14px;align-items:center"><div style="width:120px;height:120px;border-radius:10px;background:var(--sf3);border:1px solid var(--bd);display:grid;place-items:center;color:var(--tx3)"><i class="ph ph-qr-code" style="font-size:64px"></i></div><div style="font-size:13px;color:var(--tx2);line-height:1.5">Escanea con el WhatsApp del taller.<br><b style="color:var(--tx)">+1 555 0100</b> conectado desde el 2 oct.<br><span style="color:var(--ac-tx);font-weight:600">Límite recomendado: 200 msj/día</span></div></div></sc-if>
+            <sc-if value="{{ isAPI }}"><div style="display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:13px"><span style="color:var(--tx3)">Número</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">+1 555 0100</span><span style="color:var(--tx3)">Proveedor</span><span>WhatsApp Business API (oficial)</span><span style="color:var(--tx3)">Plantillas</span><span><b style="color:var(--grn)">3 aprobadas</b> · 1 en revisión</span><span style="color:var(--tx3)">Calidad</span><span style="color:var(--grn);font-weight:600">Alta</span></div></sc-if>
+            <div style="height:1px;background:var(--bd)"></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13.5px"><i class="ph ph-envelope-simple" style="font-size:20px;color:var(--tx2)"></i><span style="flex:1">Correo · avisos@tallerruta5.com</span><span style="color:var(--grn);font-weight:600">Activo</span></div>
+          </div>
+          <div style="padding:18px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:16px;font-weight:700">Reglas automáticas</div>
+            <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:36px minmax(0,1fr) 180px 160px 48px;gap:12px;align-items:center;padding:10px 12px;border-radius:9px;border:1px solid var(--bd);opacity:{{ r.op }}">
+                <div style="width:36px;height:36px;border-radius:8px;background:var(--sf3);display:grid;place-items:center;font-size:18px"><i class="ph {{ r.icon }}"></i></div>
+                <div><div style="font-size:15.5px;font-weight:600">{{ r.n }}</div><div style="font-size:12.5px;color:var(--tx3)">{{ r.when }}</div></div>
+                <div style="font-size:12.5px;color:var(--tx2)">Plantilla: <b style="color:var(--tx)">{{ r.tpl }}</b></div>
+                <div style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:6px"><i class="ph-fill ph-whatsapp-logo" style="color:var(--grn)"></i>Canal preferido</div>
+                <button onClick="{{ r.tog }}" style="width:44px;height:26px;border-radius:13px;border:0;background:{{ r.tbg }};padding:3px;display:flex;justify-content:{{ r.tj }}"><span style="width:20px;height:20px;border-radius:50%;background:var(--sf)"></span></button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:18px;flex:1;min-height:0">
+          <div style="padding:18px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;flex-direction:column;gap:10px;min-height:0">
+            <div style="display:flex;align-items:center"><div style="font-size:16px;font-weight:700;flex:1">Bitácora de envíos</div><span style="font-size:12.5px;color:var(--tx3)">Hoy · 38 enviados · 1 fallido</span></div>
+            <div style="display:grid;grid-template-columns:60px 110px minmax(0,1fr) 150px 120px;font-size:13px;overflow:auto">
+              <sc-for list="{{ log }}" as="l" hint-placeholder-count="6"><div style="display:contents"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx3);padding:9px 0;border-bottom:1px solid var(--bd)">{{ l.t }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;padding:9px 0;border-bottom:1px solid var(--bd)">{{ l.p }}</span><span style="padding:9px 0;border-bottom:1px solid var(--bd)">{{ l.what }} · <span style="color:var(--tx3)">{{ l.who }}</span></span><span style="padding:9px 0;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:6px;color:var(--tx2)"><i class="ph-fill {{ l.ci }}"></i>{{ l.ch }}</span><span style="padding:9px 0;border-bottom:1px solid var(--bd);color:{{ l.sc }};font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold {{ l.si }}"></i>{{ l.s }}</span></div></sc-for>
+            </div>
+          </div>
+          <div style="padding:18px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center"><div style="font-size:16px;font-weight:700;flex:1">Plantilla · Vehículo listo</div><span style="font-size:12px;color:var(--grn);font-weight:700">Aprobada por Meta</span></div>
+            <div style="padding:14px;border-radius:10px;background:var(--sf2);border:1px solid var(--bd);font-size:15px;line-height:1.55">Hola <span style="padding:1px 5px;border-radius:4px;background:var(--ac-s);color:var(--ac-tx);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px">{cliente}</span>, tu <span style="padding:1px 5px;border-radius:4px;background:var(--ac-s);color:var(--ac-tx);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px">{vehiculo}</span> placa <span style="padding:1px 5px;border-radius:4px;background:var(--ac-s);color:var(--ac-tx);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px">{placa}</span> está listo para retirar en <span style="padding:1px 5px;border-radius:4px;background:var(--ac-s);color:var(--ac-tx);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px">{sucursal}</span>. Total: <span style="padding:1px 5px;border-radius:4px;background:var(--ac-s);color:var(--ac-tx);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px">{total}</span>. Horario hasta las 18:00.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ vars }}" as="v" hint-placeholder-count="6"><span style="height:26px;padding:0 8px;border-radius:6px;border:1px solid var(--bd2);font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;display:flex;align-items:center">+ {{ v }}</span></sc-for></div>
+            <div style="font-size:12.5px;color:var(--tx3)">Otras plantillas: Próximo mantenimiento · Cotización pendiente · Recordatorio de cita</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+      <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+      <div style="flex:1;overflow:auto;padding:6px 14px 14px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-family:'Barlow Semi Condensed';font-size:24px;font-weight:700;letter-spacing:-.01em">Avisos</div>
+        <div style="padding:14px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;align-items:center;gap:10px"><i class="ph-fill ph-whatsapp-logo" style="font-size:28px;color:var(--grn)"></i><div style="flex:1"><div style="font-size:16px;font-weight:700">WhatsApp</div><div style="font-size:12.5px;color:var(--tx3)">{{ modeName }}</div></div><span style="font-size:12.5px;font-weight:700;color:{{ connFg }}">{{ connLabel }}</span></div>
+        <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4"><div style="padding:12px 14px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);display:flex;align-items:center;gap:12px;opacity:{{ r.op }}"><i class="ph {{ r.icon }}" style="font-size:22px"></i><div style="flex:1"><div style="font-size:15.5px;font-weight:600">{{ r.n }}</div><div style="font-size:12px;color:var(--tx3)">{{ r.when }}</div></div><button onClick="{{ r.tog }}" style="width:50px;height:30px;border-radius:15px;border:0;background:{{ r.tbg }};padding:3px;display:flex;justify-content:{{ r.tj }}"><span style="width:24px;height:24px;border-radius:50%;background:var(--sf)"></span></button></div></sc-for>
+        <div style="font-size:16px;font-weight:700;margin-top:4px">Últimos envíos</div>
+        <sc-for list="{{ logM }}" as="l" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px;font-size:13.5px;padding:8px 2px;border-bottom:1px solid var(--bd)"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx3);font-size:12px">{{ l.t }}</span><span style="flex:1">{{ l.what }}</span><i class="ph-bold {{ l.si }}" style="color:{{ l.sc }}"></i></div></sc-for>
+      </div>
+      <dc-import name="TabBar" active="mas" hint-size="100%,84px"></dc-import>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark', mode: 1, on: [true, true, true, false] };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    const s = this.state;
+    const log = [['10:12','ASD-417','Vehículo listo','Valeria Ortiz','WhatsApp','ph-whatsapp-logo','Leído','ph-checks','var(--blue)'],['09:40','FGH-306','Vehículo listo','Diego Castro','Correo','ph-envelope-simple','Entregado','ph-check','var(--grn)'],['09:05','ABC-482','Cotización pendiente','Carlos Méndez','WhatsApp','ph-whatsapp-logo','Leído','ph-checks','var(--blue)'],['08:30','PRT-907','Próximo mantenimiento','Transportes Andina','WhatsApp','ph-whatsapp-logo','Fallido · número inválido','ph-warning','var(--red)'],['08:00','KDF-310','Recibido en taller','Lucía Fernández','WhatsApp','ph-whatsapp-logo','Entregado','ph-check','var(--grn)'],['07:45','GHT-554','Cotización pendiente (recordatorio)','Roberto Díaz','WhatsApp','ph-whatsapp-logo','Enviado','ph-check','var(--tx3)']].map(l => ({ t: l[0], p: l[1], what: l[2], who: l[3], ch: l[4], ci: l[5], s: l[6], si: l[7], sc: l[8] }));
+    return {
+      theme: s.theme, toggle: this.toggle, themeLabel: s.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      modes: ['QR del taller','API oficial'].map((n, i) => ({ n, bg: s.mode === i ? 'var(--sf)' : 'transparent', fg: s.mode === i ? 'var(--tx)' : 'var(--tx3)', sh: s.mode === i ? 'var(--sh)' : 'none', pick: () => this.setState({ mode: i }) })),
+      isQR: s.mode === 0, isAPI: s.mode === 1, modeName: s.mode === 0 ? 'Conectado por QR' : 'API oficial de WhatsApp Business',
+      connLabel: 'Conectado', connBg: 'var(--grn-s)', connFg: 'var(--grn)',
+      rules: [['Vehículo listo para entregar','ph-flag-checkered','Al pasar la OT a «Listo para entregar»','Vehículo listo'],['Cotización pendiente','ph-receipt','Al enviar + recordatorio a las 24h sin respuesta','Cotización'],['Próximo mantenimiento','ph-calendar-check','7 días antes por fecha o 500 km antes por km estimado','Mantenimiento'],['Encuesta post-entrega','ph-star','48h después de entregar','Encuesta']].map((r, i) => ({ n: r[0], icon: r[1], when: r[2], tpl: r[3], op: s.on[i] ? 1 : .55, tbg: s.on[i] ? 'var(--grn)' : 'var(--bd2)', tj: s.on[i] ? 'flex-end' : 'flex-start', tog: () => this.setState(st => { const a = [...st.on]; a[i] = !a[i]; return { on: a }; }) })),
+      log, logM: log.slice(0, 5), vars: ['{cliente}','{vehiculo}','{placa}','{sucursal}','{total}','{link_cotizacion}','{km_proximo}']
+    };
+  }
+}
+</script>
+</body>
+</html>

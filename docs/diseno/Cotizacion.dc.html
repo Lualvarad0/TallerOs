@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">10 · Cotización y aprobación</div>
+    <div style="flex:1"></div>
+    <span style="font-size:13px;color:#A9ADB1">Aprueba / rechaza ítems en el móvil del cliente: el escritorio se actualiza</span>
+    <a href="Notificaciones.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Notificaciones →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="width:1440px;flex-shrink:0;height:900px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+      <dc-import name="Sidebar" active="cotizaciones" hint-size="232px,900px"></dc-import>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+        <div style="height:64px;display:flex;align-items:center;gap:14px;padding:0 28px;border-bottom:1px solid var(--bd);background:var(--sf)">
+          <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700;letter-spacing:-.01em">Cotización COT-0587</div>
+          <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px;padding:1px 7px;border:1.5px solid var(--tx);border-radius:4px">ABC-482</span>
+          <a href="Detalle-OT.dc.html" style="font-size:13.5px;color:var(--tx3)">OT-1042 · Carlos Méndez</a>
+          <div style="flex:1"></div>
+          <span style="height:28px;padding:0 10px;border-radius:6px;background:var(--vio-s);color:var(--vio);font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="ph-bold ph-hourglass"></i>Esperando respuesta · {{ answered }}/{{ itemCount }}</span>
+        </div>
+        <div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 360px">
+          <div style="padding:20px 28px;display:flex;flex-direction:column;gap:14px;overflow:auto">
+            <div style="border-radius:12px;background:var(--sf);border:1px solid var(--bd);overflow:hidden">
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) 110px 60px 100px 100px 150px;gap:10px;padding:10px 16px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);background:var(--sf2);border-bottom:1px solid var(--bd)"><span>Ítem</span><span>Tipo</span><span>Cant.</span><span style="text-align:right">Precio</span><span style="text-align:right">Subtotal</span><span>Cliente</span></div>
+              <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) 110px 60px 100px 100px 150px;gap:10px;padding:12px 16px;border-bottom:1px solid var(--bd);align-items:center;font-size:15px;opacity:{{ it.op }}">
+                  <div><div style="font-weight:600">{{ it.name }}</div><div style="font-size:12.5px;color:var(--tx3)">{{ it.note }}</div></div>
+                  <span style="font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:5px"><i class="ph {{ it.ticon }}"></i>{{ it.type }}</span>
+                  <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">{{ it.q }}</span>
+                  <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;color:var(--tx2)">{{ it.price }}</span>
+                  <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;font-weight:700">{{ it.sub }}</span>
+                  <span style="height:26px;padding:0 9px;border-radius:6px;background:{{ it.sbg }};color:{{ it.sfg }};font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:5px;justify-self:start"><i class="ph-bold {{ it.sicon }}"></i>{{ it.sname }}</span>
+                </div>
+              </sc-for>
+              <div style="padding:10px 16px;display:flex;align-items:center;gap:8px;color:var(--tx3);font-size:13.5px"><i class="ph ph-plus"></i>Agregar repuesto o mano de obra<div style="flex:1"></div><span style="font-size:12.5px">Tipos de trabajo con tiempo estándar ↗</span></div>
+            </div>
+            <div style="padding:14px 16px;border-radius:12px;border:1px solid var(--ac);background:var(--ac-s);display:flex;align-items:center;gap:12px;font-size:15px"><i class="ph-fill ph-lightbulb" style="font-size:22px;color:var(--ac-tx)"></i><div style="flex:1"><b>Hallazgo de taller agregado:</b> retén diferencial trasero. Incluye 2 fotos que el cliente verá en el link.</div></div>
+          </div>
+          <div style="border-left:1px solid var(--bd);background:var(--sf);padding:20px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
+              <div style="display:flex"><span style="flex:1;color:var(--tx2)">Repuestos</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">{{ tParts }}</span></div>
+              <div style="display:flex"><span style="flex:1;color:var(--tx2)">Mano de obra</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">{{ tLabor }}</span></div>
+              <div style="display:flex"><span style="flex:1;color:var(--tx2)">Impuesto (12%)</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">{{ tTax }}</span></div>
+              <div style="height:1px;background:var(--bd);margin:4px 0"></div>
+              <div style="display:flex;align-items:baseline"><span style="flex:1;font-weight:700">Total cotizado</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:16px;color:var(--tx2)">{{ tAll }}</span></div>
+              <div style="display:flex;align-items:baseline"><span style="flex:1;font-weight:700;color:var(--grn)">Total aprobado</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:24px;font-weight:700;color:var(--grn)">{{ tApproved }}</span></div>
+            </div>
+            <div style="padding:14px;border-radius:10px;background:var(--sf2);border:1px solid var(--bd);display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:13px;font-weight:700">Enviado al cliente</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px"><i class="ph-fill ph-whatsapp-logo" style="color:var(--grn);font-size:18px"></i><span style="flex:1">WhatsApp · +1 555 0142</span><span style="color:var(--grn);font-weight:600">Leído 09:28</span></div>
+              <div style="height:36px;border-radius:7px;border:1px solid var(--bd2);display:flex;align-items:center;gap:8px;padding:0 10px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx2)"><i class="ph ph-link"></i>ruta5.talleros.app/c/7Kx2p<i class="ph ph-copy" style="margin-left:auto"></i></div>
+              <div style="font-size:12.5px;color:var(--tx3)">Vence en 48h · Recordatorio automático a las 24h</div>
+            </div>
+            <div style="flex:1"></div>
+            <button style="height:42px;border-radius:9px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ph ph-paper-plane-tilt"></i>Reenviar</button>
+            <button style="height:42px;border-radius:9px;border:0;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700">Registrar aprobación por teléfono</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="color:#A9ADB1;font-size:13px">Vista del cliente · link por WhatsApp</div>
+      <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+        <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700;background:var(--sf)"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="background:var(--sf);padding:8px 18px 16px;border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:9px;background:var(--ac);color:var(--ac-ink);display:grid;place-items:center;font-weight:800;font-size:13px">R5</div><div style="flex:1"><div style="font-size:15px;font-weight:700">Taller Ruta 5</div><div style="font-size:12px;color:var(--tx3)">Sucursal Norte</div></div></div>
+          <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.15">Hola Carlos, revisa el presupuesto de tu Hilux</div>
+          <div style="font-size:13.5px;color:var(--tx2)">Aprueba o rechaza cada trabajo. Solo haremos lo que apruebes.</div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ items }}" as="it" hint-placeholder-count="5">
+            <div style="padding:14px;border-radius:14px;background:var(--sf);border:1.5px solid {{ it.mbd }};display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;gap:10px"><div style="flex:1"><div style="font-size:15.5px;font-weight:700;line-height:1.25">{{ it.name }}</div><div style="font-size:12.5px;color:var(--tx3);margin-top:2px">{{ it.why }}</div></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:16px;font-weight:700">{{ it.sub }}</div></div>
+              <sc-if value="{{ it.hasPhoto }}"><div style="display:flex;gap:6px"><div style="width:64px;height:48px;border-radius:6px;background:var(--sf3);display:grid;place-items:center;color:var(--tx3)"><i class="ph ph-image"></i></div><div style="width:64px;height:48px;border-radius:6px;background:var(--sf3);display:grid;place-items:center;color:var(--tx3)"><i class="ph ph-image"></i></div></div></sc-if>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <button onClick="{{ it.no }}" style="height:44px;border-radius:10px;border:1.5px solid {{ it.nbd }};background:{{ it.nbg }};color:{{ it.nfg }};font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ph-bold ph-x"></i>Rechazar</button>
+                <button onClick="{{ it.yes }}" style="height:44px;border-radius:10px;border:1.5px solid {{ it.ybd }};background:{{ it.ybg }};color:{{ it.yfg }};font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px"><i class="ph-bold ph-check"></i>Aprobar</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:12px 16px 28px;background:var(--sf);border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:baseline"><span style="flex:1;font-size:15px;color:var(--tx2)">Total aprobado (con impuesto)</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:22px;font-weight:700">{{ tApproved }}</span></div>
+          <button style="height:54px;border-radius:12px;border:0;background:var(--ac);color:var(--ac-ink);font-size:16px;font-weight:800">Confirmar mi respuesta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark', ans: ['y','y','y','y',null,'n',null] };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    const s = this.state, money = n => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const I = [
+      ['Pastillas delanteras Bosch','r',1,68,'Original equivalente','Desgaste al 90%, rozan el disco',false],
+      ['Discos ventilados delanteros','r',2,71,'Par','Rayados, vibran al frenar',false],
+      ['Amortiguadores delanteros Monroe','r',2,155,'Llega hoy 15:00','Pierden aceite, rebote excesivo',false],
+      ['Mano de obra frenos y suspensión','m',5.33,35,'5h 20m tiempo estándar','Desmontaje, instalación y prueba',false],
+      ['Retén diferencial trasero','r',1,48,'Hallazgo de taller','Encontramos fuga de aceite (ver fotos)',true],
+      ['Bujes barra estabilizadora','r',2,47.5,'Recomendado','Desgaste leve, puede esperar',false],
+      ['Mano de obra retén diferencial','m',2,36,'2h tiempo estándar','Cambio de retén y nivel de aceite',true]
+    ];
+    const tot = { r: 0, m: 0, ok: 0 };
+    const items = I.map((it, i) => {
+      const sub = it[2] * it[3], a = s.ans[i]; tot[it[1]] += sub; if (a === 'y') tot.ok += sub;
+      const set = v => () => this.setState(st => { const x = [...st.ans]; x[i] = x[i] === v ? null : v; return { ans: x }; });
+      return { name: it[0], type: it[1] === 'r' ? 'Repuesto' : 'Mano de obra', ticon: it[1] === 'r' ? 'ph-gear' : 'ph-wrench', q: it[1] === 'm' ? (it[2] === 2 ? '2h' : '5h 20m') : it[2], price: money(it[3]), sub: money(sub), note: it[4], why: it[5], hasPhoto: it[6],
+        sname: a === 'y' ? 'Aprobado' : a === 'n' ? 'Rechazado' : 'Pendiente', sicon: a === 'y' ? 'ph-check' : a === 'n' ? 'ph-x' : 'ph-hourglass', sbg: a === 'y' ? 'var(--grn-s)' : a === 'n' ? 'var(--red-s)' : 'var(--vio-s)', sfg: a === 'y' ? 'var(--grn)' : a === 'n' ? 'var(--red)' : 'var(--vio)', op: a === 'n' ? .55 : 1,
+        mbd: a === 'y' ? 'var(--grn)' : a === 'n' ? 'var(--red)' : 'var(--bd)',
+        ybg: a === 'y' ? 'var(--grn)' : 'var(--sf)', yfg: a === 'y' ? 'var(--sf)' : 'var(--grn)', ybd: 'var(--grn)',
+        nbg: a === 'n' ? 'var(--red)' : 'var(--sf)', nfg: a === 'n' ? 'var(--sf)' : 'var(--red)', nbd: a === 'n' ? 'var(--red)' : 'var(--bd2)',
+        yes: set('y'), no: set('n') };
+    });
+    return {
+      theme: s.theme, toggle: this.toggle, themeLabel: s.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      items, itemCount: I.length, answered: s.ans.filter(Boolean).length,
+      tParts: money(tot.r), tLabor: money(tot.m), tTax: money((tot.r + tot.m) * .12), tAll: money((tot.r + tot.m) * 1.12), tApproved: money(tot.ok * 1.12)
+    };
+  }
+}
+</script>
+</body>
+</html>

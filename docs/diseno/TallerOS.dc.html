@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+body{margin:0;background:#0C0E10;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:#FFC940}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#0C0E10;color:#EEF0F2;padding:56px clamp(20px,5vw,72px);display:flex;flex-direction:column;gap:40px">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="width:48px;height:48px;border-radius:11px;background:#FFC21A;color:#1A1400;display:grid;place-items:center;font-size:26px"><i class="ph-bold ph-wrench"></i></div>
+    <div><div style="font-family:'Barlow Semi Condensed';font-size:34px;font-weight:700;letter-spacing:-.01em">TallerOS</div><div style="font-size:15px;color:#8A939C">Sistema de diseño y pantallas · escritorio 1440 + móvil 390 · prototipo navegable</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+    <sc-for list="{{ screens }}" as="s" hint-placeholder-count="16">
+      <a href="{{ s.href }}" style="padding:18px;border-radius:12px;background:#15181B;border:1px solid {{ s.bd }};display:flex;flex-direction:column;gap:10px" style-hover="background:#1B1F23">
+        <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;font-size:13px;color:#8A939C;white-space:nowrap">{{ s.n }}</span><i class="ph {{ s.icon }}" style="font-size:20px;color:{{ s.ic }}"></i><div style="flex:1"></div><sc-if value="{{ s.prio }}"><span style="height:20px;padding:0 7px;border-radius:4px;background:#2E2710;color:#FFC940;font-size:11px;font-weight:800;display:flex;align-items:center">PRIORIDAD</span></sc-if><sc-if value="{{ s.opts }}"><span style="height:20px;padding:0 7px;border-radius:4px;border:1px solid #3B434A;color:#B4BCC4;font-size:11px;font-weight:700;display:flex;align-items:center">2 opciones</span></sc-if></div>
+        <div style="font-size:18px;font-weight:700">{{ s.t }}</div>
+        <div style="font-size:13.5px;color:#8A939C;line-height:1.4">{{ s.d }}</div>
+      </a>
+    </sc-for>
+  </div>
+  <div style="font-size:13px;color:#8A939C;max-width:760px;line-height:1.5">El modo claro/oscuro se cambia arriba a la derecha en cada pantalla y se recuerda entre pantallas. Archivos compartidos: Sidebar y TabBar.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const S = [
+      ['00','Design system','Tokens de color, tipografía, espaciado y componentes base','Design-System.dc.html','ph-palette',0,0],
+      ['01','Login + empresa/sucursal','Acceso multi-empresa y modo tablet','Login.dc.html','ph-sign-in',0,0],
+      ['02','Dashboard del jefe','Estado, atrasos, alertas en vivo, carga por mecánico','Dashboard.dc.html','ph-squares-four',1,0],
+      ['03','Tablero Kanban de OT','Columnas por estado con arrastrar y soltar, tabla, carriles por mecánico','Tablero-Kanban.dc.html','ph-kanban',1,1],
+      ['04','Detalle de OT','Subtareas con cronómetro, tiempos en vivo/manual, costos, actividad','Detalle-OT.dc.html','ph-file-text',1,1],
+      ['05','Vista del mecánico','Mis tareas, Iniciar/Pausar/Finalizar, hallazgo, tablet con PIN','Vista-Mecanico.dc.html','ph-hand',1,0],
+      ['06','Registro delegado','Registrar el trabajo de mecánicos sin acceso','Registro-Delegado.dc.html','ph-users-three',0,0],
+      ['07','Recepción / check-in','Placa, km, combustible, diagrama de daños, objetos, firma','Recepcion.dc.html','ph-clipboard-text',1,0],
+      ['08','Ficha del vehículo','Datos técnicos, km, línea de tiempo, próximos mantenimientos','Ficha-Vehiculo.dc.html','ph-car-profile',1,0],
+      ['09','Ficha del cliente','Contacto, canal preferido, vehículos, historial','Ficha-Cliente.dc.html','ph-address-book',0,0],
+      ['10','Cotización y aprobación','Editor ítem por ítem + vista del cliente por link','Cotizacion.dc.html','ph-receipt',0,0],
+      ['11','Notificaciones','Conexión WhatsApp, reglas, plantillas y bitácora','Notificaciones.dc.html','ph-whatsapp-logo',0,0],
+      ['12','Reportes','Productividad, tiempos por tipo de trabajo, ingresos, retrabajos','Reportes.dc.html','ph-chart-bar',0,0],
+      ['13','Configuración','Sucursales, personal, matriz de permisos, tiempos estándar, alertas','Configuracion.dc.html','ph-sliders-horizontal',0,0],
+      ['14','Super Admin','Empresas clientes, planes, uso y suscripciones','Super-Admin.dc.html','ph-shield-star',0,0],
+      ['15–20','Mi Garage (cliente)','Vehículos, inversión, historial verificado, registro propio, OT en curso, transferencia','Mi-Garage.dc.html','ph-garage',0,0]
+    ];
+    return { screens: S.map(s => ({ n: s[0], t: s[1], d: s[2], href: s[3], icon: s[4], prio: !!s[5], opts: !!s[6], bd: s[5] ? '#3B434A' : '#2A3036', ic: s[0].startsWith('15') ? '#43D88F' : '#FFC21A' })) };
+  }
+}
+</script>
+</body>
+</html>

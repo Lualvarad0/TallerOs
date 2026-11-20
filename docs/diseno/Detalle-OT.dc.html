@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">04 · Detalle de OT</div>
+    <div style="flex:1"></div>
+    <a href="Vista-Mecanico.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Vista del mecánico →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <section style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+
+    <div id="2a" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:10px;color:#E6E6E3"><span style="background:#FFC21A;color:#1A1400;font-weight:800;font-size:13px;padding:3px 8px;border-radius:5px">2a</span><span style="font-size:16px;font-weight:600">Documento + panel lateral (tipo issue)</span><span style="font-size:13px;color:#A9ADB1">Pulsa Iniciar/Pausar en una subtarea</span></div>
+      <div style="display:flex;gap:32px;align-items:flex-start">
+        <div style="width:1440px;flex-shrink:0;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+          <dc-import name="Sidebar" active="tablero" hint-size="232px,1700px"></dc-import>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+            <div style="height:52px;display:flex;align-items:center;gap:8px;padding:0 28px;border-bottom:1px solid var(--bd);background:var(--sf);font-size:13.5px;color:var(--tx3)">
+              <a href="Tablero-Kanban.dc.html">Tablero</a><i class="ph ph-caret-right"></i><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx)">OT-1042</span>
+              <div style="flex:1"></div>
+              <div style="display:flex;align-items:center;gap:6px;color:var(--grn);font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:var(--grn)"></span>Daniela y Patricia viendo</div>
+            </div>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px">
+              <div style="padding:24px 28px 40px;display:flex;flex-direction:column;gap:24px;border-right:1px solid var(--bd)">
+                <div style="display:flex;align-items:flex-start;gap:16px">
+                  <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+                    <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:16px;padding:2px 9px;border:2px solid var(--tx);border-radius:5px;letter-spacing:.06em">ABC-482</span><span style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:var(--red)"><i class="ph-bold ph-caret-double-up"></i>Urgente</span><span style="height:24px;padding:0 8px;border-radius:5px;background:var(--red);color:var(--sf);font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-warning"></i>+2h sobre estimado</span></div>
+                    <div style="font-family:'Barlow Semi Condensed';font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.1">Toyota Hilux 2019 · Frenos + suspensión</div>
+                    <div style="font-size:15px;color:var(--tx2)">Ingresó hoy 08:05 · Promesa de entrega hoy 17:00 · Área Mecánica</div>
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-receipt"></i>Cotización</button>
+                    <button style="height:38px;padding:0 14px;border-radius:8px;border:0;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px">En reparación<i class="ph-bold ph-caret-down"></i></button>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:4px">
+                  <sc-for list="{{ steps }}" as="s" hint-placeholder-count="8">
+                    <div style="display:flex;flex-direction:column;gap:6px"><div style="height:6px;border-radius:3px;background:{{ s.c }}"></div><div style="font-size:11.5px;font-weight:{{ s.w }};color:{{ s.fg }};line-height:1.2">{{ s.name }}</div></div>
+                  </sc-for>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1.5fr);border:1px solid var(--bd);border-radius:12px;background:var(--sf);overflow:hidden">
+                  <div style="padding:14px 16px;display:flex;flex-direction:column;gap:4px"><div style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Ingresó por</div><div style="font-size:16px;font-weight:600">Ruido al frenar y rebote en baches</div><div style="font-size:12.5px;color:var(--tx3)">Motivo del cliente · recepción 08:05</div></div>
+                  <div style="display:grid;place-items:center;color:var(--tx3);font-size:22px;background:var(--sf2)"><i class="ph-bold ph-arrow-right"></i></div>
+                  <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;background:var(--sf2)"><div style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Sale con</div><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="height:26px;padding:0 9px;border-radius:6px;border:1px solid var(--bd2);background:var(--sf);font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-check" style="color:var(--grn)"></i>Frenos delanteros</span><span style="height:26px;padding:0 9px;border-radius:6px;border:1px solid var(--bd2);background:var(--sf);font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-check" style="color:var(--grn)"></i>Amortiguadores delanteros</span><span style="height:26px;padding:0 9px;border-radius:6px;background:var(--grn-s);color:var(--grn);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-plus"></i>Retén diferencial · hallazgo aprobado</span><span style="height:26px;padding:0 9px;border-radius:6px;border:1px dashed var(--bd2);color:var(--tx3);font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-clock-countdown"></i>Llantas traseras pospuesto</span></div></div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:10px"><div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700">Subtareas</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx3)">2/5 · {{ totReal }} de 5:20 est.</div><div style="flex:1"></div><button style="height:32px;padding:0 12px;border-radius:7px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-plus"></i>Subtarea</button></div>
+                  <div style="border:1px solid var(--bd);border-radius:10px;background:var(--sf);overflow:hidden">
+                    <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="5">
+                      <div style="display:grid;grid-template-columns:28px minmax(0,1fr) 150px 170px 120px;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--bd);background:{{ t.rowBg }}">
+                        <i class="{{ t.icon }}" style="font-size:22px;color:{{ t.iconC }}"></i>
+                        <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                          <div style="font-size:15.5px;font-weight:600">{{ t.name }}</div>
+                          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--tx3)"><sc-if value="{{ t.live }}"><span style="height:20px;padding:0 7px;border-radius:10px;background:var(--grn-s);color:var(--grn);font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:var(--grn)"></span>En vivo</span></sc-if><sc-if value="{{ t.manual }}"><span style="height:20px;padding:0 7px;border-radius:10px;border:1.5px dashed var(--tx3);color:var(--tx2);font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-pencil-simple"></i>Manual</span></sc-if>{{ t.meta }}</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:{{ t.mbg }};color:{{ t.mfg }};border:{{ t.mborder }};display:grid;place-items:center;font-size:11px;font-weight:700;flex-shrink:0">{{ t.mi }}</div><div style="font-size:13px;line-height:1.2">{{ t.mname }}</div></div>
+                        <div style="display:flex;flex-direction:column;gap:5px"><div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px"><b style="color:{{ t.realC }}">{{ t.real }}</b><span style="color:var(--tx3)">/ {{ t.est }}</span></div><div style="height:5px;border-radius:3px;background:var(--sf3);overflow:hidden"><div style="height:100%;width:{{ t.pct }};background:{{ t.barC }}"></div></div></div>
+                        <div style="display:flex;justify-content:flex-end">
+                          <sc-if value="{{ t.canPlay }}"><button onClick="{{ t.toggle }}" style="height:32px;padding:0 12px;border-radius:7px;border:0;background:var(--grn);color:var(--sf);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-fill ph-play"></i>{{ t.playLabel }}</button></sc-if>
+                          <sc-if value="{{ t.running }}"><button onClick="{{ t.toggle }}" style="height:32px;padding:0 12px;border-radius:7px;border:0;background:var(--ac);color:var(--ac-ink);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-fill ph-pause"></i>Pausar</button></sc-if>
+                          <sc-if value="{{ t.done }}"><span style="font-size:13px;color:var(--grn);font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-check"></i>Hecha</span></sc-if>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:10px"><div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">Hallazgos</div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx3)">{{ findCount }}</span><div style="flex:1"></div><button style="height:32px;padding:0 12px;border-radius:7px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-plus"></i>Hallazgo</button></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                    <sc-for list="{{ finds }}" as="f" hint-placeholder-count="4">
+                      <div style="display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;padding:12px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);border-left:4px solid {{ f.c }}">
+                        <div style="height:100px;border-radius:8px;background:var(--sf3);position:relative;overflow:hidden;display:grid;place-items:center;color:var(--tx3)"><i class="ph ph-image" style="font-size:26px"></i><svg viewBox="0 0 132 100" style="position:absolute;inset:0;width:100%;height:100%"><circle cx="{{ f.cx }}" cy="{{ f.cy }}" r="17" fill="none" stroke="var(--red)" stroke-width="3"></circle><path d="M{{ f.ax }} 86 L{{ f.cx }} {{ f.ty }}" stroke="var(--ac)" stroke-width="3.5" stroke-linecap="round"></path><path d="M{{ f.cx }} {{ f.ty }} l-7 4 M{{ f.cx }} {{ f.ty }} l1 8" stroke="var(--ac)" stroke-width="3.5" stroke-linecap="round"></path></svg><span style="position:absolute;right:5px;top:5px;height:18px;padding:0 5px;border-radius:4px;background:var(--bg);font-size:10.5px;font-weight:700;display:flex;align-items:center;color:var(--tx)">{{ f.nph }}</span></div>
+                        <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                          <div style="display:flex;align-items:center;gap:7px"><span style="width:12px;height:12px;border-radius:50%;background:{{ f.c }};box-shadow:0 0 0 3px {{ f.cs }};flex-shrink:0"></span><b style="font-size:15px;font-weight:600;line-height:1.2">{{ f.n }}</b></div>
+                          <div style="font-size:12.5px;color:var(--tx3)">{{ f.sev }} · {{ f.moment }} · {{ f.who }}</div>
+                          <div style="display:flex;align-items:center;gap:6px;margin-top:auto"><span style="height:24px;padding:0 8px;border-radius:5px;background:{{ f.sbg }};color:{{ f.sfg }};font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold {{ f.si }}"></i>{{ f.st }}</span><div style="flex:1"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13.5px">{{ f.price }}</span></div>
+                          <sc-if value="{{ f.isProp }}"><div style="display:flex;gap:6px"><button onClick="{{ f.add }}" style="flex:1;height:30px;border-radius:7px;border:0;background:var(--ac);color:var(--ac-ink);font-size:12.5px;font-weight:700">Enviar a cotización</button><button onClick="{{ f.later }}" style="height:30px;padding:0 10px;border-radius:7px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:12.5px;font-weight:600">Posponer</button></div></sc-if>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:10px"><div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">Registro de tiempos</div><div style="flex:1"></div><span style="font-size:12.5px;color:var(--tx3)">Modo del área: En vivo · Kevin Rojas: Al cierre</span></div>
+                  <div style="border:1px solid var(--bd);border-radius:10px;background:var(--sf);overflow:hidden">
+                    <div style="display:grid;grid-template-columns:110px minmax(0,1.3fr) minmax(0,1fr) 100px 70px minmax(0,1.1fr);gap:10px;padding:9px 14px;background:var(--sf2);border-bottom:1px solid var(--bd);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)"><span>Horario</span><span>Subtarea</span><span>Ejecutó / registró</span><span>Origen</span><span>Dur.</span><span>Desvío</span></div>
+                    <sc-for list="{{ tlog }}" as="l" hint-placeholder-count="5">
+                      <div style="display:grid;grid-template-columns:110px minmax(0,1.3fr) minmax(0,1fr) 100px 70px minmax(0,1.1fr);gap:10px;padding:10px 14px;border-bottom:1px solid var(--bd);align-items:center;font-size:13.5px">
+                        <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx2)">{{ l.h }}</span>
+                        <span style="font-weight:600">{{ l.task }}</span>
+                        <span style="font-size:12.5px;line-height:1.35"><b style="font-weight:600">{{ l.by }}</b><br><span style="color:var(--tx3)">reg. {{ l.reg }}</span></span>
+                        <span style="height:22px;padding:0 8px;border-radius:11px;background:{{ l.obg }};border:{{ l.obd }};color:{{ l.ofg }};font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;gap:4px;justify-self:start"><i class="ph-bold {{ l.oi }}"></i>{{ l.o }}</span>
+                        <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700">{{ l.d }}</span>
+                        <span style="display:flex;align-items:center;gap:6px;font-size:12.5px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;color:{{ l.dc }}">{{ l.dev }}</span><span style="color:var(--tx2)">{{ l.why }}</span></span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:10px"><div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">Repuestos</div><div style="flex:1"></div><span style="font-size:12.5px;color:var(--tx3);display:flex;align-items:center;gap:5px"><i class="ph ph-lock-simple"></i>Costos visibles por permiso «Ver costos y márgenes»</span></div>
+                  <div style="position:relative">
+                    <button onClick="{{ toggleSearch }}" style="width:100%;height:42px;border:1px solid {{ searchBd }};border-radius:9px;background:var(--sf);display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--tx3);font-size:15px;text-align:left"><i class="ph ph-magnifying-glass"></i><span style="flex:1">Buscar repuesto… <span style="color:var(--tx2)">amortiguador trasero</span></span><span style="height:24px;padding:0 8px;border-radius:5px;background:var(--grn-s);color:var(--grn);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-check"></i>Solo compatibles · Hilux 2.4 2019</span></button>
+                    <sc-if value="{{ searchOpen }}"><div style="position:absolute;left:0;right:0;top:46px;z-index:5;background:var(--sf);border:1px solid var(--bd2);border-radius:10px;box-shadow:var(--sh);overflow:hidden">
+                      <sc-for list="{{ compat }}" as="c" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:minmax(0,1fr) 120px 90px 90px;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bd);align-items:center;font-size:13.5px"><div><b style="font-weight:600">{{ c.n }}</b><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx3)">{{ c.sku }} · {{ c.fit }}</div></div><span style="font-size:12.5px;font-weight:700;color:{{ c.sc }}">{{ c.stock }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right">{{ c.price }}</span><button onClick="{{ toggleSearch }}" style="height:28px;border-radius:6px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:12.5px;font-weight:600">Agregar</button></div></sc-for>
+                    </div></sc-if>
+                  </div>
+                  <div style="border:1px solid var(--bd);border-radius:10px;background:var(--sf);overflow:hidden;font-size:13.5px">
+                    <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px 44px 80px 80px 70px;gap:10px;padding:9px 14px;background:var(--sf2);border-bottom:1px solid var(--bd);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)"><span>Repuesto</span><span>Origen</span><span>Cant.</span><span style="text-align:right">Costo</span><span style="text-align:right">Precio</span><span style="text-align:right">Margen</span></div>
+                    <sc-for list="{{ partsX }}" as="p" hint-placeholder-count="5">
+                      <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px 44px 80px 80px 70px;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bd);align-items:center"><div><div style="font-weight:600">{{ p.n }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx3)">{{ p.sku }}</div></div><span style="height:24px;padding:0 8px;border-radius:6px;background:{{ p.obg }};border:{{ p.obd }};color:{{ p.ofg }};font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:4px;justify-self:start"><i class="ph-bold {{ p.oi }}"></i>{{ p.o }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx2)">×{{ p.q }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;color:var(--tx2)">{{ p.cost }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;font-weight:700">{{ p.price }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;font-weight:700;color:{{ p.mc }}">{{ p.m }}</span></div>
+                    </sc-for>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+                    <div style="padding:12px 14px;border-radius:10px;background:var(--sf);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--tx3)">Mano de obra · 7h 20m</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700">$259.00</div><div style="font-size:12px;color:var(--grn);font-weight:600">margen 74%</div></div>
+                    <div style="padding:12px 14px;border-radius:10px;background:var(--sf);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--tx3)">Repuestos</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700">$583.00</div><div style="font-size:12px;color:var(--grn);font-weight:600">margen 34%</div></div>
+                    <div style="padding:12px 14px;border-radius:10px;background:var(--sf);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--tx3)">Total OT</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700">$842.00</div><div style="display:flex;height:5px;border-radius:3px;overflow:hidden;margin-top:6px"><div style="width:31%;background:var(--blue)"></div><div style="width:69%;background:var(--ac)"></div></div></div>
+                    <div style="padding:12px 14px;border-radius:10px;background:var(--grn-s);border:1px solid var(--grn)"><div style="font-size:12px;color:var(--grn)">Utilidad bruta</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700;color:var(--grn)">$393.00</div><div style="font-size:12px;color:var(--grn);font-weight:600">47% de la OT</div></div>
+                  </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:20px">
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <div style="display:flex;align-items:center;gap:10px"><div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">Checklist de prueba de ruta</div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx3)">{{ roadDone }}</span></div>
+                    <div style="border:1px solid var(--bd);border-radius:10px;background:var(--sf);overflow:hidden">
+                      <sc-for list="{{ road }}" as="r" hint-placeholder-count="6"><button onClick="{{ r.tog }}" style="width:100%;display:flex;align-items:center;gap:10px;padding:10px 14px;border:0;border-bottom:1px solid var(--bd);background:transparent;color:var(--tx);font-size:14px;text-align:left"><i class="{{ r.i }}" style="font-size:22px;color:{{ r.c }}"></i><span style="flex:1">{{ r.n }}</span><span style="font-size:12.5px;color:{{ r.c }};font-weight:600">{{ r.note }}</span></button></sc-for>
+                      <div style="padding:10px 14px;font-size:12.5px;color:var(--tx3);display:flex;gap:6px;align-items:center"><i class="ph ph-steering-wheel"></i>Patricia Gómez · 8 km · km salida 84.218</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700">Fotos y notas</div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                      <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="3"><div style="aspect-ratio:1;border-radius:8px;background:var(--sf3);border:1px solid var(--bd);display:flex;flex-direction:column;justify-content:flex-end;padding:6px;font-size:11px;color:var(--tx2);position:relative"><i class="ph ph-image" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:26px;color:var(--tx3)"></i>{{ ph }}</div></sc-for>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--sf)"><button style="width:34px;height:34px;border-radius:50%;border:0;background:var(--tx);color:var(--bg);display:grid;place-items:center"><i class="ph-fill ph-play"></i></button><div style="flex:1;display:flex;align-items:center;gap:2px;height:24px"><sc-for list="{{ wave }}" as="w" hint-placeholder-count="30"><div style="width:3px;border-radius:2px;background:var(--tx3);height:{{ w }}"></div></sc-for></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx2)">0:24</div></div>
+                    <div style="font-size:12.5px;color:var(--tx3)">Nota de voz · Jorge Ramírez · 10:22</div>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;gap:18px;border-bottom:1px solid var(--bd)"><div style="padding:8px 0;border-bottom:2px solid var(--ac);font-size:16px;font-weight:700">Comentarios internos</div><div style="padding:8px 0;font-size:16px;color:var(--tx3);font-weight:600">Historial de actividad</div></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+                    <div style="display:flex;flex-direction:column;gap:14px">
+                      <sc-for list="{{ comments }}" as="c" hint-placeholder-count="2">
+                        <div style="display:flex;gap:10px"><div style="width:30px;height:30px;border-radius:50%;background:{{ c.bg }};color:{{ c.fg }};display:grid;place-items:center;font-size:11px;font-weight:700;flex-shrink:0">{{ c.i }}</div><div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:13px"><b>{{ c.who }}</b> <span style="color:var(--tx3)">{{ c.when }}</span></div><div style="font-size:15px;line-height:1.45;color:var(--tx2)">{{ c.text }}</div></div></div>
+                      </sc-for>
+                      <div style="height:42px;border:1px solid var(--bd2);border-radius:9px;background:var(--sf);display:flex;align-items:center;gap:10px;padding:0 12px;color:var(--tx3);font-size:15px"><span style="flex:1">Escribe un comentario, @ para mencionar…</span><i class="ph ph-microphone" style="font-size:18px"></i><i class="ph ph-camera" style="font-size:18px"></i></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column">
+                      <sc-for list="{{ activity }}" as="a" hint-placeholder-count="5">
+                        <div style="display:grid;grid-template-columns:44px 16px 1fr;gap:8px;font-size:13px"><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx3);font-size:12px;padding-top:1px">{{ a.t }}</span><div style="display:flex;flex-direction:column;align-items:center"><div style="width:8px;height:8px;border-radius:50%;background:{{ a.c }};margin-top:5px"></div><div style="flex:1;width:1px;background:var(--bd)"></div></div><div style="padding-bottom:12px;color:var(--tx2);line-height:1.4"><b style="color:var(--tx);font-weight:600">{{ a.who }}</b> {{ a.what }}</div></div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="padding:24px 20px;display:flex;flex-direction:column;gap:18px;background:var(--sf)">
+                <a href="Ficha-Vehiculo.dc.html" style="display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--bd);border-radius:10px">
+                  <div style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Vehículo</div>
+                  <div style="font-size:16px;font-weight:700">Toyota Hilux SR 2.4 · 2019</div>
+                  <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px"><span style="color:var(--tx3)">VIN</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px">MR0HA3CD5K0712233</span><span style="color:var(--tx3)">Km ingreso</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">84.210</span><span style="color:var(--tx3)">Combustible</span><span>½ tanque</span><span style="color:var(--tx3)">Visitas</span><span>6 · desde 2021</span></div>
+                  <div style="font-size:13px;color:var(--ac-tx);font-weight:600;display:flex;align-items:center;gap:4px">Ver ficha técnica<i class="ph ph-arrow-right"></i></div>
+                </a>
+                <a href="Ficha-Cliente.dc.html" style="display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--bd);border-radius:10px">
+                  <div style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Cliente</div>
+                  <div style="font-size:16px;font-weight:700">Carlos Méndez</div>
+                  <div style="font-size:13px;color:var(--tx2)">+1 555 0142 · cmendez@correo.com</div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--grn)"><i class="ph-fill ph-whatsapp-logo" style="font-size:17px"></i>Prefiere WhatsApp</div>
+                </a>
+                <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 14px;font-size:13.5px;align-items:center">
+                  <span style="color:var(--tx3)">Asesora</span><span style="font-weight:600">Daniela Cruz</span>
+                  <span style="color:var(--tx3)">Jefe de área</span><span style="font-weight:600">Patricia Gómez</span>
+                  <span style="color:var(--tx3)">Sucursal</span><span style="font-weight:600">Norte</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Recomendados no aprobados</div>
+                  <sc-for list="{{ recs }}" as="r" hint-placeholder-count="2">
+                    <div style="padding:12px;border:1px dashed var(--bd2);border-radius:10px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:15px;font-weight:600">{{ r.name }}</b><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px">{{ r.cost }}</span></div><div style="font-size:12.5px;color:{{ r.c }};font-weight:600">{{ r.st }}</div></div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+          <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700;background:var(--sf)"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+          <div style="background:var(--sf);padding:4px 16px 14px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--bd)">
+            <div style="display:flex;align-items:center;gap:10px"><a href="Tablero-Kanban.dc.html" style="font-size:24px"><i class="ph ph-arrow-left"></i></a><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:15px;padding:2px 7px;border:2px solid var(--tx);border-radius:4px">ABC-482</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx3)">OT-1042</span><div style="flex:1"></div><i class="ph ph-dots-three-vertical" style="font-size:22px"></i></div>
+            <div><div style="font-family:'Barlow Semi Condensed';font-size:21px;font-weight:700;letter-spacing:-.01em">Toyota Hilux 2019</div><div style="font-size:15px;color:var(--tx2)">Carlos Méndez · Frenos + suspensión</div></div>
+            <div style="display:flex;gap:8px;align-items:center"><span style="height:28px;padding:0 10px;border-radius:6px;background:var(--blue-s);color:var(--blue);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-wrench"></i>En reparación<i class="ph-bold ph-caret-down"></i></span><span style="height:28px;padding:0 8px;border-radius:6px;background:var(--red);color:var(--sf);font-size:13px;font-weight:800;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-warning"></i>+2h</span></div>
+            <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:3px"><sc-for list="{{ steps }}" as="s" hint-placeholder-count="8"><div style="height:5px;border-radius:3px;background:{{ s.c }}"></div></sc-for></div>
+          </div>
+          <div style="flex:1;overflow:auto;padding:14px 12px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-family:'Barlow Semi Condensed';font-size:20px;font-weight:700;padding:0 4px">Hallazgos <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;font-size:13px;color:var(--tx3);font-weight:500">{{ findCount }}</span></div>
+            <sc-for list="{{ finds }}" as="f" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--sf);border:1px solid var(--bd);border-left:4px solid {{ f.c }}"><div style="width:44px;height:44px;border-radius:8px;background:var(--sf3);display:grid;place-items:center;color:var(--tx3);flex-shrink:0"><i class="ph ph-image"></i></div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;line-height:1.25">{{ f.n }}</div><div style="font-size:12px;color:var(--tx3)">{{ f.sev }} · {{ f.moment }}</div></div><span style="height:22px;padding:0 7px;border-radius:5px;background:{{ f.sbg }};color:{{ f.sfg }};font-size:11px;font-weight:700;display:flex;align-items:center;white-space:nowrap">{{ f.st }}</span></div></sc-for>
+            <div style="font-size:17px;font-weight:700;padding:0 4px">Subtareas <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx3);font-weight:500">2/5</span></div>
+            <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="4">
+              <div style="background:var(--sf);border:1px solid {{ t.cardBd }};border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;gap:10px;align-items:flex-start"><i class="{{ t.icon }}" style="font-size:22px;color:{{ t.iconC }}"></i><div style="flex:1"><div style="font-size:16px;font-weight:600;line-height:1.25">{{ t.name }}</div><div style="display:flex;align-items:center;gap:6px;margin-top:5px;font-size:12.5px;color:var(--tx3)"><div style="width:22px;height:22px;border-radius:50%;background:{{ t.mbg }};color:{{ t.mfg }};border:{{ t.mborder }};display:grid;place-items:center;font-size:9px;font-weight:700">{{ t.mi }}</div>{{ t.mname }}<sc-if value="{{ t.manual }}"><span style="height:18px;padding:0 6px;border-radius:9px;border:1.5px dashed var(--tx3);color:var(--tx2);font-size:11px;font-weight:700;display:flex;align-items:center">Manual</span></sc-if></div></div></div>
+                <div style="display:flex;align-items:center;gap:10px"><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:20px;font-weight:700;color:{{ t.realC }}">{{ t.real }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx3)">/ {{ t.est }}</div><div style="flex:1"></div>
+                  <sc-if value="{{ t.canPlay }}"><button onClick="{{ t.toggle }}" style="height:40px;padding:0 16px;border-radius:9px;border:0;background:var(--grn);color:var(--sf);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="ph-fill ph-play"></i>{{ t.playLabel }}</button></sc-if>
+                  <sc-if value="{{ t.running }}"><button onClick="{{ t.toggle }}" style="height:40px;padding:0 16px;border-radius:9px;border:0;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px"><i class="ph-fill ph-pause"></i>Pausar</button></sc-if>
+                </div>
+              </div>
+            </sc-for>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:12px"><div style="font-size:12px;color:var(--tx3)">Repuestos</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:18px;font-weight:700">$534.00</div><div style="font-size:12px;color:var(--vio);font-weight:600">1 en pedido</div></div>
+              <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:12px"><div style="font-size:12px;color:var(--tx3)">Mano de obra</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:18px;font-weight:700">$187.00</div><div style="font-size:12px;color:var(--tx2)">5h 20m est.</div></div>
+            </div>
+          </div>
+          <div style="padding:10px 12px 26px;background:var(--sf);border-top:1px solid var(--bd);display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+            <div style="height:48px;border-radius:10px;border:1px solid var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;gap:2px"><i class="ph ph-camera" style="font-size:20px"></i>Foto</div>
+            <div style="height:48px;border-radius:10px;border:1px solid var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;gap:2px"><i class="ph ph-microphone" style="font-size:20px"></i>Nota</div>
+            <div style="height:48px;border-radius:10px;border:1px solid var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;gap:2px"><i class="ph ph-chat-circle" style="font-size:20px"></i>Comentar</div>
+            <div style="height:48px;border-radius:10px;border:1px solid var(--bd2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;gap:2px"><i class="ph ph-clock-counter-clockwise" style="font-size:20px"></i>Actividad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="2b" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:10px;color:#E6E6E3"><span style="background:#FFC21A;color:#1A1400;font-weight:800;font-size:13px;padding:3px 8px;border-radius:5px">2b</span><span style="font-size:16px;font-weight:600">Cabina de control: tiempos al centro, actividad siempre visible</span></div>
+      <div style="display:flex;gap:32px;align-items:flex-start">
+        <div style="width:1440px;flex-shrink:0;height:960px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+          <div style="height:64px;display:flex;align-items:center;gap:14px;padding:0 20px;border-bottom:1px solid var(--bd);background:var(--sf)">
+            <a href="Tablero-Kanban.dc.html" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--bd2);display:grid;place-items:center;font-size:18px"><i class="ph ph-x"></i></a>
+            <span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:16px;padding:2px 9px;border:2px solid var(--tx);border-radius:5px;letter-spacing:.06em">ABC-482</span>
+            <div style="font-family:'Barlow Semi Condensed';font-size:19px;font-weight:700">Toyota Hilux 2019</div><div style="font-size:15px;color:var(--tx2)">Carlos Méndez · OT-1042</div>
+            <div style="flex:1"></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:11.5px;color:var(--tx3)">Promesa</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:14px">Hoy 17:00</div></div>
+            <div style="width:1px;height:32px;background:var(--bd)"></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end"><div style="font-size:11.5px;color:var(--tx3)">Total</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:14px">$721.00</div></div>
+            <button style="height:38px;padding:0 14px;border-radius:8px;border:0;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px">Pasar a Control de calidad<i class="ph-bold ph-arrow-right"></i></button>
+          </div>
+          <div style="flex:1;min-height:0;display:grid;grid-template-columns:220px minmax(0,1fr) 380px">
+            <div style="border-right:1px solid var(--bd);padding:20px 16px;display:flex;flex-direction:column;gap:0;background:var(--sf)">
+              <div style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);margin-bottom:12px">Etapa</div>
+              <sc-for list="{{ steps }}" as="s" hint-placeholder-count="8">
+                <div style="display:grid;grid-template-columns:20px 1fr;gap:10px"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:14px;height:14px;border-radius:50%;background:{{ s.dot }};border:2px solid {{ s.c }}"></div><div style="flex:1;width:2px;background:var(--bd);min-height:24px"></div></div><div style="padding-bottom:14px"><div style="font-size:13.5px;font-weight:{{ s.w }};color:{{ s.fg }}">{{ s.name }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx3)">{{ s.time }}</div></div></div>
+              </sc-for>
+              <div style="flex:1"></div>
+              <div style="padding:12px;border-radius:10px;background:var(--sf2);border:1px solid var(--bd);font-size:12.5px;color:var(--tx2);line-height:1.45">Asesora <b style="color:var(--tx)">Daniela Cruz</b><br>Área <b style="color:var(--tx)">Mecánica</b> · Sucursal <b style="color:var(--tx)">Norte</b></div>
+            </div>
+            <div style="padding:20px 24px;display:flex;flex-direction:column;gap:16px;overflow:auto">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+                <div style="padding:14px;border-radius:10px;background:var(--sf);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--tx3)">Tiempo real</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:26px;font-weight:700">{{ totReal }}</div></div>
+                <div style="padding:14px;border-radius:10px;background:var(--sf);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--tx3)">Estimado</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:26px;font-weight:700">5:20:00</div></div>
+                <div style="padding:14px;border-radius:10px;background:var(--red-s);border:1px solid var(--red)"><div style="font-size:12px;color:var(--red)">Desvío subtarea activa</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:26px;font-weight:700;color:var(--red)">+0:41</div></div>
+              </div>
+              <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 16px;border-radius:12px;background:var(--sf);border:1px solid {{ t.cardBd }}">
+                  <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+                    <div style="display:flex;align-items:center;gap:10px"><i class="{{ t.icon }}" style="font-size:20px;color:{{ t.iconC }}"></i><div style="font-size:15.5px;font-weight:700">{{ t.name }}</div></div>
+                    <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--tx2);flex-wrap:wrap"><div style="width:24px;height:24px;border-radius:50%;background:{{ t.mbg }};color:{{ t.mfg }};border:{{ t.mborder }};display:grid;place-items:center;font-size:10px;font-weight:700">{{ t.mi }}</div><span>Ejecuta <b style="color:var(--tx)">{{ t.mname }}</b></span><sc-if value="{{ t.manual }}"><span>· Registró <b style="color:var(--tx)">Daniela Cruz</b></span><span style="height:20px;padding:0 7px;border-radius:10px;border:1.5px dashed var(--tx3);font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-pencil-simple"></i>Manual</span></sc-if><sc-if value="{{ t.live }}"><span style="height:20px;padding:0 7px;border-radius:10px;background:var(--grn-s);color:var(--grn);font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:var(--grn)"></span>En vivo</span></sc-if><span style="color:var(--tx3)">{{ t.meta }}</span></div>
+                    <div style="height:6px;border-radius:3px;background:var(--sf3);overflow:hidden"><div style="height:100%;width:{{ t.pct }};background:{{ t.barC }}"></div></div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div style="text-align:right"><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:24px;font-weight:700;color:{{ t.realC }}">{{ t.real }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx3)">est. {{ t.est }}</div></div>
+                    <sc-if value="{{ t.canPlay }}"><button onClick="{{ t.toggle }}" style="width:48px;height:48px;border-radius:12px;border:0;background:var(--grn);color:var(--sf);font-size:22px;display:grid;place-items:center"><i class="ph-fill ph-play"></i></button></sc-if>
+                    <sc-if value="{{ t.running }}"><button onClick="{{ t.toggle }}" style="width:48px;height:48px;border-radius:12px;border:0;background:var(--ac);color:var(--ac-ink);font-size:22px;display:grid;place-items:center"><i class="ph-fill ph-pause"></i></button></sc-if>
+                    <sc-if value="{{ t.done }}"><div style="width:48px;height:48px;border-radius:12px;background:var(--grn-s);color:var(--grn);font-size:22px;display:grid;place-items:center"><i class="ph-bold ph-check"></i></div></sc-if>
+                  </div>
+                </div>
+              </sc-for>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ parts }}" as="p" hint-placeholder-count="4"><div style="height:30px;padding:0 10px;border-radius:7px;border:1px solid var(--bd);background:var(--sf);font-size:12.5px;display:flex;align-items:center;gap:8px"><b style="font-weight:600">{{ p.name }}</b><span style="color:{{ p.sfg }};font-weight:700">{{ p.st }}</span><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx2)">{{ p.cost }}</span></div></sc-for>
+              </div>
+            </div>
+            <div style="border-left:1px solid var(--bd);display:flex;flex-direction:column;background:var(--sf)">
+              <div style="display:flex;gap:16px;padding:0 18px;border-bottom:1px solid var(--bd)"><div style="padding:14px 0;border-bottom:2px solid var(--ac);font-size:15px;font-weight:700">Todo</div><div style="padding:14px 0;font-size:15px;color:var(--tx3);font-weight:600">Comentarios</div><div style="padding:14px 0;font-size:15px;color:var(--tx3);font-weight:600">Fotos 6</div><div style="padding:14px 0;font-size:15px;color:var(--tx3);font-weight:600">Cambios</div></div>
+              <div style="flex:1;overflow:auto;padding:16px 18px;display:flex;flex-direction:column;gap:14px">
+                <div style="padding:12px;border-radius:10px;border:1px solid var(--ac);background:var(--ac-s);font-size:13.5px;display:flex;flex-direction:column;gap:8px"><div><b>Hallazgo · Jorge Ramírez</b> <span style="color:var(--tx3)">10:20</span></div><div style="color:var(--tx2)">Fuga en retén del diferencial trasero.</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div style="aspect-ratio:4/3;border-radius:6px;background:var(--sf3);display:grid;place-items:center;color:var(--tx3)"><i class="ph ph-image" style="font-size:22px"></i></div><div style="aspect-ratio:4/3;border-radius:6px;background:var(--sf3);display:grid;place-items:center;color:var(--tx3)"><i class="ph ph-image" style="font-size:22px"></i></div></div><a href="Cotizacion.dc.html" style="font-weight:700;color:var(--ac-tx)">Agregar a cotización →</a></div>
+                <sc-for list="{{ comments }}" as="c" hint-placeholder-count="2">
+                  <div style="display:flex;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:{{ c.bg }};color:{{ c.fg }};display:grid;place-items:center;font-size:10px;font-weight:700;flex-shrink:0">{{ c.i }}</div><div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:13px"><b>{{ c.who }}</b> <span style="color:var(--tx3)">{{ c.when }}</span></div><div style="font-size:13.5px;line-height:1.45;color:var(--tx2)">{{ c.text }}</div></div></div>
+                </sc-for>
+                <sc-for list="{{ activity }}" as="a" hint-placeholder-count="5">
+                  <div style="display:flex;gap:10px;font-size:12.5px;color:var(--tx3);align-items:flex-start"><i class="ph ph-arrow-bend-down-right" style="margin-top:2px"></i><div style="flex:1;line-height:1.4"><b style="color:var(--tx2);font-weight:600">{{ a.who }}</b> {{ a.what }}</div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap">{{ a.t }}</span></div>
+                </sc-for>
+              </div>
+              <div style="padding:12px 18px;border-top:1px solid var(--bd)"><div style="height:42px;border:1px solid var(--bd2);border-radius:9px;display:flex;align-items:center;gap:10px;padding:0 12px;color:var(--tx3);font-size:15px"><span style="flex:1">Comentario interno…</span><i class="ph ph-microphone" style="font-size:18px"></i><i class="ph ph-camera" style="font-size:18px"></i></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+          <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700;background:var(--sf)"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+          <div style="background:var(--sf);padding:4px 16px 0;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--bd)">
+            <div style="display:flex;align-items:center;gap:10px"><a href="Tablero-Kanban.dc.html" style="font-size:24px"><i class="ph ph-arrow-left"></i></a><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:15px;padding:2px 7px;border:2px solid var(--tx);border-radius:4px">ABC-482</span><div style="font-size:16px;font-weight:700;flex:1">Hilux 2019</div><span style="height:26px;padding:0 8px;border-radius:6px;background:var(--red);color:var(--sf);font-size:12.5px;font-weight:800;display:flex;align-items:center">+2h</span></div>
+            <div style="display:flex;align-items:center;gap:14px;padding:14px;border-radius:12px;background:var(--sf2);border:1px solid var(--bd)"><div style="flex:1"><div style="font-size:12px;color:var(--tx3)">Real / estimado</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:26px;font-weight:700">{{ totReal }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx3)">de 5:20:00</div></div><div style="width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--blue) 0 62%,var(--sf3) 62% 100%);display:grid;place-items:center"><div style="width:50px;height:50px;border-radius:50%;background:var(--sf2);display:grid;place-items:center;font-size:12px;font-weight:700">2/5</div></div></div>
+            <div style="display:flex;gap:18px"><div style="padding:10px 0;border-bottom:3px solid var(--ac);font-size:15px;font-weight:700">Tareas</div><div style="padding:10px 0;font-size:15px;color:var(--tx3);font-weight:600">Repuestos</div><div style="padding:10px 0;font-size:15px;color:var(--tx3);font-weight:600">Actividad</div><div style="padding:10px 0;font-size:15px;color:var(--tx3);font-weight:600">Fotos</div></div>
+          </div>
+          <div style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:var(--sf);border:1px solid {{ t.cardBd }}">
+                <div style="flex:1;min-width:0"><div style="font-size:15.5px;font-weight:600;line-height:1.25">{{ t.name }}</div><div style="font-size:12.5px;color:var(--tx3);margin-top:3px">{{ t.mname }}</div></div>
+                <div style="text-align:right"><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:16px;font-weight:700;color:{{ t.realC }}">{{ t.real }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx3)">/ {{ t.est }}</div></div>
+                <sc-if value="{{ t.canPlay }}"><button onClick="{{ t.toggle }}" style="width:44px;height:44px;border-radius:11px;border:0;background:var(--grn);color:var(--sf);font-size:20px;display:grid;place-items:center"><i class="ph-fill ph-play"></i></button></sc-if>
+                <sc-if value="{{ t.running }}"><button onClick="{{ t.toggle }}" style="width:44px;height:44px;border-radius:11px;border:0;background:var(--ac);color:var(--ac-ink);font-size:20px;display:grid;place-items:center"><i class="ph-fill ph-pause"></i></button></sc-if>
+                <sc-if value="{{ t.done }}"><div style="width:44px;height:44px;border-radius:11px;background:var(--grn-s);color:var(--grn);font-size:20px;display:grid;place-items:center"><i class="ph-bold ph-check"></i></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:10px 12px 26px;background:var(--sf);border-top:1px solid var(--bd)"><button style="width:100%;height:52px;border-radius:12px;border:0;background:var(--ac);color:var(--ac-ink);font-size:16px;font-weight:800">Pasar a Control de calidad</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = {
+    theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark',
+    secs: [52 * 60, 75 * 60, 2 * 3600 + 41 * 60 + 12, 0, 0], running: 2
+  };
+  componentDidMount() { this.iv = setInterval(() => { if (this.state.running != null) this.setState(s => { const a = [...s.secs]; a[s.running]++; return { secs: a }; }); }, 1000); }
+  componentWillUnmount() { clearInterval(this.iv); }
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  extraVals() {
+    const s = this.state, fst = s.fst || ['ok','prop','later','no'], road = s.road || [1,1,1,2,1,0];
+    const SEV = { r: ['var(--red)','var(--red-s)','Urgente'], y: ['var(--ac)','var(--ac-s)','Pronto'], g: ['var(--grn)','var(--grn-s)','Vigilar'] };
+    const ST = { prop: ['Propuesto','var(--sf3)','var(--tx2)','ph-lightbulb'], ok: ['Aprobado · en OT','var(--grn-s)','var(--grn)','ph-check'], no: ['Rechazado','var(--red-s)','var(--red)','ph-x'], later: ['Pospuesto','var(--vio-s)','var(--vio)','ph-clock-countdown'] };
+    const F = [['Fuga en retén del diferencial trasero','r','Durante el trabajo','Jorge Ramírez 10:20','$129.92',2,84,40],['Rodamiento delantero izq. con ruido leve','y','Prueba de ruta','Patricia Gómez 11:40','$85.00',1,58,50],['Llantas traseras a 2 mm','y','Durante el trabajo','Miguel Soto 09:10','$380.00',3,72,62],['Bujes barra estabilizadora','g','Diagnóstico','Jorge Ramírez 08:50','$95.00',1,40,46]];
+    const setF = (i, v) => () => this.setState(st => { const a = [...(st.fst || fst)]; a[i] = v; return { fst: a }; });
+    const O = { b: ['Bodega','var(--blue-s)','0','var(--blue)','ph-warehouse'], c: ['Conseguido','var(--vio-s)','0','var(--vio)','ph-storefront'], k: ['Cliente','transparent','1.5px solid var(--bd2)','var(--tx2)','ph-user'] };
+    const P = [['Pastillas delanteras Bosch','BP-1187','b',1,'$41.00','$68.00','40%'],['Discos ventilados delanteros','DV-4402','b',2,'$88.00','$142.00','38%'],['Amortiguadores Monroe · llega 15:00','MN-G7321','c',2,'$224.00','$310.00','28%'],['Líquido de frenos DOT4','LQ-004','b',1,'$7.00','$14.00','50%'],['Retén diferencial trasero','RT-2231','c',1,'$22.00','$48.00','54%'],['Aceite diferencial 75W-90','—','k',1,'—','—','—']];
+    const R = ['Frenado firme, sin vibración','Sin ruido en suspensión en baches','Dirección centrada','Sin ruidos en rodamientos','Testigos del tablero apagados','Nivel de fluidos y sin fugas'];
+    return {
+      finds: F.map((x, i) => { const st = ST[fst[i]]; return { n: x[0], c: SEV[x[1]][0], cs: SEV[x[1]][1], sev: SEV[x[1]][2], moment: x[2], who: x[3], price: x[4], nph: x[5] + ' foto' + (x[5] > 1 ? 's' : ''), cx: x[6], cy: x[7], ty: x[7] + 18, ax: x[6] - 34, st: st[0], sbg: st[1], sfg: st[2], si: st[3], isProp: fst[i] === 'prop', add: setF(i, 'ok'), later: setF(i, 'later') }; }),
+      findCount: F.length + ' · ' + fst.filter(x => x === 'prop').length + ' por decidir',
+      tlog: [['08:12–09:04','Diagnóstico','Jorge Ramírez','Jorge Ramírez','live','0:52','+0:07','Hallazgo adicional'],['08:10–09:25','Pastillas y discos del.','Miguel Soto','Daniela Cruz','man','1:15','−0:15',''],['09:30–10:48','Amortiguadores (tramo 1)','Jorge Ramírez','Jorge Ramírez','live','1:18','',''],['10:48–11:20','Pausa · sin repuesto','Jorge Ramírez','Jorge Ramírez','live','0:32','+0:32','Faltó repuesto'],['Ayer','Revisión previa ruedas traseras','Kevin Rojas','Kevin Rojas','close','0:40','+0:10','Pieza oxidada']].map(l => ({ h: l[0], task: l[1], by: l[2], reg: l[3], d: l[5], dev: l[6] || '—', why: l[7], dc: l[6].startsWith('+') ? 'var(--red)' : l[6] ? 'var(--grn)' : 'var(--tx3)', o: { live: 'En vivo', man: 'Manual', close: 'Al cierre' }[l[4]], oi: { live: 'ph-record', man: 'ph-pencil-simple', close: 'ph-flag-checkered' }[l[4]], obg: { live: 'var(--grn-s)', man: 'transparent', close: 'var(--blue-s)' }[l[4]], ofg: { live: 'var(--grn)', man: 'var(--tx2)', close: 'var(--blue)' }[l[4]], obd: l[4] === 'man' ? '1.5px dashed var(--tx3)' : '0' })),
+      partsX: P.map(p => ({ n: p[0], sku: p[1], o: O[p[2]][0], obg: O[p[2]][1], obd: O[p[2]][2], ofg: O[p[2]][3], oi: O[p[2]][4], q: p[3], cost: p[4], price: p[5], m: p[6], mc: p[6] === '—' ? 'var(--tx3)' : parseInt(p[6]) < 30 ? 'var(--ac-tx)' : 'var(--grn)' })),
+      searchOpen: !!s.search, searchBd: s.search ? 'var(--ac)' : 'var(--bd2)', toggleSearch: () => this.setState(st => ({ search: !st.search })),
+      compat: [['Amortiguador trasero Monroe','MN-37290','Compatible exacto','4 en bodega','var(--grn)','$128.00'],['Amortiguador trasero KYB','KY-344456','Compatible exacto','Sin stock · 2 días','var(--red)','$142.00'],['Amortiguador trasero Gabriel','GB-69871','Compatible (equivalente)','1 en Sucursal Centro','var(--ac-tx)','$96.00']].map(c => ({ n: c[0], sku: c[1], fit: c[2], stock: c[3], sc: c[4], price: c[5] })),
+      road: R.map((n, i) => ({ n, i: road[i] === 1 ? 'ph-fill ph-check-circle' : road[i] === 2 ? 'ph-fill ph-warning-circle' : 'ph ph-circle', c: road[i] === 1 ? 'var(--grn)' : road[i] === 2 ? 'var(--ac-tx)' : 'var(--tx3)', note: road[i] === 2 ? 'Generó hallazgo' : road[i] === 0 ? 'Pendiente' : '', tog: () => this.setState(st => { const a = [...(st.road || road)]; a[i] = (a[i] + 1) % 3; return { road: a }; }) })),
+      roadDone: road.filter(x => x).length + '/' + R.length
+    };
+  }
+  renderVals() {
+    const f = x => { const h = Math.floor(x / 3600), m = Math.floor(x % 3600 / 60), s = x % 60; return h + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'); };
+    const M = { JR: ['var(--blue-s)','var(--blue)','Jorge Ramírez'], MS: ['var(--sf)','var(--tx2)','Miguel Soto'], KR: ['var(--ac-s)','var(--ac-tx)','Kevin Rojas'], PG: ['var(--vio-s)','var(--vio)','Patricia Gómez'] };
+    const T = [
+      ['Diagnóstico de frenos y suspensión','JR',45 * 60,'done','live','08:12 – 09:04'],
+      ['Cambio de pastillas y discos delanteros','MS',90 * 60,'done','manual','08:10 – 09:25 · reg. Daniela Cruz'],
+      ['Cambio de amortiguadores delanteros','JR',120 * 60,'doing','live','Desde 09:30 · 1 pausa (sin repuesto)'],
+      ['Alineación y balanceo','KR',45 * 60,'todo','',''],
+      ['Prueba de ruta y control de calidad','PG',20 * 60,'todo','','']
+    ];
+    const tasks = T.map((t, i) => {
+      const sec = this.state.secs[i], over = sec > t[2], run = this.state.running === i, done = t[3] === 'done';
+      return { name: t[0], mi: t[1], mname: M[t[1]][2] + (t[1] === 'MS' ? ' (sin acceso)' : ''), mbg: M[t[1]][0], mfg: M[t[1]][1], mborder: t[1] === 'MS' ? '1.5px dashed var(--tx3)' : '0',
+        real: f(sec), est: f(t[2]).slice(0, -3), realC: over ? 'var(--red)' : 'var(--tx)', pct: Math.min(100, Math.round(sec / t[2] * 100)) + '%', barC: done ? 'var(--grn)' : over ? 'var(--red)' : 'var(--blue)',
+        live: t[4] === 'live' && (done || run || sec > 0), manual: t[4] === 'manual', meta: t[5],
+        done, running: run && !done, canPlay: !done && !run, playLabel: sec > 0 ? 'Reanudar' : 'Iniciar',
+        icon: done ? 'ph-fill ph-check-circle' : run ? 'ph-fill ph-play-circle' : sec > 0 ? 'ph-fill ph-pause-circle' : 'ph ph-circle', iconC: done ? 'var(--grn)' : run ? 'var(--blue)' : sec > 0 ? 'var(--vio)' : 'var(--tx3)',
+        rowBg: run ? 'var(--sf2)' : 'transparent', cardBd: run ? 'var(--blue)' : over && !done ? 'var(--red)' : 'var(--bd)',
+        toggle: () => this.setState(s => ({ running: s.running === i ? null : i }))
+      };
+    });
+    const tot = this.state.secs.reduce((a, b) => a + b, 0);
+    const SN = ['Recibido','Diagnóstico','Esperando aprobación','Esperando repuestos','En reparación','Control de calidad','Listo para entregar','Entregado'];
+    const ST = ['08:05','08:12','09:04','09:31','10:48','—','—','—'];
+    return {
+      theme: this.state.theme, toggle: this.toggle, themeLabel: this.state.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      tasks, totReal: f(tot), ...this.extraVals(),
+      steps: SN.map((n, i) => ({ name: n, time: ST[i], c: i < 4 ? 'var(--grn)' : i === 4 ? 'var(--blue)' : 'var(--sf3)', dot: i < 4 ? 'var(--grn)' : i === 4 ? 'var(--blue)' : 'var(--sf)', fg: i <= 4 ? 'var(--tx)' : 'var(--tx3)', w: i === 4 ? 700 : 500 })),
+      parts: [
+        ['Pastillas delanteras Bosch','BP-1187',1,'$68.00','Instalado','var(--grn-s)','var(--grn)'],
+        ['Discos ventilados delanteros','DV-4402',2,'$142.00','Instalado','var(--grn-s)','var(--grn)'],
+        ['Amortiguadores Monroe','MN-G7321',2,'$310.00','Pedido · 15:00','var(--vio-s)','var(--vio)'],
+        ['Líquido de frenos DOT4','LQ-004',1,'$14.00','En bodega','var(--sf3)','var(--tx2)']
+      ].map(p => ({ name: p[0], sku: p[1], q: p[2], cost: p[3], st: p[4], sbg: p[5], sfg: p[6] })),
+      photos: ['Ingreso frontal','Discos gastados','Retén diferencial'],
+      wave: [8,14,20,12,18,22,10,6,16,24,18,12,8,14,20,16,10,22,18,12,6,10,16,20,14,8,12,18,10,6].map(h => h + 'px'),
+      comments: [
+        { i: 'PG', bg: 'var(--vio-s)', fg: 'var(--vio)', who: 'Patricia Gómez', when: '10:51', text: '@Jorge los amortiguadores llegan a las 15:00. Adelanta la alineación con Kevin para no perder la promesa.' },
+        { i: 'DC', bg: 'var(--grn-s)', fg: 'var(--grn)', who: 'Daniela Cruz', when: '10:55', text: 'Le aviso a Carlos por WhatsApp que la entrega puede pasar a 18:00.' }
+      ],
+      activity: [
+        { t: '10:48', c: 'var(--vio)', who: 'Jorge Ramírez', what: 'pausó «Cambio de amortiguadores» · motivo: sin repuesto' },
+        { t: '10:20', c: 'var(--ac)', who: 'Jorge Ramírez', what: 'reportó un hallazgo con 2 fotos' },
+        { t: '10:15', c: 'var(--tx3)', who: 'Daniela Cruz', what: 'registró 1h 15m manual por Miguel Soto' },
+        { t: '09:31', c: 'var(--grn)', who: 'Carlos Méndez (cliente)', what: 'aprobó 4 de 5 ítems por link de WhatsApp' },
+        { t: '09:04', c: 'var(--blue)', who: 'Patricia Gómez', what: 'cambió estado Diagnóstico → Esperando aprobación' },
+        { t: '08:05', c: 'var(--tx3)', who: 'Daniela Cruz', what: 'creó la OT en recepción' }
+      ],
+      recs: [
+        { name: 'Bujes barra estabilizadora', cost: '$95.00', st: 'Rechazado por cliente · 28 oct', c: 'var(--red)' },
+        { name: 'Llantas traseras (2)', cost: '$380.00', st: 'Pendiente de respuesta', c: 'var(--vio)' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

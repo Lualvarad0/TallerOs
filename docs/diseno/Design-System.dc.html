@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">00 · Design system</div>
+    <div style="flex:1"></div>
+    <a href="Login.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Login →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <div style="width:1440px;flex-shrink:0;background:var(--bg);color:var(--tx);border-radius:12px;padding:56px 64px;display:flex;flex-direction:column;gap:64px">
+    <div style="display:flex;align-items:flex-end;gap:24px">
+      <div style="width:64px;height:64px;border-radius:14px;background:var(--ac);color:var(--ac-ink);display:grid;place-items:center;font-size:36px"><i class="ph-bold ph-wrench"></i></div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)">TallerOS · Sistema de diseño v0.1</div>
+        <div style="font-family:'Barlow Semi Condensed';font-size:48px;font-weight:700;letter-spacing:-.01em;line-height:1.05">Hecho para leerse a dos metros</div>
+      </div>
+      <div style="max-width:420px;font-size:16px;line-height:1.5;color:var(--tx2);text-wrap:pretty">Interfaz de productividad para el taller: superficies sobrias, un acento amarillo industrial reservado para acciones y foco, y cuatro colores de estado que significan lo mismo en todas las pantallas.</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:-.01em">Color</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+        <sc-for list="{{ statusColors }}" as="c" hint-placeholder-count="5">
+          <div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:hidden">
+            <div style="height:88px;background:{{ c.v }};display:flex;align-items:flex-end;padding:10px"><div style="height:24px;padding:0 9px;border-radius:5px;background:{{ c.s }};color:{{ c.v }};font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold {{ c.icon }}"></i>{{ c.name }}</div></div>
+            <div style="padding:12px 14px;display:flex;flex-direction:column;gap:4px"><div style="font-size:16px;font-weight:700">{{ c.name }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx3)">{{ c.tok }}</div><div style="font-size:13px;color:var(--tx2);line-height:1.4">{{ c.use }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--bd)">
+        <sc-for list="{{ neutrals }}" as="n" hint-placeholder-count="8">
+          <div style="background:{{ n.v }};height:96px;padding:10px;display:flex;flex-direction:column;justify-content:flex-end;color:{{ n.fg }}"><div style="font-size:13px;font-weight:700">{{ n.name }}</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11px;opacity:.8">{{ n.tok }}</div></div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:48px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:-.01em">Tipografía</div>
+        <div style="font-size:15px;color:var(--tx2)">Barlow Semi Condensed 600–700 para títulos · Inter 400–600 para interfaz · JetBrains Mono con cifras tabulares para placa, VIN, OT, cronómetros y montos. Base 16px escritorio, 18px mínimo en vista del mecánico, cronómetro activo ≥48px.</div>
+        <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="7">
+          <div style="display:grid;grid-template-columns:120px 1fr;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--bd)">
+            <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx3)">{{ t.tok }}</div>
+            <div style="font-family:{{ t.ff }};font-size:{{ t.size }};font-weight:{{ t.w }};letter-spacing:{{ t.ls }};line-height:1.15">{{ t.sample }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:-.01em">Espaciado y radios</div>
+        <div style="font-size:15px;color:var(--tx2)">Base 4px. Escritorio denso; móvil de taller usa objetivos táctiles de 64px mínimo.</div>
+        <sc-for list="{{ spaces }}" as="s" hint-placeholder-count="8">
+          <div style="display:flex;align-items:center;gap:14px"><div style="width:72px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx3)">{{ s.tok }}</div><div style="height:14px;width:{{ s.px }};background:var(--ac);border-radius:2px"></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx2)">{{ s.px }}</div></div>
+        </sc-for>
+        <div style="display:flex;gap:14px;margin-top:8px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:64px;height:64px;border:2px solid var(--tx2);border-radius:4px"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11px;color:var(--tx3)">r-sm 4</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:64px;height:64px;border:2px solid var(--tx2);border-radius:8px"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11px;color:var(--tx3)">r-md 8</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:64px;height:64px;border:2px solid var(--tx2);border-radius:12px"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11px;color:var(--tx3)">r-lg 12</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:64px;height:64px;border:2px solid var(--tx2);border-radius:20px"></div><span style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11px;color:var(--tx3)">r-xl 20</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:-.01em">Componentes</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Botones</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <button style="height:36px;padding:0 14px;border-radius:8px;border:0;background:var(--ac);color:var(--ac-ink);font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px" style-hover="filter:brightness(1.06)"><i class="ph-bold ph-plus"></i>Nueva OT</button>
+            <button style="height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px" style-hover="background:var(--sf2)"><i class="ph ph-funnel"></i>Filtros</button>
+            <button style="height:36px;padding:0 12px;border-radius:8px;border:0;background:transparent;color:var(--tx2);font-size:15px;font-weight:600" style-hover="background:var(--sf2)">Cancelar</button>
+            <button style="width:36px;height:36px;border-radius:8px;border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-size:18px;display:grid;place-items:center"><i class="ph ph-dots-three"></i></button>
+          </div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Botones de taller (táctil 72px)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <div style="height:72px;border-radius:14px;background:var(--grn);color:var(--sf);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:16px;gap:2px"><i class="ph-fill ph-play" style="font-size:24px"></i>INICIAR</div>
+            <div style="height:72px;border-radius:14px;background:var(--ac);color:var(--ac-ink);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:16px;gap:2px"><i class="ph-fill ph-pause" style="font-size:24px"></i>PAUSAR</div>
+            <div style="height:72px;border-radius:14px;background:var(--tx);color:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:16px;gap:2px"><i class="ph-fill ph-flag-checkered" style="font-size:24px"></i>FINALIZAR</div>
+          </div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Badge de estado de OT</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ states }}" as="s" hint-placeholder-count="8">
+              <div style="height:24px;padding:0 9px;border-radius:5px;background:{{ s.bg }};color:{{ s.fg }};font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold {{ s.icon }}"></i>{{ s.name }}</div>
+            </sc-for>
+          </div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Prioridad · Atraso · Placa</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <div style="display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;color:var(--red)"><i class="ph-bold ph-caret-double-up"></i>Urgente</div>
+            <div style="display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;color:var(--ac-tx)"><i class="ph-bold ph-caret-up"></i>Alta</div>
+            <div style="display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;color:var(--tx3)"><i class="ph-bold ph-equals"></i>Normal</div>
+            <div style="height:22px;padding:0 8px;border-radius:5px;background:var(--red);color:var(--sf);font-size:12px;font-weight:800;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-warning"></i>+2h 10m</div>
+            <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px;padding:2px 7px;border:1.5px solid var(--tx);border-radius:4px;letter-spacing:.06em;background:var(--sf)">ABC-482</div>
+          </div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Avatar de mecánico</div>
+          <div style="display:flex;gap:18px;align-items:flex-start">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:40px;height:40px;border-radius:50%;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-size:15px;font-weight:700;position:relative">JR<div style="position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;background:var(--grn);border:2px solid var(--sf)"></div></div><span style="font-size:12px;color:var(--tx2)">Trabajando</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:40px;height:40px;border-radius:50%;background:var(--sf3);color:var(--tx2);display:grid;place-items:center;font-size:15px;font-weight:700;position:relative">LP<div style="position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;border-radius:50%;background:var(--ac);border:2px solid var(--sf)"></div></div><span style="font-size:12px;color:var(--tx2)">En pausa</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:40px;height:40px;border-radius:50%;background:transparent;border:1.5px dashed var(--tx3);color:var(--tx2);display:grid;place-items:center;font-size:15px;font-weight:700">MS</div><span style="font-size:12px;color:var(--tx2)">Sin acceso</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="display:flex"><div style="width:28px;height:28px;border-radius:50%;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-size:11px;font-weight:700;border:2px solid var(--sf)">JR</div><div style="width:28px;height:28px;border-radius:50%;background:var(--grn-s);color:var(--grn);display:grid;place-items:center;font-size:11px;font-weight:700;border:2px solid var(--sf);margin-left:-8px">AT</div><div style="width:28px;height:28px;border-radius:50%;border:1.5px dashed var(--tx3);background:var(--sf);color:var(--tx2);display:grid;place-items:center;font-size:11px;font-weight:700;margin-left:-8px">MS</div></div><span style="font-size:12px;color:var(--tx2)">Grupo</span></div>
+          </div>
+          <div style="font-size:13px;color:var(--tx2);line-height:1.45">Borde punteado = personal sin acceso a la app. Sus registros siempre muestran quién los registró.</div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Cronómetro</div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:var(--sf2)">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--grn);animation:pulse 1.4s infinite"></div>
+            <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:28px;font-weight:700;letter-spacing:-.02em">01:24:08</div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:5px"><div style="font-size:12px;color:var(--tx3)">de 1:30 estimado</div><div style="height:6px;border-radius:3px;background:var(--sf3);overflow:hidden"><div style="width:93%;height:100%;background:var(--blue)"></div></div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--red);border-radius:10px;background:var(--red-s)">
+            <i class="ph-fill ph-pause-circle" style="font-size:22px;color:var(--red)"></i>
+            <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:28px;font-weight:700;color:var(--red)">02:41:55</div>
+            <div style="flex:1;font-size:12.5px;color:var(--red);font-weight:600">Excede estimado (2:00) · En pausa: sin repuesto</div>
+          </div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Chip de registro de tiempo</div>
+          <div style="display:flex;gap:10px">
+            <div style="height:24px;padding:0 9px;border-radius:12px;background:var(--grn-s);color:var(--grn);font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:var(--grn);animation:pulse 1.4s infinite"></span>En vivo</div>
+            <div style="height:24px;padding:0 9px;border-radius:12px;border:1.5px dashed var(--tx3);color:var(--tx2);font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-pencil-simple"></i>Manual</div>
+          </div>
+          <div style="border:1px solid var(--bd);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:15px;font-weight:600">Cambio de pastillas delanteras</div><div style="height:22px;padding:0 8px;border-radius:11px;border:1.5px dashed var(--tx3);color:var(--tx2);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-pencil-simple"></i>Manual</div></div>
+            <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px;color:var(--tx2)">08:10 – 09:25 · 1h 15m</div>
+            <div style="font-size:12.5px;color:var(--tx3)">Ejecutado por <b style="color:var(--tx)">Miguel Soto</b> · Registrado por <b style="color:var(--tx)">Daniela Cruz</b></div>
+          </div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Sello de historial</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:6px;background:var(--grn-s);color:var(--grn);font-size:13px;font-weight:700"><i class="ph-fill ph-seal-check" style="font-size:17px"></i>Verificado por taller</div>
+            <div style="display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:6px;border:1.5px dashed var(--bd2);color:var(--tx2);font-size:13px;font-weight:700"><i class="ph-bold ph-user-circle" style="font-size:17px"></i>Registro propio</div>
+          </div>
+          <div style="font-size:13px;color:var(--tx2);line-height:1.45">Verificado = OT cerrada en un taller TallerOS. Registro propio = ingresado por el dueño; se muestra pero no suma como historial certificado.</div>
+        </div>
+
+        <div style="grid-column:span 2;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Timeline de visitas</div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ visits }}" as="v" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:96px 24px 1fr;gap:12px">
+                <div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;color:var(--tx2);padding-top:2px;text-align:right">{{ v.date }}<div style="color:var(--tx3);font-size:11.5px">{{ v.km }}</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center"><div style="width:14px;height:14px;border-radius:50%;border:3px solid {{ v.c }};background:var(--sf);margin-top:3px"></div><div style="flex:1;width:2px;background:var(--bd)"></div></div>
+                <div style="padding-bottom:18px;display:flex;flex-direction:column;gap:4px"><div style="font-size:15.5px;font-weight:700">{{ v.title }}</div><div style="font-size:13px;color:var(--tx2)">{{ v.sub }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Tarjeta de OT</div>
+          <div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--sh);border-left:3px solid var(--red)">
+            <div style="display:flex;gap:10px">
+              <div style="width:64px;height:46px;border-radius:7px;background:var(--sf2);border:1px solid var(--bd);position:relative;flex-shrink:0;padding:4px"><dc-import name="Silueta" tipo="pickup" hint-size="100%,100%"></dc-import><span style="position:absolute;left:-5px;bottom:-5px;width:20px;height:20px;border-radius:50%;background:var(--sf);border:1px solid var(--bd2);display:grid;place-items:center;font-size:11px"><i class="ph-bold ph-car"></i></span></div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px"><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700;font-size:13px;padding:1px 6px;border:1.5px solid var(--tx);border-radius:4px;letter-spacing:.06em">ABC-482</div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px;color:var(--tx3)">OT-1042</div><div style="flex:1"></div><i class="ph-bold ph-caret-double-up" style="color:var(--red)"></i></div>
+                <div style="font-family:'Barlow Semi Condensed';font-size:18px;font-weight:700;line-height:1.1">Toyota Hilux 2019</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--tx2)">Carlos Méndez · Frenos + suspensión</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="height:22px;padding:0 7px;border-radius:5px;background:var(--ac-s);color:var(--ac-tx);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-lightbulb"></i>2 hallazgos por aprobar</span><span style="height:22px;padding:0 7px;border-radius:5px;background:var(--vio-s);color:var(--vio);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-package"></i>Falta repuesto</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="display:flex"><div style="width:24px;height:24px;border-radius:50%;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-size:10px;font-weight:700;border:2px solid var(--sf)">JR</div><div style="width:24px;height:24px;border-radius:50%;border:1.5px dashed var(--tx3);background:var(--sf);color:var(--tx2);display:grid;place-items:center;font-size:10px;font-weight:700;margin-left:-7px">MS</div></div><div style="flex:1"></div><div style="font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:4px"><i class="ph ph-clock"></i>5h 10m</div><div style="height:20px;padding:0 6px;border-radius:4px;background:var(--red);color:var(--sf);font-size:11px;font-weight:800;display:flex;align-items:center">+2h</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700">Componentes de taller</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Origen del registro de tiempo</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="height:26px;padding:0 10px;border-radius:13px;background:var(--grn-s);color:var(--grn);font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:var(--grn);animation:pulse 1.4s infinite"></span>En vivo</span>
+            <span style="height:26px;padding:0 10px;border-radius:13px;border:1.5px dashed var(--tx3);color:var(--tx2);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-pencil-simple"></i>Manual</span>
+            <span style="height:26px;padding:0 10px;border-radius:13px;background:var(--blue-s);color:var(--blue);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-flag-checkered"></i>Al cierre</span>
+          </div>
+          <div style="font-size:13px;color:var(--tx2);line-height:1.45">En vivo = cronómetro. Manual = otra persona ingresó horas. Al cierre = el mecánico ingresó el total del vehículo y el sistema lo repartió.</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Motivo de desviación</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ deviations }}" as="d" hint-placeholder-count="6"><span style="height:24px;padding:0 8px;border-radius:5px;background:var(--red-s);color:var(--red);font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px"><i class="ph-bold {{ d.i }}"></i>{{ d.n }}</span></sc-for></div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Semáforo de severidad de hallazgos</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:16px;height:16px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px var(--red-s)"></span><b style="font-size:14px;width:80px">Urgente</b><span style="font-size:13px;color:var(--tx2)">Riesgo de seguridad. Si el cliente rechaza, firma «fui informado».</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:16px;height:16px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px var(--ac-s)"></span><b style="font-size:14px;width:80px">Pronto</b><span style="font-size:13px;color:var(--tx2)">Atender en la próxima visita o en semanas.</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="width:16px;height:16px;border-radius:50%;background:var(--grn);box-shadow:0 0 0 4px var(--grn-s)"></span><b style="font-size:14px;width:80px">Vigilar</b><span style="font-size:13px;color:var(--tx2)">Desgaste normal; revisar en mantenimiento.</span></div>
+          </div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Estado del hallazgo</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="height:24px;padding:0 8px;border-radius:5px;background:var(--sf3);color:var(--tx2);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-lightbulb"></i>Propuesto</span>
+            <span style="height:24px;padding:0 8px;border-radius:5px;background:var(--grn-s);color:var(--grn);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-check"></i>Aprobado · en OT</span>
+            <span style="height:24px;padding:0 8px;border-radius:5px;background:var(--red-s);color:var(--red);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-x"></i>Rechazado</span>
+            <span style="height:24px;padding:0 8px;border-radius:5px;background:var(--vio-s);color:var(--vio);font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px"><i class="ph-bold ph-clock-countdown"></i>Pospuesto</span>
+          </div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Origen de repuesto</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="height:26px;padding:0 10px;border-radius:6px;background:var(--blue-s);color:var(--blue);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-warehouse"></i>Bodega</span>
+            <span style="height:26px;padding:0 10px;border-radius:6px;background:var(--vio-s);color:var(--vio);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-storefront"></i>Conseguido</span>
+            <span style="height:26px;padding:0 10px;border-radius:6px;border:1.5px solid var(--bd2);color:var(--tx2);font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="ph-bold ph-user"></i>Cliente</span>
+          </div>
+          <div style="font-size:13px;color:var(--tx2);line-height:1.45">Bodega descuenta stock. Conseguido = compra externa para la OT. Cliente = traído por el dueño, sin margen ni garantía de pieza.</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Estados de validación</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;flex-direction:column;gap:3px"><div style="height:40px;border:2px solid var(--red);border-radius:8px;display:flex;align-items:center;padding:0 12px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;font-size:14px;gap:8px">0912-445-87<i class="ph-fill ph-x-circle" style="margin-left:auto;color:var(--red);font-size:18px"></i></div><span style="font-size:12px;color:var(--red);font-weight:600">Cédula inválida: dígito verificador no coincide</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px"><div style="height:40px;border:2px solid var(--ac);border-radius:8px;display:flex;align-items:center;padding:0 12px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;font-size:14px;gap:8px">AB-48-2C<i class="ph-fill ph-warning" style="margin-left:auto;color:var(--ac-tx);font-size:18px"></i></div><span style="font-size:12px;color:var(--ac-tx);font-weight:600">Formato de placa poco común. ¿Es correcto?</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px"><div style="height:40px;border:2px solid var(--grn);border-radius:8px;display:flex;align-items:center;padding:0 12px;font-family:'JetBrains Mono';font-variant-numeric:tabular-nums;font-size:14px;gap:8px">+1 555 014 2<i class="ph-fill ph-check-circle" style="margin-left:auto;color:var(--grn);font-size:18px"></i></div><span style="font-size:12px;color:var(--grn);font-weight:600">Normalizado para WhatsApp</span></div>
+          </div>
+        </div>
+
+        <div style="grid-column:span 2;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Siluetas por carrocería (cuando aún no hay foto)</div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+            <sc-for list="{{ bodies }}" as="b" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div style="width:100%;height:76px;border-radius:10px;background:var(--sf2);border:1px solid var(--bd);padding:10px"><dc-import name="Silueta" tipo="{{ b.t }}" hint-size="100%,100%"></dc-import></div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><i class="ph {{ b.i }}"></i>{{ b.n }}</div></div></sc-for>
+          </div>
+        </div>
+
+        <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Botón grande de marcación</div>
+          <div style="height:120px;border-radius:20px;background:var(--grn);color:var(--sf);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><i class="ph-fill ph-sign-in" style="font-size:36px"></i><span style="font-family:'Barlow Semi Condensed';font-size:26px;font-weight:700;letter-spacing:.04em">MARCAR ENTRADA</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="height:56px;border-radius:14px;background:var(--ac);color:var(--ac-ink);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:800;font-size:16px"><i class="ph-fill ph-fork-knife"></i>ALMUERZO</div><div style="height:56px;border-radius:14px;background:var(--tx);color:var(--bg);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:800;font-size:16px"><i class="ph-fill ph-sign-out"></i>SALIDA</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark' };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    const dark = this.state.theme === 'dark';
+    return {
+      theme: this.state.theme, toggle: this.toggle, themeLabel: dark ? 'Modo claro' : 'Modo oscuro',
+      statusColors: [
+        { name: 'Acento', tok: '--ac #FFC21A', v: 'var(--ac)', s: 'var(--ac-ink)', icon: 'ph-lightning', use: 'Acción primaria, foco, selección. Nunca como estado.' },
+        { name: 'Atrasado', tok: '--red', v: 'var(--red)', s: 'var(--red-s)', icon: 'ph-warning', use: 'Excede tiempo estimado, detenida, retrabajo.' },
+        { name: 'En curso', tok: '--blue', v: 'var(--blue)', s: 'var(--blue-s)', icon: 'ph-wrench', use: 'Diagnóstico, reparación, control de calidad.' },
+        { name: 'En espera', tok: '--vio', v: 'var(--vio)', s: 'var(--vio-s)', icon: 'ph-hourglass', use: 'Aprobación del cliente, repuestos, pausa.' },
+        { name: 'Terminado', tok: '--grn', v: 'var(--grn)', s: 'var(--grn-s)', icon: 'ph-check-circle', use: 'Listo para entregar, entregado, aprobado.' }
+      ],
+      neutrals: [['bg','--bg'],['sf','--sf'],['sf2','--sf2'],['sf3','--sf3'],['bd','--bd'],['bd2','--bd2'],['tx3','--tx3'],['tx','--tx']].map((n, i) => ({ name: ['Fondo','Superficie','Superficie 2','Superficie 3','Borde','Borde fuerte','Texto 3','Texto'][i], tok: n[1], v: `var(${n[1]})`, fg: i >= 6 ? 'var(--bg)' : 'var(--tx)' })),
+      typeScale: [
+        { tok: 'Barlow SC 48/700', ff: "'Barlow Semi Condensed'", size: '48px', w: 700, ls: '-.01em', sample: 'Tablero de OT' },
+        { tok: 'Barlow SC 32/700', ff: "'Barlow Semi Condensed'", size: '32px', w: 700, ls: '0', sample: 'Toyota Hilux 2019' },
+        { tok: 'Barlow SC 22/600', ff: "'Barlow Semi Condensed'", size: '22px', w: 600, ls: '0', sample: 'Subtareas y tiempos' },
+        { tok: 'Inter 16/400', ff: 'Inter', size: '16px', w: 400, ls: '0', sample: 'Cliente reporta ruido al frenar en bajada.' },
+        { tok: 'Inter 13/500', ff: 'Inter', size: '13px', w: 500, ls: '0', sample: 'Registrado por Daniela Cruz · hace 12 min' },
+        { tok: 'Mono 48/700 tab', ff: "'JetBrains Mono'", size: '48px', w: 700, ls: '-.02em', sample: '01:24:08' },
+        { tok: 'plate 13/700', ff: "'JetBrains Mono'", size: '13px', w: 700, ls: '.06em', sample: 'ABC-482 · OT-1042' }
+      ],
+      deviations: [['Pieza oxidada','ph-drop-half'],['Hallazgo adicional','ph-lightbulb'],['Faltó herramienta','ph-wrench'],['Faltó repuesto','ph-package'],['Esperó aprobación','ph-hourglass'],['Retrabajo','ph-arrow-counter-clockwise']].map(d => ({ n: d[0], i: d[1] })),
+      bodies: [['sedan','Sedán','ph-car'],['suv','SUV','ph-car'],['pickup','Pickup','ph-truck'],['hatchback','Hatchback','ph-car'],['moto','Moto','ph-motorcycle']].map(b => ({ t: b[0], n: b[1], i: b[2] })),
+      spaces: [4, 8, 12, 16, 24, 32, 48, 64].map((p, i) => ({ tok: 's-' + [1, 2, 3, 4, 6, 8, 12, 16][i], px: p + 'px' })),
+      states: [
+        ['Recibido','var(--sf3)','var(--tx2)','ph-tray-arrow-down'],['Diagnóstico','var(--blue-s)','var(--blue)','ph-stethoscope'],['Esperando aprobación','var(--vio-s)','var(--vio)','ph-hourglass'],['Esperando repuestos','var(--vio-s)','var(--vio)','ph-package'],['En reparación','var(--blue-s)','var(--blue)','ph-wrench'],['Control de calidad','var(--blue-s)','var(--blue)','ph-check-square'],['Listo para entregar','var(--grn-s)','var(--grn)','ph-flag-checkered'],['Entregado','var(--sf3)','var(--grn)','ph-handshake']
+      ].map(s => ({ name: s[0], bg: s[1], fg: s[2], icon: s[3] })),
+      visits: [
+        { date: 'HOY', km: '84.210 km', c: 'var(--blue)', title: 'OT-1042 · Frenos + suspensión — en reparación', sub: 'Atiende ahora: Jorge Ramírez, Miguel Soto · Asesora: Daniela Cruz' },
+        { date: '12 MAR 2026', km: '78.950 km', c: 'var(--grn)', title: 'Mantenimiento 80.000 km', sub: 'Aceite 5W-30, filtros aceite/aire/cabina · Atendió: Luis Pérez' },
+        { date: '03 SEP 2025', km: '71.300 km', c: 'var(--grn)', title: 'Cambio de batería + alineación', sub: 'Batería 70Ah · Atendió: Andrés Torres' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root,[data-theme=light]{--bg:#EEEEEB;--sf:#FFFFFF;--sf2:#F6F6F3;--sf3:#E9E9E5;--bd:#DEDED8;--bd2:#C6C6BF;--tx:#15171A;--tx2:#474E56;--tx3:#737B84;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#8A5F00;--ac-s:#FFF3CC;--red:#C8282E;--red-s:#FDE6E6;--blue:#1A62D6;--blue-s:#E2ECFD;--vio:#6E41D0;--vio-s:#EEE7FC;--grn:#137A3A;--grn-s:#DFF3E6;--sh:0 1px 2px rgba(20,20,20,.06),0 6px 20px rgba(20,20,20,.07)}
+[data-theme=dark]{--bg:#0C0E10;--sf:#15181B;--sf2:#1B1F23;--sf3:#252A2F;--bd:#2A3036;--bd2:#3B434A;--tx:#EEF0F2;--tx2:#B4BCC4;--tx3:#8A939C;--ac:#FFC21A;--ac-ink:#1A1400;--ac-tx:#FFC940;--ac-s:#2E2710;--red:#FF6166;--red-s:#3A1618;--blue:#5AA2FF;--blue-s:#14283F;--vio:#AE92FF;--vio-s:#261D42;--grn:#43D88F;--grn-s:#0F2E20;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+body{margin:0;background:#2A2D30;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ac-tx)}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh;background:#2A2D30;padding:40px;display:flex;flex-direction:column;gap:24px;font-family:Inter,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:16px;color:#E6E6E3">
+    <a href="TallerOS.dc.html" style="font-size:15px;color:#A9ADB1">← Índice</a>
+    <div style="font-family:'Barlow Semi Condensed';font-size:22px;font-weight:700">01 · Login + selector de empresa / sucursal</div>
+    <div style="flex:1"></div>
+    <a href="Dashboard.dc.html" style="font-size:15px;color:#A9ADB1">Siguiente: Dashboard →</a>
+    <button onClick="{{ toggle }}" style="height:34px;padding:0 14px;border-radius:8px;border:1px solid #4A4E52;background:#1E2124;color:#E6E6E3;font-size:13.5px;display:flex;align-items:center;gap:8px;white-space:nowrap"><i class="ph ph-circle-half"></i>{{ themeLabel }}</button>
+  </div>
+  <div style="display:flex;gap:32px;align-items:flex-start">
+    <div style="width:1440px;flex-shrink:0;height:900px;border-radius:12px;overflow:hidden;background:var(--bg);color:var(--tx);display:grid;grid-template-columns:1fr 1fr;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+      <div style="padding:56px 72px;display:flex;flex-direction:column;gap:28px;background:var(--sf)">
+        <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:var(--ac);color:var(--ac-ink);display:grid;place-items:center;font-size:20px"><i class="ph-bold ph-wrench"></i></div><div style="font-family:'Barlow Semi Condensed';font-size:21px;font-weight:700;letter-spacing:-.01em">TallerOS</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px;max-width:400px">
+          <div><div style="font-family:'Barlow Semi Condensed';font-size:34px;font-weight:700;letter-spacing:-.01em">Ingresar</div><div style="font-size:16px;color:var(--tx2);margin-top:6px">Con tu correo o número de celular.</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><label style="font-size:13px;font-weight:600;color:var(--tx2)">Correo o celular</label><div style="height:48px;border:1px solid var(--bd2);border-radius:9px;display:flex;align-items:center;padding:0 14px;font-size:16px">patricia@tallerruta5.com</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex"><label style="font-size:13px;font-weight:600;color:var(--tx2);flex:1">Contraseña</label><span style="font-size:13px;color:var(--ac-tx);font-weight:600">¿Olvidaste?</span></div><div style="height:48px;border:2px solid var(--ac);border-radius:9px;display:flex;align-items:center;padding:0 14px;font-size:16px;letter-spacing:.2em">••••••••••<i class="ph ph-eye" style="margin-left:auto;color:var(--tx3);letter-spacing:0"></i></div></div>
+          <button style="height:50px;border-radius:10px;border:0;background:var(--ac);color:var(--ac-ink);font-size:16px;font-weight:800">Continuar</button>
+          <div style="display:flex;align-items:center;gap:12px;color:var(--tx3);font-size:13px"><div style="flex:1;height:1px;background:var(--bd)"></div>o<div style="flex:1;height:1px;background:var(--bd)"></div></div>
+          <a href="Vista-Mecanico.dc.html" style="height:50px;border-radius:10px;border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:700"><i class="ph ph-device-tablet" style="font-size:20px"></i>Modo tablet de taller (PIN)</a>
+        </div>
+        <div style="font-size:12.5px;color:var(--tx3)">Web · Escritorio · Android · iOS</div>
+      </div>
+      <div style="padding:56px 72px;display:flex;flex-direction:column;justify-content:center;gap:22px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3)">Paso 2 · Elige dónde trabajar</div>
+        <div style="font-family:'Barlow Semi Condensed';font-size:28px;font-weight:700;letter-spacing:-.01em">Hola Patricia, tienes acceso a 2 empresas</div>
+        <sc-for list="{{ companies }}" as="c" hint-placeholder-count="2">
+          <div style="border:1px solid {{ c.bd }};border-radius:12px;background:var(--sf);overflow:hidden">
+            <button onClick="{{ c.pick }}" style="width:100%;display:flex;align-items:center;gap:14px;padding:16px;border:0;background:transparent;color:var(--tx);text-align:left"><div style="width:44px;height:44px;border-radius:10px;background:{{ c.lbg }};color:{{ c.lfg }};display:grid;place-items:center;font-weight:800">{{ c.ini }}</div><div style="flex:1"><div style="font-size:16px;font-weight:700">{{ c.name }}</div><div style="font-size:13px;color:var(--tx3)">{{ c.role }} · {{ c.plan }}</div></div><i class="ph-bold {{ c.caret }}" style="color:var(--tx3)"></i></button>
+            <sc-if value="{{ c.open }}"><div style="display:flex;flex-direction:column;border-top:1px solid var(--bd)"><sc-for list="{{ c.branches }}" as="b" hint-placeholder-count="3"><a href="Dashboard.dc.html" style="display:flex;align-items:center;gap:12px;padding:12px 16px 12px 74px;border-bottom:1px solid var(--bd);font-size:15.5px" style-hover="background:var(--sf2)"><i class="ph ph-map-pin" style="color:var(--tx3)"></i><span style="flex:1;font-weight:600">{{ b.n }}</span><span style="font-size:12.5px;color:var(--tx3)">{{ b.s }}</span><i class="ph ph-arrow-right"></i></a></sc-for></div></sc-if>
+          </div>
+        </sc-for>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--tx2)"><i class="ph-fill ph-check-square" style="color:var(--ac-tx);font-size:20px"></i>Recordar mi elección en este dispositivo</label>
+      </div>
+    </div>
+    <div style="width:390px;flex-shrink:0;height:844px;border-radius:44px;overflow:hidden;background:var(--sf);color:var(--tx);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);border:8px solid #0A0A0A">
+      <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:700"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+      <div style="flex:1;padding:24px 22px;display:flex;flex-direction:column;gap:18px">
+        <div style="width:48px;height:48px;border-radius:12px;background:var(--ac);color:var(--ac-ink);display:grid;place-items:center;font-size:26px"><i class="ph-bold ph-wrench"></i></div>
+        <div style="font-family:'Barlow Semi Condensed';font-size:28px;font-weight:700;letter-spacing:-.01em;line-height:1.1">Elige empresa y sucursal</div>
+        <sc-for list="{{ companies }}" as="c" hint-placeholder-count="2">
+          <div style="border:1px solid {{ c.bd }};border-radius:14px;overflow:hidden">
+            <button onClick="{{ c.pick }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:14px;border:0;background:var(--sf2);color:var(--tx);text-align:left"><div style="width:40px;height:40px;border-radius:10px;background:{{ c.lbg }};color:{{ c.lfg }};display:grid;place-items:center;font-weight:800;font-size:15px">{{ c.ini }}</div><div style="flex:1"><div style="font-size:15.5px;font-weight:700">{{ c.name }}</div><div style="font-size:12.5px;color:var(--tx3)">{{ c.role }}</div></div><i class="ph-bold {{ c.caret }}"></i></button>
+            <sc-if value="{{ c.open }}"><sc-for list="{{ c.branches }}" as="b" hint-placeholder-count="3"><a href="Dashboard.dc.html" style="display:flex;align-items:center;gap:10px;height:56px;padding:0 14px;border-top:1px solid var(--bd);font-size:16px;font-weight:600"><i class="ph ph-map-pin" style="color:var(--tx3)"></i><span style="flex:1">{{ b.n }}</span><i class="ph ph-caret-right"></i></a></sc-for></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tema&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: (typeof localStorage !== 'undefined' && localStorage.getItem('talleros-theme')) || this.props.tema || 'dark', open: 0 };
+  toggle = () => this.setState(s => { const t = s.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('talleros-theme', t); return { theme: t }; });
+  renderVals() {
+    const C = [
+      { name: 'Taller Ruta 5', ini: 'R5', role: 'Jefa de taller', plan: 'Plan Pro', lbg: 'var(--ac)', lfg: 'var(--ac-ink)', branches: [{ n: 'Sucursal Norte', s: '24 OT activas' }, { n: 'Sucursal Centro', s: '11 OT activas' }, { n: 'Todas las sucursales', s: 'Vista consolidada' }] },
+      { name: 'Frenos y Embragues Díaz', ini: 'FD', role: 'Asesora (apoyo)', plan: 'Plan Básico', lbg: 'var(--blue-s)', lfg: 'var(--blue)', branches: [{ n: 'Sede única', s: '6 OT activas' }] }
+    ];
+    return {
+      theme: this.state.theme, toggle: this.toggle, themeLabel: this.state.theme === 'dark' ? 'Modo claro' : 'Modo oscuro',
+      companies: C.map((c, i) => ({ ...c, open: this.state.open === i, caret: this.state.open === i ? 'ph-caret-up' : 'ph-caret-down', bd: this.state.open === i ? 'var(--ac)' : 'var(--bd)', pick: () => this.setState(s => ({ open: s.open === i ? -1 : i })) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

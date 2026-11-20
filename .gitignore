@@ -1,0 +1,29 @@
+# Secretos
+.env
+
+# Config/notas locales de herramientas de desarrollo (no van al repositorio)
+.claude/
+CLAUDE.md
+
+# .NET
+bin/
+obj/
+*.user
+
+# Node / Nuxt
+node_modules/
+.nuxt/
+.output/
+dist/
+
+# Tauri / Capacitor
+apps/*/src-tauri/target/
+apps/*/android/
+apps/*/ios/
+
+# Editor / OS
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
