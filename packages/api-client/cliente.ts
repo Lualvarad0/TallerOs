@@ -4,11 +4,16 @@ import { crearRecursoAuth } from './recursos/auth';
 import { crearRecursoClientes } from './recursos/clientes';
 import { crearRecursoDispositivosTablet } from './recursos/dispositivosTablet';
 import { crearRecursoEmpresas } from './recursos/empresas';
+import { crearRecursoEstadosOt } from './recursos/estadosOt';
 import { crearRecursoMarcas } from './recursos/marcas';
 import { crearRecursoModelos } from './recursos/modelos';
+import { crearRecursoOrdenesTrabajo } from './recursos/ordenesTrabajo';
 import { crearRecursoPersonal } from './recursos/personal';
+import { crearRecursoRecepcion } from './recursos/recepcion';
 import { crearRecursoRoles } from './recursos/roles';
+import { crearRecursoSubtareas } from './recursos/subtareas';
 import { crearRecursoSucursales } from './recursos/sucursales';
+import { crearRecursoTiposTrabajo } from './recursos/tiposTrabajo';
 import { crearRecursoTiposVehiculo } from './recursos/tiposVehiculo';
 import { crearRecursoUsuarios } from './recursos/usuarios';
 import { crearRecursoVehiculos } from './recursos/vehiculos';
@@ -33,6 +38,11 @@ export function crearClienteApi(fetch: $Fetch) {
     modelos: crearRecursoModelos(fetch),
     clientes: crearRecursoClientes(fetch),
     vehiculos: crearRecursoVehiculos(fetch),
+    tiposTrabajo: crearRecursoTiposTrabajo(fetch),
+    estadosOt: crearRecursoEstadosOt(fetch),
+    recepcion: crearRecursoRecepcion(fetch),
+    ordenesTrabajo: crearRecursoOrdenesTrabajo(fetch),
+    subtareas: crearRecursoSubtareas(fetch),
   };
 }
 
