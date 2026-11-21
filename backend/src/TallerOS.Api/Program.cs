@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+// Converter global: todo enum serializa como texto por defecto, para no depender de agregar
+// [JsonConverter(typeof(JsonStringEnumConverter))] a mano en cada enum nuevo (varios, como
+// TipoAdjunto/EstadoEmpresa/EstadoSuscripcion, quedaron sin él y serializaban como número).
+builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

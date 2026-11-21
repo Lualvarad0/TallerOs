@@ -131,7 +131,7 @@
               type="button"
               class="h-8 rounded-md"
               :style="{ border: '1px solid var(--bd2)', background: n <= form.combustible ? 'var(--ac)' : 'var(--sf)' }"
-              @click="form.combustible = n"
+              @click="form.combustible = form.combustible === n ? n - 1 : n"
             />
           </div>
         </div>
@@ -196,7 +196,7 @@
 
 <script setup lang="ts">
 import { PhArrowRight, PhCheckCircle, PhPlus, PhTrash } from '@phosphor-icons/vue';
-import type { AreaDto, ClienteDetalleDto, ClienteDto, PersonalDto, PrioridadOt, SucursalDto, TipoDanio, VehiculoResumenDto } from '@talleros/api-client';
+import type { ClienteDetalleDto, ClienteDto, PersonalDto, PrioridadOt, SucursalDto, TipoDanio, VehiculoResumenDto } from '@talleros/api-client';
 
 const api = useApi();
 
@@ -245,7 +245,7 @@ async function onVehiculoRegistrado() {
 
 // Paso 2: sucursal, prioridad, km, combustible, asesor
 const sucursales = ref<SucursalDto[]>([]);
-const areasDeLaSucursal = ref<AreaDto[]>([]);
+const cascadaPersonal = usePersonalDeSucursal();
 const personalDeLaSucursal = ref<PersonalDto[]>([]);
 
 const form = reactive({
@@ -261,13 +261,15 @@ const form = reactive({
 
 const etiquetaCombustible = computed(() => ['Vacío', '1/8', '1/4', '3/8', '1/2', '5/8', '3/4', '7/8', 'Lleno'][form.combustible]);
 
+let idCambioSucursal = 0;
 async function onCambioSucursal(sucursalId: string) {
+  const idPeticion = ++idCambioSucursal;
   form.asesorPersonalId = '';
   personalDeLaSucursal.value = [];
   if (!sucursalId) return;
-  areasDeLaSucursal.value = await api.areas.listar(sucursalId);
-  const porArea = await Promise.all(areasDeLaSucursal.value.map((a) => api.personal.listar(a.id)));
-  personalDeLaSucursal.value = porArea.flat().filter((p) => p.tieneAcceso);
+  const personal = await cascadaPersonal.listar(sucursalId);
+  if (idPeticion !== idCambioSucursal) return; // el usuario ya cambió de sucursal otra vez
+  personalDeLaSucursal.value = personal;
 }
 
 const puedeGuardar = computed(() => !!form.sucursalId && !!form.kmIngreso && !!vehiculoId.value && !!clienteElegido.value);
