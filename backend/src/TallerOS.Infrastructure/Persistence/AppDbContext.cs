@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Npgsql;
 using TallerOS.Application.Comun;
 using TallerOS.Domain.Catalogos;
 using TallerOS.Domain.Clientes;
 using TallerOS.Domain.Organizacion;
+using TallerOS.Domain.OrdenesTrabajo;
 using TallerOS.Domain.Plataforma;
 using TallerOS.Domain.Seguridad;
 using TallerOS.Domain.Vehiculos;
@@ -41,6 +44,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, ITenantContext
     public DbSet<VehiculoPlaca> VehiculoPlacas => Set<VehiculoPlaca>();
     public DbSet<VehiculoPropietario> VehiculoPropietarios => Set<VehiculoPropietario>();
     public DbSet<ClienteVehiculo> ClienteVehiculos => Set<ClienteVehiculo>();
+
+    public DbSet<EstadoOt> EstadosOt => Set<EstadoOt>();
+    public DbSet<ContadorNumeroOt> ContadoresNumeroOt => Set<ContadorNumeroOt>();
+    public DbSet<OrdenTrabajo> OrdenesTrabajo => Set<OrdenTrabajo>();
+    public DbSet<HistorialEstadoOt> HistorialEstadoOt => Set<HistorialEstadoOt>();
+    public DbSet<Recepcion> Recepciones => Set<Recepcion>();
+    public DbSet<DanioPrevio> DaniosPrevios => Set<DanioPrevio>();
+    public DbSet<TipoTrabajo> TiposTrabajo => Set<TipoTrabajo>();
+    public DbSet<Subtarea> Subtareas => Set<Subtarea>();
+    public DbSet<Adjunto> Adjuntos => Set<Adjunto>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -85,6 +98,38 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, ITenantContext
         // haber atendido alguna vez un vehículo que esa cuenta también posee).
         modelBuilder.Entity<CuentaCliente>().HasQueryFilter(cc =>
             EsSuperAdmin || Clientes.Any(c => c.CuentaClienteId == cc.Id && c.EmpresaId == EmpresaIdActual));
+
+        // Módulo 4: todas estas tablas tienen empresa_id propio (regla número uno de Seguridad en
+        // docs/convenciones.md), así que el filtro es siempre directo, sin EXISTS.
+        modelBuilder.Entity<EstadoOt>().HasQueryFilter(e => EsSuperAdmin || e.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<ContadorNumeroOt>().HasQueryFilter(c => EsSuperAdmin || c.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<OrdenTrabajo>().HasQueryFilter(o => EsSuperAdmin || o.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<HistorialEstadoOt>().HasQueryFilter(h => EsSuperAdmin || h.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<Recepcion>().HasQueryFilter(r => EsSuperAdmin || r.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<DanioPrevio>().HasQueryFilter(d => EsSuperAdmin || d.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<TipoTrabajo>().HasQueryFilter(t => EsSuperAdmin || t.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<Subtarea>().HasQueryFilter(s => EsSuperAdmin || s.EmpresaId == EmpresaIdActual);
+        modelBuilder.Entity<Adjunto>().HasQueryFilter(a => EsSuperAdmin || a.EmpresaId == EmpresaIdActual);
+    }
+
+    public async Task<int> SiguienteNumeroOtAsync(Guid empresaId, CancellationToken cancellationToken)
+    {
+        // Database.SqlQuery siempre envuelve el SQL que recibe en un SELECT adicional (para poder
+        // componer Where/Select/etc. encima), y un UPDATE...RETURNING no es válido ahí dentro, ni
+        // siquiera metiéndolo en su propio WITH ("WITH clause containing a data-modifying statement
+        // must be at the top level" — un WITH con UPDATE no puede anidarse en el FROM de otro
+        // SELECT). La única forma de ejecutar este UPDATE atómico y leer su RETURNING es con
+        // ADO.NET directo, sobre la misma conexión (y transacción ambiente, si hay una) que ya usa
+        // este DbContext.
+        await Database.OpenConnectionAsync(cancellationToken);
+        var conexion = (NpgsqlConnection)Database.GetDbConnection();
+        await using var comando = conexion.CreateCommand();
+        comando.CommandText = "UPDATE contador_numero_ot SET ultimo_numero = ultimo_numero + 1 WHERE empresa_id = @empresaId RETURNING ultimo_numero";
+        comando.Parameters.AddWithValue("empresaId", empresaId);
+        comando.Transaction = (NpgsqlTransaction?)Database.CurrentTransaction?.GetDbTransaction();
+
+        var resultado = await comando.ExecuteScalarAsync(cancellationToken);
+        return (int)resultado!;
     }
 
     public async Task ElevarPrivilegiosSinEmpresaAsync(CancellationToken cancellationToken)

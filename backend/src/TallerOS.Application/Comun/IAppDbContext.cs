@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TallerOS.Domain.Catalogos;
 using TallerOS.Domain.Clientes;
 using TallerOS.Domain.Organizacion;
+using TallerOS.Domain.OrdenesTrabajo;
 using TallerOS.Domain.Plataforma;
 using TallerOS.Domain.Seguridad;
 using TallerOS.Domain.Vehiculos;
@@ -40,7 +41,24 @@ public interface IAppDbContext
     DbSet<VehiculoPropietario> VehiculoPropietarios { get; }
     DbSet<ClienteVehiculo> ClienteVehiculos { get; }
 
+    DbSet<EstadoOt> EstadosOt { get; }
+    DbSet<ContadorNumeroOt> ContadoresNumeroOt { get; }
+    DbSet<OrdenTrabajo> OrdenesTrabajo { get; }
+    DbSet<HistorialEstadoOt> HistorialEstadoOt { get; }
+    DbSet<Recepcion> Recepciones { get; }
+    DbSet<DanioPrevio> DaniosPrevios { get; }
+    DbSet<TipoTrabajo> TiposTrabajo { get; }
+    DbSet<Subtarea> Subtareas { get; }
+    DbSet<Adjunto> Adjuntos { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Incrementa contador_numero_ot para esta empresa y devuelve el nuevo número, en un
+    /// único UPDATE ... RETURNING: el bloqueo de fila de esa sola UPDATE es lo que serializa dos
+    /// recepciones simultáneas y evita que dos OT de la misma empresa reciban el mismo número (ver
+    /// ContadorNumeroOt en Domain). Un método dedicado en vez de leer+incrementar con EF porque esa
+    /// alternativa sí tendría una carrera real entre el SELECT y el SaveChanges.</summary>
+    Task<int> SiguienteNumeroOtAsync(Guid empresaId, CancellationToken cancellationToken);
 
     /// <summary>Para tres operaciones legítimas, y ninguna otra — no es un interruptor general de
     /// "modo administrador":

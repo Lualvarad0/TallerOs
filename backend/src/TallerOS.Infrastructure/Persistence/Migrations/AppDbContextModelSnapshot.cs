@@ -254,6 +254,530 @@ namespace TallerOS.Infrastructure.Persistence.Migrations
                     b.ToTable("cuenta_cliente", (string)null);
                 });
 
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.Adjunto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AutorUsuarioId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("autor_usuario_id");
+
+                    b.Property<DateTimeOffset>("CreadoEn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creado_en");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<string>("Entidad")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("entidad");
+
+                    b.Property<Guid>("EntidadId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("entidad_id");
+
+                    b.Property<string>("MiniaturaUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("miniatura_url");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("tipo");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("url");
+
+                    b.HasKey("Id")
+                        .HasName("pk_adjunto");
+
+                    b.HasIndex("AutorUsuarioId")
+                        .HasDatabaseName("ix_adjunto_autor_usuario_id");
+
+                    b.HasIndex("EmpresaId", "Entidad", "EntidadId")
+                        .HasDatabaseName("ix_adjunto_empresa_id_entidad_entidad_id");
+
+                    b.ToTable("adjunto", (string)null);
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.ContadorNumeroOt", b =>
+                {
+                    b.Property<Guid>("EmpresaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<int>("UltimoNumero")
+                        .HasColumnType("integer")
+                        .HasColumnName("ultimo_numero");
+
+                    b.HasKey("EmpresaId")
+                        .HasName("pk_contador_numero_ot");
+
+                    b.ToTable("contador_numero_ot", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            UltimoNumero = 0
+                        });
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.DanioPrevio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("text")
+                        .HasColumnName("descripcion");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<string>("FotoUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("foto_url");
+
+                    b.Property<Guid>("RecepcionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("recepcion_id");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("tipo");
+
+                    b.Property<string>("Zona")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("zona");
+
+                    b.HasKey("Id")
+                        .HasName("pk_danio_previo");
+
+                    b.HasIndex("EmpresaId", "RecepcionId")
+                        .HasDatabaseName("ix_danio_previo_empresa_id_recepcion_id");
+
+                    b.ToTable("danio_previo", (string)null);
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.EstadoOt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("ColorToken")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("color_token");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<bool>("EsFinal")
+                        .HasColumnType("boolean")
+                        .HasColumnName("es_final");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("nombre");
+
+                    b.Property<short>("Orden")
+                        .HasColumnType("smallint")
+                        .HasColumnName("orden");
+
+                    b.HasKey("Id")
+                        .HasName("pk_estado_ot");
+
+                    b.HasAlternateKey("EmpresaId", "Id")
+                        .HasName("ak_estado_ot_empresa_id_id");
+
+                    b.HasIndex("EmpresaId", "Orden")
+                        .IsUnique()
+                        .HasDatabaseName("ix_estado_ot_empresa_id_orden");
+
+                    b.ToTable("estado_ot", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000001"),
+                            ColorToken = "sf3",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = false,
+                            Nombre = "Recibido",
+                            Orden = (short)1
+                        },
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000002"),
+                            ColorToken = "blue",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = false,
+                            Nombre = "Diagnóstico",
+                            Orden = (short)2
+                        },
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000003"),
+                            ColorToken = "vio",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = false,
+                            Nombre = "Esperando aprobación del cliente",
+                            Orden = (short)3
+                        },
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000004"),
+                            ColorToken = "vio",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = false,
+                            Nombre = "Esperando repuestos",
+                            Orden = (short)4
+                        },
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000005"),
+                            ColorToken = "blue",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = false,
+                            Nombre = "En reparación",
+                            Orden = (short)5
+                        },
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000006"),
+                            ColorToken = "blue",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = false,
+                            Nombre = "Control de calidad",
+                            Orden = (short)6
+                        },
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000007"),
+                            ColorToken = "grn",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = false,
+                            Nombre = "Listo para entregar",
+                            Orden = (short)7
+                        },
+                        new
+                        {
+                            Id = new Guid("00000004-aaaa-4000-8000-000000000008"),
+                            ColorToken = "grn",
+                            EmpresaId = new Guid("e598ae6b-3823-446a-b9b3-3229deb3d134"),
+                            EsFinal = true,
+                            Nombre = "Entregado",
+                            Orden = (short)8
+                        });
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.HistorialEstadoOt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AEstadoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("a_estado_id");
+
+                    b.Property<Guid?>("DeEstadoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("de_estado_id");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<DateTimeOffset>("Fecha")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("fecha");
+
+                    b.Property<Guid>("OtId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ot_id");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("usuario_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_historial_estado_ot");
+
+                    b.HasIndex("UsuarioId")
+                        .HasDatabaseName("ix_historial_estado_ot_usuario_id");
+
+                    b.HasIndex("EmpresaId", "AEstadoId")
+                        .HasDatabaseName("ix_historial_estado_ot_empresa_id_a_estado_id");
+
+                    b.HasIndex("EmpresaId", "DeEstadoId")
+                        .HasDatabaseName("ix_historial_estado_ot_empresa_id_de_estado_id");
+
+                    b.HasIndex("EmpresaId", "OtId", "Fecha")
+                        .HasDatabaseName("ix_historial_estado_ot_empresa_id_ot_id_fecha");
+
+                    b.ToTable("historial_estado_ot", (string)null);
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.OrdenTrabajo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid?>("AsesorPersonalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("asesor_personal_id");
+
+                    b.Property<Guid>("ClienteId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("cliente_id");
+
+                    b.Property<DateTimeOffset?>("EliminadoEn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("eliminado_en");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<DateTimeOffset?>("EntregadoEn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("entregado_en");
+
+                    b.Property<Guid>("EstadoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("estado_id");
+
+                    b.Property<DateTimeOffset>("IngresoEn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ingreso_en");
+
+                    b.Property<int>("KmIngreso")
+                        .HasColumnType("integer")
+                        .HasColumnName("km_ingreso");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("integer")
+                        .HasColumnName("numero");
+
+                    b.Property<string>("Prioridad")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("prioridad");
+
+                    b.Property<Guid>("SucursalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("sucursal_id");
+
+                    b.Property<Guid>("VehiculoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("vehiculo_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_orden_trabajo");
+
+                    b.HasAlternateKey("EmpresaId", "Id")
+                        .HasName("ak_ordenes_trabajo_empresa_id_id");
+
+                    b.HasIndex("VehiculoId")
+                        .HasDatabaseName("ix_orden_trabajo_vehiculo_id");
+
+                    b.HasIndex("EmpresaId", "AsesorPersonalId")
+                        .HasDatabaseName("ix_orden_trabajo_empresa_id_asesor_personal_id");
+
+                    b.HasIndex("EmpresaId", "ClienteId")
+                        .HasDatabaseName("ix_orden_trabajo_empresa_id_cliente_id");
+
+                    b.HasIndex("EmpresaId", "EstadoId")
+                        .HasDatabaseName("ix_orden_trabajo_empresa_id_estado_id");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("EmpresaId", "EstadoId"), new[] { "VehiculoId", "ClienteId", "Prioridad", "IngresoEn" });
+
+                    b.HasIndex("EmpresaId", "Numero")
+                        .IsUnique()
+                        .HasDatabaseName("ix_orden_trabajo_empresa_id_numero");
+
+                    b.HasIndex("EmpresaId", "SucursalId")
+                        .HasDatabaseName("ix_orden_trabajo_empresa_id_sucursal_id");
+
+                    b.HasIndex("EmpresaId", "VehiculoId")
+                        .HasDatabaseName("ix_orden_trabajo_empresa_id_vehiculo_id");
+
+                    b.ToTable("orden_trabajo", (string)null);
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.Recepcion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<short>("Combustible")
+                        .HasColumnType("smallint")
+                        .HasColumnName("combustible");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<string>("FirmaUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("firma_url");
+
+                    b.Property<string>("Objetos")
+                        .HasColumnType("text")
+                        .HasColumnName("objetos");
+
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("text")
+                        .HasColumnName("observaciones");
+
+                    b.Property<Guid>("OtId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ot_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_recepcion");
+
+                    b.HasAlternateKey("EmpresaId", "Id")
+                        .HasName("ak_recepciones_empresa_id_id");
+
+                    b.HasIndex("EmpresaId", "OtId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_recepcion_empresa_id_ot_id");
+
+                    b.ToTable("recepcion", (string)null);
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.Subtarea", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("estado");
+
+                    b.Property<short>("Orden")
+                        .HasColumnType("smallint")
+                        .HasColumnName("orden");
+
+                    b.Property<Guid>("OtId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ot_id");
+
+                    b.Property<Guid?>("ResponsablePersonalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("responsable_personal_id");
+
+                    b.Property<int>("TiempoEstimadoMin")
+                        .HasColumnType("integer")
+                        .HasColumnName("tiempo_estimado_min");
+
+                    b.Property<Guid>("TipoTrabajoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tipo_trabajo_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_subtarea");
+
+                    b.HasIndex("EmpresaId", "ResponsablePersonalId")
+                        .HasDatabaseName("ix_subtarea_empresa_id_responsable_personal_id");
+
+                    b.HasIndex("EmpresaId", "TipoTrabajoId")
+                        .HasDatabaseName("ix_subtarea_empresa_id_tipo_trabajo_id");
+
+                    b.HasIndex("EmpresaId", "OtId", "Orden")
+                        .HasDatabaseName("ix_subtarea_empresa_id_ot_id_orden");
+
+                    b.ToTable("subtarea", (string)null);
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.TipoTrabajo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("EliminadoEn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("eliminado_en");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("empresa_id");
+
+                    b.Property<int?>("IntervaloKm")
+                        .HasColumnType("integer")
+                        .HasColumnName("intervalo_km");
+
+                    b.Property<int?>("IntervaloMeses")
+                        .HasColumnType("integer")
+                        .HasColumnName("intervalo_meses");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)")
+                        .HasColumnName("nombre");
+
+                    b.Property<int>("TiempoEstandarMin")
+                        .HasColumnType("integer")
+                        .HasColumnName("tiempo_estandar_min");
+
+                    b.HasKey("Id")
+                        .HasName("pk_tipo_trabajo");
+
+                    b.HasAlternateKey("EmpresaId", "Id")
+                        .HasName("ak_tipos_trabajo_empresa_id_id");
+
+                    b.HasIndex("EmpresaId", "Nombre")
+                        .IsUnique()
+                        .HasDatabaseName("ix_tipo_trabajo_empresa_id_nombre")
+                        .HasFilter("eliminado_en IS NULL");
+
+                    b.ToTable("tipo_trabajo", (string)null);
+                });
+
             modelBuilder.Entity("TallerOS.Domain.Organizacion.Area", b =>
                 {
                     b.Property<Guid>("Id")
@@ -410,6 +934,9 @@ namespace TallerOS.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_personal");
+
+                    b.HasAlternateKey("EmpresaId", "Id")
+                        .HasName("ak_personal_empresa_id_id");
 
                     b.HasIndex("UsuarioId")
                         .HasDatabaseName("ix_personal_usuario_id");
@@ -1202,6 +1729,138 @@ namespace TallerOS.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cuenta_cliente_usuarios_usuario_id");
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.Adjunto", b =>
+                {
+                    b.HasOne("TallerOS.Domain.Seguridad.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("AutorUsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_adjunto_usuarios_autor_usuario_id");
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.DanioPrevio", b =>
+                {
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.Recepcion", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "RecepcionId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_danio_previo_recepciones_empresa_id_recepcion_id");
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.HistorialEstadoOt", b =>
+                {
+                    b.HasOne("TallerOS.Domain.Seguridad.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_historial_estado_ot_usuarios_usuario_id");
+
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.EstadoOt", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "AEstadoId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_historial_estado_ot_estado_ot_empresa_id_a_estado_id");
+
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.EstadoOt", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "DeEstadoId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_historial_estado_ot_estado_ot_empresa_id_de_estado_id");
+
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.OrdenTrabajo", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "OtId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_historial_estado_ot_ordenes_trabajo_empresa_id_ot_id");
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.OrdenTrabajo", b =>
+                {
+                    b.HasOne("TallerOS.Domain.Vehiculos.Vehiculo", null)
+                        .WithMany()
+                        .HasForeignKey("VehiculoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_orden_trabajo_vehiculos_vehiculo_id");
+
+                    b.HasOne("TallerOS.Domain.Organizacion.Personal", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "AsesorPersonalId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_orden_trabajo_personal_empresa_id_asesor_personal_id");
+
+                    b.HasOne("TallerOS.Domain.Clientes.Cliente", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "ClienteId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_orden_trabajo_cliente_empresa_id_cliente_id");
+
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.EstadoOt", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "EstadoId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_orden_trabajo_estado_ot_empresa_id_estado_id");
+
+                    b.HasOne("TallerOS.Domain.Organizacion.Sucursal", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "SucursalId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_orden_trabajo_sucursales_empresa_id_sucursal_id");
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.Recepcion", b =>
+                {
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.OrdenTrabajo", null)
+                        .WithOne()
+                        .HasForeignKey("TallerOS.Domain.OrdenesTrabajo.Recepcion", "EmpresaId", "OtId")
+                        .HasPrincipalKey("TallerOS.Domain.OrdenesTrabajo.OrdenTrabajo", "EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_recepcion_orden_trabajo_empresa_id_ot_id");
+                });
+
+            modelBuilder.Entity("TallerOS.Domain.OrdenesTrabajo.Subtarea", b =>
+                {
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.OrdenTrabajo", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "OtId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_subtarea_orden_trabajo_empresa_id_ot_id");
+
+                    b.HasOne("TallerOS.Domain.Organizacion.Personal", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "ResponsablePersonalId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_subtarea_personal_empresa_id_responsable_personal_id");
+
+                    b.HasOne("TallerOS.Domain.OrdenesTrabajo.TipoTrabajo", null)
+                        .WithMany()
+                        .HasForeignKey("EmpresaId", "TipoTrabajoId")
+                        .HasPrincipalKey("EmpresaId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_subtarea_tipos_trabajo_empresa_id_tipo_trabajo_id");
                 });
 
             modelBuilder.Entity("TallerOS.Domain.Organizacion.Area", b =>

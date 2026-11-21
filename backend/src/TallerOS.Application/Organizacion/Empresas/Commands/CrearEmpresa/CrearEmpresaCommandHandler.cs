@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TallerOS.Application.Comun;
 using TallerOS.Application.Comun.Cqrs;
 using TallerOS.Application.Comun.Excepciones;
+using TallerOS.Application.OrdenesTrabajo;
 using TallerOS.Domain.Organizacion;
 using TallerOS.Domain.Plataforma;
 using TallerOS.Domain.Seguridad;
@@ -54,6 +55,10 @@ public sealed class CrearEmpresaCommandHandler(IAppDbContext db, IHashService ha
 
         // sucursalId nulo: el dueño administra todas las sucursales desde el día uno.
         db.UsuarioRoles.Add(new UsuarioRol(usuario.Id, empresa.Id, rolDueño.Id, sucursalId: null));
+
+        // Módulo 4: los 8 estados estándar del flujo de OT y el contador de numeración nacen con la
+        // empresa, no cuando se crea la primera OT (ver EstadosOtEstandar).
+        await EstadosOtEstandar.SembrarAsync(db, empresa.Id, cancellationToken);
 
         await db.SaveChangesAsync(cancellationToken);
 
