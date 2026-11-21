@@ -104,14 +104,16 @@ interface ItemNav {
   icono?: unknown;
 }
 
-// "Configuración" (Módulo 1) y "Clientes" (Módulo 3) tienen pantalla construida; el resto de
-// módulos aún no existen y llevan a /proximamente, siguiendo el mismo orden y agrupación que
-// Sidebar.dc.html. "Vehículos" no tiene lista propia (no hay query para listar todos los vehículos
-// ni diseño para esa pantalla): se llega a la ficha de un vehículo desde la ficha de su cliente.
+// "Configuración" (Módulo 1), "Clientes" (Módulo 3) y "Tablero OT"/"Recepción" (Módulo 4) tienen
+// pantalla construida; el resto de módulos aún no existen y llevan a /proximamente, siguiendo el
+// mismo orden y agrupación que Sidebar.dc.html. "Vehículos" no tiene lista propia (no hay query
+// para listar todos los vehículos ni diseño para esa pantalla): se llega a la ficha de un vehículo
+// desde la ficha de su cliente. "Registro delegado" y "Modo taller (PIN)" dependen de jornada y
+// marcación (Módulo 5), que todavía no existen.
 const items: ItemNav[] = [
   { label: 'Dashboard', href: '/proximamente', icono: PhSquaresFour },
-  { label: 'Tablero OT', href: '/proximamente', icono: PhKanban },
-  { label: 'Recepción', href: '/proximamente', icono: PhClipboardText },
+  { label: 'Tablero OT', href: '/tablero', icono: PhKanban },
+  { label: 'Recepción', href: '/recepcion', icono: PhClipboardText },
   { label: 'Registro delegado', href: '/proximamente', icono: PhUsersThree },
   { label: 'Modo taller (PIN)', href: '/proximamente', icono: PhDeviceTablet },
   { separador: true, label: 'Clientes y vehículos' },

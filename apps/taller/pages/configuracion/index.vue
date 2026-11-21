@@ -22,6 +22,7 @@
       <PanelPersonal v-else-if="activa === 'personal'" />
       <PanelRoles v-else-if="activa === 'roles'" />
       <PanelDispositivos v-else-if="activa === 'dispositivos'" />
+      <PanelTiposTrabajo v-else-if="activa === 'tipos-trabajo'" />
     </div>
   </div>
 </template>
@@ -39,13 +40,13 @@ interface Seccion {
 
 const activa = ref<IdSeccion>('sucursales');
 
-// "Tipos de trabajo" (Módulo 4) y "Alertas" (Módulo 8) dependen de módulos que no existen aún.
+// "Tipos de trabajo" ya tiene pantalla (Módulo 4). "Alertas" depende del Módulo 8, que no existe aún.
 const secciones: Seccion[] = [
   { id: 'sucursales', label: 'Sucursales y áreas', icono: PhBuildings },
   { id: 'personal', label: 'Personal', icono: PhUsers },
   { id: 'roles', label: 'Roles y permisos', icono: PhShieldCheck },
   { id: 'dispositivos', label: 'Dispositivos tablet', icono: PhDeviceTablet },
-  { id: 'tipos-trabajo', label: 'Tipos de trabajo', icono: PhWrench, proximamente: true },
+  { id: 'tipos-trabajo', label: 'Tipos de trabajo', icono: PhWrench },
   { id: 'alertas', label: 'Alertas y mantenimiento', icono: PhBellRinging, proximamente: true },
 ];
 </script>

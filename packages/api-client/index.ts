@@ -3,6 +3,7 @@ export * from './tipos/auth';
 export * from './tipos/catalogos';
 export * from './tipos/clientes';
 export * from './tipos/error';
+export * from './tipos/ordenesTrabajo';
 export * from './tipos/organizacion';
 export * from './tipos/seguridad';
 export * from './tipos/vehiculos';
@@ -10,3 +11,7 @@ export type { CrearEmpresaDatos, CrearEmpresaResultado } from './recursos/empres
 export type { CrearPersonalDatos } from './recursos/personal';
 export type { ActualizarClienteDatos, CrearClienteDatos } from './recursos/clientes';
 export type { RegistrarVehiculoDatos } from './recursos/vehiculos';
+export type { CrearTipoTrabajoDatos } from './recursos/tiposTrabajo';
+export type { DanioPrevioInput, RegistrarRecepcionDatos, RegistrarRecepcionResultado } from './recursos/recepcion';
+export type { CrearSubtareaDatos, FiltrosTablero } from './recursos/ordenesTrabajo';
+export type { ActualizarSubtareaDatos } from './recursos/subtareas';
