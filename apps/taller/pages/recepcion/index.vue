@@ -196,7 +196,7 @@
 
 <script setup lang="ts">
 import { PhArrowRight, PhCheckCircle, PhPlus, PhTrash } from '@phosphor-icons/vue';
-import type { AreaDto, ClienteDetalleDto, ClienteDto, PersonalDto, PrioridadOt, SucursalDto, TipoDanio, VehiculoResumenDto } from '@talleros/api-client';
+import type { ClienteDetalleDto, ClienteDto, PersonalDto, PrioridadOt, SucursalDto, TipoDanio, VehiculoResumenDto } from '@talleros/api-client';
 
 const api = useApi();
 
@@ -245,7 +245,7 @@ async function onVehiculoRegistrado() {
 
 // Paso 2: sucursal, prioridad, km, combustible, asesor
 const sucursales = ref<SucursalDto[]>([]);
-const areasDeLaSucursal = ref<AreaDto[]>([]);
+const cascadaPersonal = usePersonalDeSucursal();
 const personalDeLaSucursal = ref<PersonalDto[]>([]);
 
 const form = reactive({
@@ -267,11 +267,9 @@ async function onCambioSucursal(sucursalId: string) {
   form.asesorPersonalId = '';
   personalDeLaSucursal.value = [];
   if (!sucursalId) return;
-  const areas = await api.areas.listar(sucursalId);
-  const porArea = await Promise.all(areas.map((a) => api.personal.listar(a.id)));
+  const personal = await cascadaPersonal.listar(sucursalId);
   if (idPeticion !== idCambioSucursal) return; // el usuario ya cambió de sucursal otra vez
-  areasDeLaSucursal.value = areas;
-  personalDeLaSucursal.value = porArea.flat().filter((p) => p.tieneAcceso);
+  personalDeLaSucursal.value = personal;
 }
 
 const puedeGuardar = computed(() => !!form.sucursalId && !!form.kmIngreso && !!vehiculoId.value && !!clienteElegido.value);

@@ -114,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhCaretDoubleUp, PhCaretUp, PhClock, PhEquals, PhKanban, PhPlus, PhRows } from '@phosphor-icons/vue';
+import { PhClock, PhKanban, PhPlus, PhRows } from '@phosphor-icons/vue';
 import type { EstadoOtDto, PrioridadOt, SucursalDto, TableroOtDto } from '@talleros/api-client';
 
 const api = useApi();
@@ -140,20 +140,6 @@ const columnas = computed(() =>
   })),
 );
 
-// "sf3" (Recibido) no tiene variante "-s": es ya un tono neutro de superficie, a diferencia de
-// blue/vio/grn que sí vienen en par color+fondo claro (ver docs/diseno/README.md § Design Tokens).
-function tonoEstado(colorToken: string) {
-  if (colorToken === 'sf3') return { texto: 'var(--tx2)', fondo: 'var(--sf3)' };
-  return { texto: `var(--${colorToken})`, fondo: `var(--${colorToken}-s)` };
-}
-
-const iconosPrioridad = { Urgente: PhCaretDoubleUp, Alta: PhCaretUp, Normal: PhEquals };
-function prioridadIcono(p: PrioridadOt) {
-  return iconosPrioridad[p];
-}
-function prioridadColor(p: PrioridadOt) {
-  return p === 'Urgente' ? 'var(--red)' : p === 'Alta' ? 'var(--ac-tx)' : 'var(--tx3)';
-}
 
 function transcurrido(ingresoEn: string) {
   const ms = Date.now() - new Date(ingresoEn).getTime();

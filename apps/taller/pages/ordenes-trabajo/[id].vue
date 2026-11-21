@@ -153,12 +153,13 @@
 </template>
 
 <script setup lang="ts">
-import { PhCaretDoubleUp, PhCaretDown, PhCaretUp, PhEquals, PhPlus } from '@phosphor-icons/vue';
-import type { EstadoOtDto, EstadoSubtarea, OrdenTrabajoDetalleDto, PersonalDto, PrioridadOt, SubtareaDto, TipoTrabajoDto, VehiculoDetalleDto } from '@talleros/api-client';
+import { PhCaretDown, PhPlus } from '@phosphor-icons/vue';
+import type { EstadoOtDto, EstadoSubtarea, OrdenTrabajoDetalleDto, PersonalDto, SubtareaDto, TipoTrabajoDto, VehiculoDetalleDto } from '@talleros/api-client';
 
 const route = useRoute();
 const api = useApi();
 const carga = useCarga<OrdenTrabajoDetalleDto>();
+const personalDeLaSucursal = usePersonalDeSucursal();
 const ot = ref<OrdenTrabajoDetalleDto | null>(null);
 const vehiculo = ref<VehiculoDetalleDto | null>(null);
 const estados = ref<EstadoOtDto[]>([]);
@@ -169,19 +170,6 @@ const mostrarNuevaSubtarea = ref(false);
 
 const estadoActual = computed(() => estados.value.find((e) => e.id === ot.value?.estadoId));
 const hechas = computed(() => ot.value?.subtareas.filter((s) => s.estado === 'Hecha').length ?? 0);
-
-function tonoEstado(colorToken: string | undefined) {
-  if (!colorToken || colorToken === 'sf3') return { texto: 'var(--tx2)', fondo: 'var(--sf3)' };
-  return { texto: `var(--${colorToken})`, fondo: `var(--${colorToken}-s)` };
-}
-
-const iconosPrioridad = { Urgente: PhCaretDoubleUp, Alta: PhCaretUp, Normal: PhEquals };
-function prioridadIcono(p: PrioridadOt) {
-  return iconosPrioridad[p];
-}
-function prioridadColor(p: PrioridadOt) {
-  return p === 'Urgente' ? 'var(--red)' : p === 'Alta' ? 'var(--ac-tx)' : 'var(--tx3)';
-}
 
 function formatearFecha(iso: string) {
   return new Date(iso).toLocaleString('es', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
@@ -196,9 +184,7 @@ async function cargar() {
   ot.value = await carga.ejecutar(() => api.ordenesTrabajo.obtener(id));
   if (ot.value) {
     vehiculo.value = await api.vehiculos.obtener(ot.value.vehiculoId);
-    const areas = await api.areas.listar(ot.value.sucursalId);
-    const porArea = await Promise.all(areas.map((a) => api.personal.listar(a.id)));
-    personal.value = porArea.flat().filter((p) => p.tieneAcceso);
+    personal.value = await personalDeLaSucursal.listar(ot.value.sucursalId);
   }
 }
 
