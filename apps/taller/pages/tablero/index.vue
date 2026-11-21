@@ -182,7 +182,7 @@ async function soltarEn(nuevoEstadoId: string) {
   const orden = ordenes.value.find((o) => o.otId === otId);
   if (!orden || orden.estadoId === nuevoEstadoId) return;
 
-  const estadoAnterior = orden.estadoId;
+  const anterior = { estadoId: orden.estadoId, estadoNombre: orden.estadoNombre, colorToken: orden.colorToken };
   const nuevoEstado = estados.value.find((e) => e.id === nuevoEstadoId);
   orden.estadoId = nuevoEstadoId;
   if (nuevoEstado) {
@@ -192,8 +192,11 @@ async function soltarEn(nuevoEstadoId: string) {
   try {
     await api.ordenesTrabajo.cambiarEstado(otId, nuevoEstadoId);
   } catch {
-    orden.estadoId = estadoAnterior;
-    await cargar();
+    // Nada cambió en el servidor: revertimos la tarjeta localmente en vez de recargar todo el
+    // tablero (cargar() deja ordenes.value en [] si el refetch también falla, ver code review).
+    orden.estadoId = anterior.estadoId;
+    orden.estadoNombre = anterior.estadoNombre;
+    orden.colorToken = anterior.colorToken;
   }
 }
 

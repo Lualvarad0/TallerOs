@@ -35,8 +35,8 @@
         <span class="text-[15.5px] font-semibold">{{ t.nombre }}</span>
         <span class="font-mono text-[13px]" :style="{ color: 'var(--tx2)' }">{{ t.tiempoEstandarMin }} min</span>
         <span class="text-[13px]" :style="{ color: 'var(--tx3)' }">
-          <template v-if="t.intervaloKm || t.intervaloMeses">
-            Cada {{ [t.intervaloKm ? `${t.intervaloKm.toLocaleString()} km` : null, t.intervaloMeses ? `${t.intervaloMeses} meses` : null].filter(Boolean).join(' / ') }}
+          <template v-if="t.intervaloKm != null || t.intervaloMeses != null">
+            Cada {{ [t.intervaloKm != null ? `${t.intervaloKm.toLocaleString()} km` : null, t.intervaloMeses != null ? `${t.intervaloMeses} meses` : null].filter(Boolean).join(' / ') }}
           </template>
           <template v-else>Sin periodicidad</template>
         </span>
